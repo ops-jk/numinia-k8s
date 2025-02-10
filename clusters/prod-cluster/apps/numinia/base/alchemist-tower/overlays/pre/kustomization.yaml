@@ -4,11 +4,11 @@ namespace: numinia
 resources:
   - ../../base
 patches:
-  - path: patches/deployment-patch.yaml
+  - path: patches/deployment.yaml
     target:
       kind: Deployment
       name: alchemist-tower-deployment
-  - path: patches/route-patch.yaml
+  - path: patches/route.yaml
     target:
       kind: IngressRoute
       name: alchemist-tower-route
@@ -16,6 +16,6 @@ configMapGenerator:
   - name: alchemist-tower-config
     behavior: merge
     envs:
-      - pre-config.env
+      - config.env
 commonLabels:
   environment: pre
