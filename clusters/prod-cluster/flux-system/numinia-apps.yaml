@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: "./apps/numinia/apps"
+  path: "./clusters/prod-cluster/apps/numinia/apps"
   prune: true
   sourceRef:
     kind: GitRepository
