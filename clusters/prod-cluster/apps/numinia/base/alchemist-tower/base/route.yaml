@@ -11,7 +11,7 @@ spec:
       kind: Rule
       middlewares:
         - name: strip-prefix-$(APP_NAME)
-          namespace: $(NAMESPACE)
+          namespace: numinia
       services:
         - name: $(APP_NAME)
           port: $(PORT)
