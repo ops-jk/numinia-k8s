@@ -9,7 +9,7 @@ spec:
       kind: Rule
       middlewares:
         - name: strip-prefix-$(APP_NAME)
-          namespace: $(NAMESPACE)
+          namespace: numinia
         - name: security-headers
           namespace: infrastructure
       services:

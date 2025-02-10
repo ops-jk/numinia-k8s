@@ -2,7 +2,7 @@ apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: $(APP_NAME)-scaler
-  namespace: $(NAMESPACE)
+  namespace: numinia
 spec:
   scaleTargetRef:
     name: $(APP_NAME)

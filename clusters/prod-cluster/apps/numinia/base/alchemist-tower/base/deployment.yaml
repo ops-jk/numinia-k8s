@@ -4,7 +4,7 @@ metadata:
   name: alchemist-tower
   namespace: numinia
   labels:
-    environment: pre
+    environment: pro
   annotations:
     keda.sh/auto-scaling: "enabled"
 spec:
@@ -38,7 +38,7 @@ spec:
           volumeMounts:
             - name: hyperfy2-persistent-storage
               mountPath: /mnt/hyperfy2-persistent-storage
-              subPath: $(APP_NAME)
+              subPath: alchemist-tower
           resources:
             requests:
               memory: "${MEMORY}"

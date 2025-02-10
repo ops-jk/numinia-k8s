@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: $(APP_NAME)
-  namespace: $(NAMESPACE)
+  namespace: numinia
 spec:
   selector:
     app: $(APP_NAME)

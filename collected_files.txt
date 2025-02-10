@@ -1,0 +1,274 @@
+
+=== File: clusters/prod-cluster/apps/numinia/base/alchemist-tower/base/middleware.yaml ===
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: strip-prefix-$(APP_NAME)
+  namespace: $(NAMESPACE)
+spec:
+  stripPrefix:
+    prefixes:
+      - $(PATH_PREFIX)
+=== File: clusters/prod-cluster/apps/numinia/base/alchemist-tower/base/autoscaling.yaml ===
+
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: $(APP_NAME)-scaler
+  namespace: $(NAMESPACE)
+spec:
+  scaleTargetRef:
+    name: $(APP_NAME)
+    kind: Deployment
+  minReplicaCount: 0
+  maxReplicaCount: 1
+  cooldownPeriod: 300
+  pollingInterval: 30 
+  triggers:
+    - type: http
+      metadata:
+        url: "http://$(APP_NAME):$(PORT)/health"
+        auth: ""
+        threshold: "1"
+        activationThreshold: "1"
+        host: "$(DOMAIN)"
+        path: "$(PATH_PREFIX)"
+=== File: clusters/prod-cluster/apps/numinia/base/alchemist-tower/base/route.yaml ===
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: alchemist-tower-route
+  namespace: $(NAMESPACE)
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`$(DOMAIN)`) && PathPrefix(`$(PATH_PREFIX)`)
+      kind: Rule
+      middlewares:
+        - name: strip-prefix-$(APP_NAME)
+          namespace: $(NAMESPACE)
+      services:
+        - name: $(APP_NAME)
+          port: $(PORT)
+  tls:
+    secretName: numinia-tls
+=== File: clusters/prod-cluster/apps/numinia/base/alchemist-tower/base/service.yaml ===
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: $(APP_NAME)
+  namespace: $(NAMESPACE)
+spec:
+  selector:
+    app: $(APP_NAME)
+  ports:
+    - protocol: TCP
+      port: $(PORT)
+      targetPort: $(PORT)
+=== File: clusters/prod-cluster/apps/numinia/base/alchemist-tower/base/deployment.yaml ===
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alchemist-tower
+  namespace: numinia
+  labels:
+    environment: pro
+  annotations:
+    keda.sh/auto-scaling: "enabled"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alchemist-tower
+      environment: pre
+  template:
+    metadata:
+      labels:
+        app: alchemist-tower
+        environment: pre
+    spec:
+      serviceAccountName: aws-secret-manager
+      imagePullSecrets:
+        - name: github-registry-secret
+      nodeSelector:
+        NodeType: memory
+      tolerations:
+        - key: workload
+          value: memory
+          effect: NoSchedule
+      volumes:
+        - name: hyperfy2-persistent-storage
+          persistentVolumeClaim:
+            claimName: hyperfy2-efs-claim
+      containers:
+        - name: alchemist-tower
+          image: ghcr.io/numengames/numinia-hyperfy2:sha-612134744b388692724eb3ddffc1597b5a16e43f
+          volumeMounts:
+            - name: hyperfy2-persistent-storage
+              mountPath: /mnt/hyperfy2-persistent-storage
+              subPath: $(APP_NAME)
+          resources:
+            requests:
+              memory: "${MEMORY}"
+              cpu: "$(CPU)"
+            limits:
+              memory: "$(LIMITS_MEMORY)"
+              cpu: "$(LIMITS_CPU)"
+          env:
+            - name: WORLD
+              value: "$(WORLD_NAME)"
+            - name: PORT
+              value: "$(PORT)"
+            - name: PUBLIC_WS_URL
+              value: "wss://$(DOMAIN)$(PATH_PREFIX)/ws"
+            - name: PUBLIC_API_URL
+              value: "https://$(DOMAIN)$(PATH_PREFIX)/api"
+            - name: PUBLIC_ASSETS_URL
+              value: "https://$(DOMAIN)$(PATH_PREFIX)/assets"
+            - name: PUBLIC_MAX_UPLOAD_SIZE
+              value: "$(PUBLIC_MAX_UPLOAD_SIZE)"
+            - name: SAVE_INTERVAL
+              value: "$(SAVE_INTERVAL)"
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: hyperfy2-numinia-pre-the-gates-of-numinia
+                  key: JWT_SECRET
+            - name: ADMIN_CODE
+              valueFrom:
+                secretKeyRef:
+                  name: hyperfy2-numinia-pre-the-gates-of-numinia
+                  key: ADMIN_CODE
+=== File: clusters/prod-cluster/apps/numinia/base/alchemist-tower/base/config.env ===
+
+CPU=100m
+PORT=3000
+MEMORY=256Mi
+LIMITS_CPU=500m
+ENVIRONMENT=PRO
+SAVE_INTERVAL=60
+LIMITS_MEMORY=1Gi
+DOMAIN=numinia.xyz
+COOLDOWN_PERIOD=300
+POLLING_INTERVAL=30
+PUBLIC_MAX_UPLOAD_SIZE=50
+WORLD_NAME=alchemist-tower
+PATH_PREFIX=/alchemist-tower
+=== File: clusters/prod-cluster/apps/numinia/base/alchemist-tower/base/kustomization.yaml ===
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: numinia
+resources:
+  - deployment.yaml
+  - service.yaml
+  - route.yaml
+  - middleware.yaml
+  - autoscaling.yaml
+configMapGenerator:
+  - name: alchemist-tower-config
+    behavior: create
+    envs:
+      - config.env
+commonLabels:
+  app: alchemist-tower
+  pod-type: alchemist-tower
+vars:
+  - name: APP_NAME
+    objref:
+      kind: Deployment
+      name: alchemist-tower-config
+      apiVersion: apps/v1
+  - name: PORT
+    objref:
+      kind: ConfigMap
+      name: alchemist-tower-config
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.PORT
+  - name: PATH_PREFIX
+    objref:
+      kind: ConfigMap
+      name: alchemist-tower-config
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.PATH_PREFIX
+
+=== File: clusters/prod-cluster/apps/numinia/base/alchemist-tower/overlays/pre/patches/route.yaml ===
+
+# Patch to modify only the host for PRE environment
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: alchemist-tower-route
+spec:
+  routes:
+    - match: Host(`pre.numinia.xyz`) && PathPrefix(`$(PATH_PREFIX)`)
+      kind: Rule
+      middlewares:
+        - name: strip-prefix-$(APP_NAME)
+          namespace: $(NAMESPACE)
+        - name: security-headers
+          namespace: infrastructure
+      services:
+        - name: $(APP_NAME)
+          port: $(PORT)
+=== File: clusters/prod-cluster/apps/numinia/base/alchemist-tower/overlays/pre/patches/deployment.yaml ===
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alchemist-tower-deployment
+spec:
+  template:
+    spec:
+      containers:
+      - name: alchemist-tower
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        env:
+        - name: ENVIRONMENT
+          value: "pre"
+
+=== File: clusters/prod-cluster/apps/numinia/base/alchemist-tower/overlays/pre/config.env ===
+
+ENVIRONMENT=PRE
+DOMAIN=pre.numinia.xyz
+PUBLIC_WS_URL=wss://pre.numinia.xyz/alchemist-tower/ws
+PUBLIC_API_URL=https://pre.numinia.xyz/alchemist-tower/api
+PUBLIC_ASSETS_URL=https://pre.numinia.xyz/alchemist-tower/assets 
+=== File: clusters/prod-cluster/apps/numinia/base/alchemist-tower/overlays/pre/kustomization.yaml ===
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: numinia
+resources:
+- ../../base
+patches:
+- path: patches/deployment.yaml
+  target:
+    kind: Deployment
+    name: alchemist-tower-deployment
+- path: patches/route.yaml
+  target:
+    kind: IngressRoute
+    name: alchemist-tower-route
+configMapGenerator:
+- behavior: merge
+  envs:
+  - config.env
+  name: alchemist-tower-config
+labels:
+- includeSelectors: true
+  pairs:
+    environment: pre

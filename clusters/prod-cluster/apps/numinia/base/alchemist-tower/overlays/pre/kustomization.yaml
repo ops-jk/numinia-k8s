@@ -7,7 +7,7 @@ patches:
 - path: patches/deployment.yaml
   target:
     kind: Deployment
-    name: alchemist-tower-deployment
+    name: alchemist-tower
 - path: patches/route.yaml
   target:
     kind: IngressRoute

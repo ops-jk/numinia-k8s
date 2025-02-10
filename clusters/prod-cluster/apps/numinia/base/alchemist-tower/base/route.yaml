@@ -2,7 +2,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: alchemist-tower-route
-  namespace: $(NAMESPACE)
+  namespace: numinia
 spec:
   entryPoints:
     - websecure
