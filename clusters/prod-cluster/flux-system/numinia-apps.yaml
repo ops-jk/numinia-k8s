@@ -9,5 +9,5 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: mi-repositorio   # Asegúrate de que este sea el nombre de tu fuente Git configurada
+    name: flux-system
   validation: client
