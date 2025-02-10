@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: numinia
+resources:
+  - ../../base
+patches:
+  - path: patches/deployment-patch.yaml
+    target:
+      kind: Deployment
+      name: alchemist-tower-deployment
+  - path: patches/route-patch.yaml
+    target:
+      kind: IngressRoute
+      name: alchemist-tower-route
+configMapGenerator:
+  - name: alchemist-tower-config
+    behavior: merge
+    envs:
+      - pre-config.env
+commonLabels:
+  environment: pre

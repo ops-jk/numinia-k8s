@@ -1,0 +1,37 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: numinia
+resources:
+  - deployment.yaml
+  - service.yaml
+  - route.yaml
+  - middleware.yaml
+  - autoscaling.yaml
+configMapGenerator:
+  - name: alchemist-tower-config
+    behavior: create
+    envs:
+      - config.env
+commonLabels:
+  app: alchemist-tower
+  pod-type: alchemist-tower
+vars:
+  - name: APP_NAME
+    objref:
+      kind: Deployment
+      name: alchemist-tower
+      apiVersion: apps/v1
+  - name: PORT
+    objref:
+      kind: ConfigMap
+      name: alchemist-tower-config
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.PORT
+  - name: PATH_PREFIX
+    objref:
+      kind: ConfigMap
+      name: alchemist-tower-config
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.PATH_PREFIX

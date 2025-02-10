@@ -1,0 +1,22 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: $(APP_NAME)-scaler
+  namespace: $(NAMESPACE)
+spec:
+  scaleTargetRef:
+    name: $(APP_NAME)
+    kind: Deployment
+  minReplicaCount: 0
+  maxReplicaCount: 1
+  cooldownPeriod: 300
+  pollingInterval: 30 
+  triggers:
+    - type: http
+      metadata:
+        url: "http://$(APP_NAME):$(PORT)/health"
+        auth: ""
+        threshold: "1"
+        activationThreshold: "1"
+        host: "$(DOMAIN)"
+        path: "$(PATH_PREFIX)"

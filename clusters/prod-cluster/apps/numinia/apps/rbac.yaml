@@ -1,0 +1,23 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: numinia-developer
+  namespace: numinia
+rules:
+  - apiGroups: ["*"]
+    resources: ["*"]
+    verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: numinia-developer-binding
+  namespace: numinia
+subjects:
+  - kind: Group
+    name: numinia-developers
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: numinia-developer
+  apiGroup: rbac.authorization.k8s.io
