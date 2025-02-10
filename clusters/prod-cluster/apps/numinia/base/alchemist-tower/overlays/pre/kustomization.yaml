@@ -17,5 +17,5 @@ configMapGenerator:
     behavior: merge
     envs:
       - config.env
-commonLabels:
+labels:
   environment: pre
