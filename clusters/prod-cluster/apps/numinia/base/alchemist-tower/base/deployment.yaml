@@ -66,9 +66,9 @@ spec:
             - name: PUBLIC_ASSETS_URL
               value: ${PUBLIC_ASSETS_URL}
             - name: PUBLIC_MAX_UPLOAD_SIZE
-              value: 50
+              value: "50"
             - name: SAVE_INTERVAL
-              value: 30
+              value: "30"
             - name: JWT_SECRET
               valueFrom:
                 secretKeyRef:
