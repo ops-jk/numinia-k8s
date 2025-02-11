@@ -5,7 +5,7 @@ metadata:
   namespace: numinia
 spec:
   scaleTargetRef:
-    name: alchemist-tower
+    name: alchemist-tower-deployment
     kind: Deployment
   minReplicaCount: 1
   maxReplicaCount: 1
