@@ -14,4 +14,10 @@ spec:
         name: kedacore
         namespace: flux-system
   install:
-    createNamespace: true 
+    createNamespace: true
+    crds: Create
+  upgrade:
+    crds: CreateReplace
+  values:
+    crds:
+      install: true 
