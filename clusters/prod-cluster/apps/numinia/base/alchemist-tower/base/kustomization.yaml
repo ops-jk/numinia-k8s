@@ -2,36 +2,233 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: numinia
 resources:
-  - deployment.yaml
-  - service.yaml
-  - route.yaml
-  - middleware.yaml
-  - autoscaling.yaml
+- deployment.yaml
+- service.yaml
+- route.yaml
+- middleware.yaml
+- autoscaling.yaml
 configMapGenerator:
-  - name: alchemist-tower-config
-    behavior: create
-    envs:
-      - config.env
-commonLabels:
-  app: alchemist-tower
-  pod-type: alchemist-tower
-vars:
-  - name: APP_NAME
-    objref:
+- behavior: create
+  envs:
+  - config.env
+  name: alchemist-tower-config
+replacements:
+- source:
+    kind: ConfigMap
+    name: alchemist-tower-config
+    fieldPath: data.MEMORY
+  targets:
+  - select:
       kind: Deployment
-      name: alchemist-tower
-      apiVersion: apps/v1
-  - name: PORT
-    objref:
-      kind: ConfigMap
-      name: alchemist-tower-config
-      apiVersion: v1
-    fieldref:
-      fieldpath: data.PORT
-  - name: PATH_PREFIX
-    objref:
-      kind: ConfigMap
-      name: alchemist-tower-config
-      apiVersion: v1
-    fieldref:
-      fieldpath: data.PATH_PREFIX
+    fieldPaths:
+    - spec.template.spec.containers.[name=alchemist-tower].resources.requests.memory
+- source:
+    kind: ConfigMap
+    name: alchemist-tower-config
+    fieldPath: data.LIMITS_MEMORY
+  targets:
+  - select:
+      kind: Deployment
+    fieldPaths:
+    - spec.template.spec.containers.[name=alchemist-tower].resources.limits.memory
+- source:
+    kind: ConfigMap
+    name: alchemist-tower-config
+    fieldPath: data.CPU
+  targets:
+  - select:
+      kind: Deployment
+    fieldPaths:
+    - spec.template.spec.containers.[name=alchemist-tower].resources.requests.cpu
+- source:
+    kind: ConfigMap
+    name: alchemist-tower-config
+    fieldPath: data.LIMITS_CPU
+  targets:
+  - select:
+      kind: Deployment
+    fieldPaths:
+    - spec.template.spec.containers.[name=alchemist-tower].resources.limits.cpu
+
+- source:
+    kind: ConfigMap
+    name: alchemist-tower-config
+    fieldPath: data.PUBLIC_WS_URL
+  targets:
+  - select:
+      kind: Deployment
+    fieldPaths:
+    - spec.template.spec.containers.[name=alchemist-tower].env.[name=PUBLIC_WS_URL].value
+
+- source:
+    kind: ConfigMap
+    name: alchemist-tower-config
+    fieldPath: data.PUBLIC_API_URL
+  targets:
+  - select:
+      kind: Deployment
+    fieldPaths:
+    - spec.template.spec.containers.[name=alchemist-tower].env.[name=PUBLIC_API_URL].value
+
+- source:
+    kind: ConfigMap
+    name: alchemist-tower-config
+    fieldPath: data.PUBLIC_ASSETS_URL
+  targets:
+  - select:
+      kind: Deployment
+    fieldPaths:
+    - spec.template.spec.containers.[name=alchemist-tower].env.[name=PUBLIC_ASSETS_URL].value    
+
+- source:
+    kind: ConfigMap
+    name: alchemist-tower-config
+    fieldPath: data.WORLD_NAME
+  targets:
+  - select:
+      kind: Deployment
+    fieldPaths:
+    - metadata.name
+    - spec.selector.matchLabels.app
+    - spec.template.metadata.labels.app
+    - spec.template.spec.containers.[name=alchemist-tower].env.[name=WORLD].value
+  - select:
+      kind: Service
+    fieldPaths:
+    - metadata.name
+    - spec.selector.app
+  - select:
+      kind: Middleware
+    fieldPaths:
+    - metadata.name
+  - select:
+      kind: IngressRoute
+    fieldPaths:
+    - metadata.name
+    - spec.routes.0.middlewares.0.name
+    - spec.routes.0.services.0.name
+  - select:
+      kind: ScaledObject
+    fieldPaths:
+    - metadata.name
+    - spec.scaleTargetRef.name
+    - spec.triggers.0.metadata.url
+- source:
+    kind: ConfigMap
+    name: alchemist-tower-config
+    fieldPath: data.PORT
+  targets:
+  - select:
+      kind: Deployment
+    fieldPaths:
+    - spec.template.spec.containers.[name=alchemist-tower].env.[name=PORT].value
+  - select:
+      kind: Service
+    fieldPaths:
+    - spec.ports.0.port
+    - spec.ports.0.targetPort
+  - select:
+      kind: ScaledObject
+    fieldPaths:
+    - spec.triggers.0.metadata.url
+  - select:
+      kind: IngressRoute
+    fieldPaths:
+    - spec.routes.0.services.0.port
+- source:
+    kind: ConfigMap
+    name: alchemist-tower-config
+    fieldPath: data.DOMAIN
+  targets:
+  - select:
+      kind: Deployment
+    fieldPaths:
+    - spec.template.spec.containers.[name=alchemist-tower].env.[name=DOMAIN].value
+  - select:
+      kind: IngressRoute
+    fieldPaths:
+    - spec.routes.0.match
+  - select:
+      kind: ScaledObject
+    fieldPaths:
+    - spec.triggers.0.metadata.host
+- source:
+    kind: ConfigMap
+    name: alchemist-tower-config
+    fieldPath: data.PATH_PREFIX
+  targets:
+  - select:
+      kind: Deployment
+    fieldPaths:
+    - spec.template.spec.containers.[name=alchemist-tower].env.[name=PATH_PREFIX].value
+  - select:
+      kind: Middleware
+    fieldPaths:
+    - spec.stripPrefix.prefixes.0
+  - select:
+      kind: IngressRoute
+    fieldPaths:
+    - spec.routes.0.match
+  - select:
+      kind: ScaledObject
+    fieldPaths:
+    - spec.triggers.0.metadata.path
+- source:
+    kind: ConfigMap
+    name: alchemist-tower-config
+    fieldPath: data.PUBLIC_MAX_UPLOAD_SIZE
+  targets:
+  - select:
+      kind: Deployment
+    fieldPaths:
+    - spec.template.spec.containers.[name=alchemist-tower].env.[name=PUBLIC_MAX_UPLOAD_SIZE].value
+- source:
+    kind: ConfigMap
+    name: alchemist-tower-config
+    fieldPath: data.SAVE_INTERVAL
+  targets:
+  - select:
+      kind: Deployment
+    fieldPaths:
+    - spec.template.spec.containers.[name=alchemist-tower].env.[name=SAVE_INTERVAL].value
+- source:
+    kind: ConfigMap
+    name: alchemist-tower-config
+    fieldPath: data.COOLDOWN_PERIOD
+  targets:
+  - select:
+      kind: ScaledObject
+    fieldPaths:
+    - spec.cooldownPeriod
+- source:
+    kind: ConfigMap
+    name: alchemist-tower-config
+    fieldPath: data.MAX_REPLICA_COUNT
+  targets:
+  - select:
+      kind: ScaledObject
+    fieldPaths:
+    - spec.maxReplicaCount
+- source:
+    kind: ConfigMap
+    name: alchemist-tower-config
+    fieldPath: data.MIN_REPLICA_COUNT
+  targets:
+  - select:
+      kind: ScaledObject
+    fieldPaths:
+    - spec.minReplicaCount
+- source:
+    kind: ConfigMap
+    name: alchemist-tower-config
+    fieldPath: data.POLLING_INTERVAL
+  targets:
+  - select:
+      kind: ScaledObject
+    fieldPaths:
+    - spec.pollingInterval
+labels:
+- includeSelectors: true
+  pairs:
+    app: alchemist-tower
+    pod-type: alchemist-tower

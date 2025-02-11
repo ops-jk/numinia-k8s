@@ -1,22 +1,22 @@
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: $(APP_NAME)-scaler
+  name: "alchemist-tower-scaler"
   namespace: numinia
 spec:
   scaleTargetRef:
-    name: $(APP_NAME)
+    name: ${WORLD_NAME}
     kind: Deployment
-  minReplicaCount: 0
-  maxReplicaCount: 1
-  cooldownPeriod: 300
-  pollingInterval: 30 
+  minReplicaCount: ${MIN_REPLICA_COUNT}
+  maxReplicaCount: ${MAX_REPLICA_COUNT}
+  cooldownPeriod: ${COOLDOWN_PERIOD}
+  pollingInterval: ${POLLING_INTERVAL}
   triggers:
     - type: http
       metadata:
-        url: "http://$(APP_NAME):$(PORT)/health"
+        url: "http://localhost:3000/health"
         auth: ""
         threshold: "1"
         activationThreshold: "1"
-        host: "$(DOMAIN)"
-        path: "$(PATH_PREFIX)"
+        host: "${DOMAIN}"
+        path: "${PATH_PREFIX}"
