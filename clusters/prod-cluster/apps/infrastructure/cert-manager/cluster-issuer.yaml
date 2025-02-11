@@ -9,11 +9,5 @@ spec:
     privateKeySecretRef:
       name: letsencrypt-dns01-account-key
     solvers:
-      - selector: {}
-        dns01:
-          cnameStrategy: None
-          acmeDNS:
-            host: "https://auth.acme-dns.io"
-            accountSecretRef:
-              name: acme-dns-auth
-              key: credentials
+      - dns01:
+        manual: {}
