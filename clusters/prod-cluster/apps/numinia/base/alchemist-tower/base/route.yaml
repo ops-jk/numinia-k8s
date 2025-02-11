@@ -7,13 +7,13 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`${DOMAIN}`) && PathPrefix(`${PATH_PREFIX}`)
+    - match: Host(`numinia.xyz`) && PathPrefix(`/alchemist-tower`)
       kind: Rule
       middlewares:
-        - name: "${WORLD_NAME}-strip-prefix"
+        - name: "alchemist-tower-strip-prefix"
           namespace: numinia
       services:
-        - name: "${WORLD_NAME}"
-          port: "${PORT}"
+        - name: "alchemist-tower"
+          port: 3000
   tls:
     secretName: numinia-tls

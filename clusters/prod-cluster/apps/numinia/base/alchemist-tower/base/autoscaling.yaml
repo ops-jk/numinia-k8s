@@ -5,12 +5,12 @@ metadata:
   namespace: numinia
 spec:
   scaleTargetRef:
-    name: ${WORLD_NAME}
+    name: alchemist-tower
     kind: Deployment
-  minReplicaCount: ${MIN_REPLICA_COUNT}
-  maxReplicaCount: ${MAX_REPLICA_COUNT}
-  cooldownPeriod: ${COOLDOWN_PERIOD}
-  pollingInterval: ${POLLING_INTERVAL}
+  minReplicaCount: 1
+  maxReplicaCount: 1
+  cooldownPeriod: 300
+  pollingInterval: 30
   triggers:
     - type: http
       metadata:
@@ -18,5 +18,5 @@ spec:
         auth: ""
         threshold: "1"
         activationThreshold: "1"
-        host: "${DOMAIN}"
-        path: "${PATH_PREFIX}"
+        host: "numinia.xyz"
+        path: "/alchemist-tower"

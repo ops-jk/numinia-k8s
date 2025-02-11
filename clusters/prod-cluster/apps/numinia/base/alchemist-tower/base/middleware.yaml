@@ -6,4 +6,4 @@ metadata:
 spec:
   stripPrefix:
     prefixes:
-      - "${PATH_PREFIX}"
+      - "/alchemist-tower"

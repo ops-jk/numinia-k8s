@@ -5,19 +5,23 @@ metadata:
   namespace: numinia
   labels:
     environment: pro
+    app: alchemist-tower
+    pod-type: alchemist-tower
   annotations:
     keda.sh/auto-scaling: "enabled"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ${WORLD_NAME}
-      environment: pre
+      app: alchemist-tower
+      environment: pro
+      pod-type: alchemist-tower
   template:
     metadata:
       labels:
-        app: ${WORLD_NAME}
-        environment: pre
+        app: alchemist-tower
+        environment: pro
+        pod-type: alchemist-tower
     spec:
       serviceAccountName: aws-secret-manager
       imagePullSecrets:
@@ -62,9 +66,9 @@ spec:
             - name: PUBLIC_ASSETS_URL
               value: ${PUBLIC_ASSETS_URL}
             - name: PUBLIC_MAX_UPLOAD_SIZE
-              value: ${PUBLIC_MAX_UPLOAD_SIZE}
+              value: 50
             - name: SAVE_INTERVAL
-              value: ${SAVE_INTERVAL}
+              value: 30
             - name: JWT_SECRET
               valueFrom:
                 secretKeyRef:
