@@ -9,5 +9,7 @@ spec:
     privateKeySecretRef:
       name: letsencrypt-dns01-account-key
     solvers:
-      - dns01:
-          manual: {}
+      - selector: {}
+        dns01:
+          cnameStrategy: None
+          acmeDNS: {}
