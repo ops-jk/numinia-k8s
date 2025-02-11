@@ -1,4 +1,4 @@
-apiVersion: keda.sh/v1beta1
+apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: "alchemist-tower-scaler"
