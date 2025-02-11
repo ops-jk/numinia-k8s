@@ -10,4 +10,4 @@ spec:
       name: letsencrypt-dns01-account-key
     solvers:
       - dns01:
-        manual: {}
+          manual: {}
