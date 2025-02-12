@@ -84,6 +84,3 @@ labels:
   pairs:
     app: alchemist-tower
     pod-type: alchemist-tower
-spec:
-  dependsOn:
-    - name: traefik
