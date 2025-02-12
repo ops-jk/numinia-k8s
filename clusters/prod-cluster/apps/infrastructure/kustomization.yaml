@@ -3,4 +3,5 @@ kind: Kustomization
 resources:
   - cert-manager
   - keda
-  - acme-dns 
+  - acme-dns
+  - traefik 
