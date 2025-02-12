@@ -5,13 +5,11 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: ./clusters/prod-cluster/apps/numinia
+  path: ./clusters/prod-cluster/organizations/numinia/
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
   dependsOn:
-    - name: keda
-      namespace: keda
     - name: traefik
       namespace: traefik

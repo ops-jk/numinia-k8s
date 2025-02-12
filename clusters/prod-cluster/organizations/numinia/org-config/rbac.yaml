@@ -27,3 +27,5 @@ kind: ServiceAccount
 metadata:
   name: aws-secret-manager
   namespace: numinia
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::241533135482:role/aws-secret-manager-role

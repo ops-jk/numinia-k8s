@@ -25,7 +25,7 @@ spec:
     spec:
       serviceAccountName: aws-secret-manager
       imagePullSecrets:
-        - name: github-registry-secret
+        - name: github/deploy
       nodeSelector:
         NodeType: memory
       tolerations:
@@ -36,6 +36,12 @@ spec:
         - name: hyperfy2-persistent-storage
           persistentVolumeClaim:
             claimName: hyperfy2-efs-claim
+        - name: secrets-store
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: aws-secrets
       containers:
         - name: alchemist-tower
           image: ghcr.io/numengames/numinia-hyperfy2:sha-612134744b388692724eb3ddffc1597b5a16e43f
@@ -43,13 +49,9 @@ spec:
             - name: hyperfy2-persistent-storage
               mountPath: /mnt/hyperfy2-persistent-storage
               subPath: alchemist-tower
-          resources:
-            requests:
-              memory: ${MEMORY}
-              cpu: ${CPU}
-            limits:
-              memory: ${LIMITS_MEMORY}
-              cpu: ${LIMITS_CPU}
+            - name: secrets-store
+              mountPath: "/mnt/secrets-store"
+              readOnly: true
           env:
             - name: WORLD
               value: ${WORLD_NAME}
@@ -72,10 +74,17 @@ spec:
             - name: JWT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: hyperfy2-numinia-the-gates-of-numinia
+                  name: aws-secrets
                   key: JWT_SECRET
             - name: ADMIN_CODE
               valueFrom:
                 secretKeyRef:
-                  name: hyperfy2-numinia-the-gates-of-numinia
+                  name: aws-secrets
                   key: ADMIN_CODE
+          resources:
+            requests:
+              memory: ${MEMORY}
+              cpu: ${CPU}
+            limits:
+              memory: ${LIMITS_MEMORY}
+              cpu: ${LIMITS_CPU}

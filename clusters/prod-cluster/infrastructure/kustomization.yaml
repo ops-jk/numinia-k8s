@@ -4,4 +4,6 @@ resources:
   - cert-manager
   - keda
   - acme-dns
-  - traefik 
+  - traefik
+  - aws-efs-csi-driver
+  - secrets-store-csi-driver 
