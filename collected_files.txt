@@ -1,271 +1,151 @@
 
-=== File: clusters/prod-cluster/apps/numinia/base/alchemist-tower/base/autoscaling.yaml ===
+=== File: clusters/prod-cluster/apps/infrastructure/traefik/repository.yaml ===
 
-apiVersion: keda.sh/v1alpha1
-kind: ScaledObject
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
 metadata:
-  name: "alchemist-tower-scaler"
-  namespace: numinia
+  name: traefik
+  namespace: flux-system
 spec:
-  scaleTargetRef:
-    name: alchemist-tower-deployment
-    kind: Deployment
-  minReplicaCount: 1
-  maxReplicaCount: 1
-  cooldownPeriod: 300
-  pollingInterval: 30
-  triggers:
-    - type: http
-      metadata:
-        url: "http://localhost:3000/health"
-        auth: ""
-        threshold: "1"
-        activationThreshold: "1"
-        host: "numinia.xyz"
-        path: "/alchemist-tower"
-=== File: clusters/prod-cluster/apps/numinia/base/alchemist-tower/base/service.yaml ===
+  interval: 1h
+  url: https://traefik.github.io/charts 
+=== File: clusters/prod-cluster/apps/infrastructure/traefik/crds.yaml ===
 
-apiVersion: v1
-kind: Service
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
 metadata:
-  labels:
-    app: alchemist-tower
-    pod-type: alchemist-tower
-  name: alchemist-tower
-  namespace: numinia
+  name: ingressroutes.traefik.containo.us
 spec:
-  selector:
-    app: alchemist-tower
-  ports:
-    - protocol: TCP
-      port: 3000
-      targetPort: 3000
-=== File: clusters/prod-cluster/apps/numinia/base/alchemist-tower/base/deployment.yaml ===
-
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: alchemist-tower-deployment
-  namespace: numinia
-  labels:
-    environment: pro
-    app: alchemist-tower
-    pod-type: alchemist-tower
-  annotations:
-    keda.sh/auto-scaling: "enabled"
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: alchemist-tower
-      environment: pro
-      pod-type: alchemist-tower
-  template:
-    metadata:
-      labels:
-        app: alchemist-tower
-        environment: pro
-        pod-type: alchemist-tower
-    spec:
-      serviceAccountName: aws-secret-manager
-      imagePullSecrets:
-        - name: github-registry-secret
-      nodeSelector:
-        NodeType: memory
-      tolerations:
-        - key: workload
-          value: memory
-          effect: NoSchedule
-      volumes:
-        - name: hyperfy2-persistent-storage
-          persistentVolumeClaim:
-            claimName: hyperfy2-efs-claim
-      containers:
-        - name: alchemist-tower
-          image: ghcr.io/numengames/numinia-hyperfy2:sha-612134744b388692724eb3ddffc1597b5a16e43f
-          volumeMounts:
-            - name: hyperfy2-persistent-storage
-              mountPath: /mnt/hyperfy2-persistent-storage
-              subPath: alchemist-tower
-          resources:
-            requests:
-              memory: ${MEMORY}
-              cpu: ${CPU}
-            limits:
-              memory: ${LIMITS_MEMORY}
-              cpu: ${LIMITS_CPU}
-          env:
-            - name: WORLD
-              value: ${WORLD_NAME}
-            - name: PORT
-              value: ${PORT}
-            - name: DOMAIN
-              value: ${DOMAIN}
-            - name: PATH_PREFIX
-              value: ${PATH_PREFIX}
-            - name: PUBLIC_WS_URL
-              value: ${PUBLIC_WS_URL}
-            - name: PUBLIC_API_URL
-              value: ${PUBLIC_API_URL}
-            - name: PUBLIC_ASSETS_URL
-              value: ${PUBLIC_ASSETS_URL}
-            - name: PUBLIC_MAX_UPLOAD_SIZE
-              value: "50"
-            - name: SAVE_INTERVAL
-              value: "30"
-            - name: JWT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: hyperfy2-numinia-the-gates-of-numinia
-                  key: JWT_SECRET
-            - name: ADMIN_CODE
-              valueFrom:
-                secretKeyRef:
-                  name: hyperfy2-numinia-the-gates-of-numinia
-                  key: ADMIN_CODE
-=== File: clusters/prod-cluster/apps/numinia/base/alchemist-tower/base/route.yaml ===
-
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: "alchemist-tower-route"
-  namespace: numinia
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: "Host(`numinia.xyz`) && PathPrefix(`/alchemist-tower`)"
-      kind: Rule
-      middlewares:
-        - name: "alchemist-tower-strip-prefix"
-          namespace: numinia
-      services:
-        - name: "alchemist-tower"
-          port: 3000
-  tls:
-    secretName: numinia-tls
-=== File: clusters/prod-cluster/apps/numinia/base/alchemist-tower/base/config.env ===
-
-# POD SPECS #
-CPU=100m
-PORT=3000
-MEMORY=256Mi
-LIMITS_CPU=500m
-SAVE_INTERVAL=60
-LIMITS_MEMORY=1Gi
-MIN_REPLICA_COUNT=0
-MAX_REPLICA_COUNT=1
-COOLDOWN_PERIOD=300
-POLLING_INTERVAL=30
-
-# WORLD SPECS #
-ENVIRONMENT=PRO
-DOMAIN=numinia.xyz
-WORLD_NAME=alchemist-tower
-PATH_PREFIX=/alchemist-tower
-
-# APP SPECS #
-PUBLIC_MAX_UPLOAD_SIZE=50
-PUBLIC_WS_URL=wss://numinia.xyz/alchemist-tower/ws
-PUBLIC_API_URL=https://numinia.xyz/alchemist-tower/api
-PUBLIC_ASSETS_URL=https://numinia.xyz/alchemist-tower/assets
-=== File: clusters/prod-cluster/apps/numinia/base/alchemist-tower/base/kustomization.yaml ===
+  group: traefik.containo.us
+  names:
+    kind: IngressRoute
+    listKind: IngressRouteList
+    plural: ingressroutes
+    singular: ingressroute
+  scope: Namespaced
+  versions:
+  - name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: IngressRoute is an Ingress CRD specification.
+        properties:
+          spec:
+            description: IngressRouteSpec defines the desired state of IngressRoute
+            properties:
+              entryPoints:
+                items:
+                  type: string
+                type: array
+              routes:
+                items:
+                  properties:
+                    kind:
+                      type: string
+                    match:
+                      type: string
+                    middlewares:
+                      items:
+                        properties:
+                          name:
+                            type: string
+                          namespace:
+                            type: string
+                        required:
+                        - name
+                        type: object
+                      type: array
+                    services:
+                      items:
+                        properties:
+                          name:
+                            type: string
+                          port:
+                            type: integer
+                        required:
+                        - name
+                        - port
+                        type: object
+                      type: array
+                  required:
+                  - match
+                  type: object
+                type: array
+              tls:
+                properties:
+                  secretName:
+                    type: string
+                type: object
+            type: object
+        type: object
+    served: true
+    storage: true 
+=== File: clusters/prod-cluster/apps/infrastructure/traefik/kustomization.yaml ===
 
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: numinia
+namespace: traefik
 resources:
-- deployment.yaml
-- service.yaml
-- route.yaml
-- middleware.yaml
-- autoscaling.yaml
-configMapGenerator:
-- behavior: create
-  envs:
-  - config.env
-  name: alchemist-tower-config
-replacements:
-- source:
-    kind: ConfigMap
-    name: alchemist-tower-config
-    fieldPath: data.MEMORY
-  targets:
-  - select:
-      kind: Deployment
-    fieldPaths:
-    - spec.template.spec.containers.[name=alchemist-tower].resources.requests.memory
-- source:
-    kind: ConfigMap
-    name: alchemist-tower-config
-    fieldPath: data.LIMITS_MEMORY
-  targets:
-  - select:
-      kind: Deployment
-    fieldPaths:
-    - spec.template.spec.containers.[name=alchemist-tower].resources.limits.memory
-- source:
-    kind: ConfigMap
-    name: alchemist-tower-config
-    fieldPath: data.CPU
-  targets:
-  - select:
-      kind: Deployment
-    fieldPaths:
-    - spec.template.spec.containers.[name=alchemist-tower].resources.requests.cpu
-- source:
-    kind: ConfigMap
-    name: alchemist-tower-config
-    fieldPath: data.LIMITS_CPU
-  targets:
-  - select:
-      kind: Deployment
-    fieldPaths:
-    - spec.template.spec.containers.[name=alchemist-tower].resources.limits.cpu
+  - namespace.yaml
+  - crds.yaml
+  - repository.yaml
+  - helmrelease.yaml 
+=== File: clusters/prod-cluster/apps/infrastructure/traefik/helmrelease.yaml ===
 
-- source:
-    kind: ConfigMap
-    name: alchemist-tower-config
-    fieldPath: data.PUBLIC_WS_URL
-  targets:
-  - select:
-      kind: Deployment
-    fieldPaths:
-    - spec.template.spec.containers.[name=alchemist-tower].env.[name=PUBLIC_WS_URL].value
-
-- source:
-    kind: ConfigMap
-    name: alchemist-tower-config
-    fieldPath: data.PUBLIC_API_URL
-  targets:
-  - select:
-      kind: Deployment
-    fieldPaths:
-    - spec.template.spec.containers.[name=alchemist-tower].env.[name=PUBLIC_API_URL].value
-
-- source:
-    kind: ConfigMap
-    name: alchemist-tower-config
-    fieldPath: data.PUBLIC_ASSETS_URL
-  targets:
-  - select:
-      kind: Deployment
-    fieldPaths:
-    - spec.template.spec.containers.[name=alchemist-tower].env.[name=PUBLIC_ASSETS_URL].value
-labels:
-- includeSelectors: true
-  pairs:
-    app: alchemist-tower
-    pod-type: alchemist-tower
-
-=== File: clusters/prod-cluster/apps/numinia/base/alchemist-tower/base/middleware.yaml ===
-
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
 metadata:
-  name: "alchemist-tower-strip-prefix"
-  namespace: numinia
+  name: traefik
+  namespace: traefik
 spec:
-  stripPrefix:
-    prefixes:
-      - "/alchemist-tower"
+  interval: 5m
+  chart:
+    spec:
+      chart: traefik
+      version: "24.0.0"
+      sourceRef:
+        kind: HelmRepository
+        name: traefik
+        namespace: flux-system
+  install:
+    createNamespace: true
+    crds: Create
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  values:
+    deployment:
+      replicas: 1
+    service:
+      type: LoadBalancer
+    ports:
+      web:
+        port: 80
+        expose: true
+        exposedPort: 80
+        protocol: TCP
+      websecure:
+        port: 443
+        expose: true
+        exposedPort: 443
+        protocol: TCP
+    ingressRoute:
+      dashboard:
+        enabled: true
+    providers:
+      kubernetesCRD:
+        enabled: true
+        allowCrossNamespace: true
+        allowExternalNameServices: true
+      kubernetesIngress:
+        enabled: true
+        publishedService:
+          enabled: true 
+=== File: clusters/prod-cluster/apps/infrastructure/traefik/namespace.yaml ===
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: traefik 

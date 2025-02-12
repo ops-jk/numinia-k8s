@@ -3,6 +3,5 @@ kind: Kustomization
 namespace: traefik
 resources:
   - namespace.yaml
-  - crds.yaml
   - repository.yaml
   - helmrelease.yaml 
