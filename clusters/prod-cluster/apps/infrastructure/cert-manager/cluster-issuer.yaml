@@ -9,8 +9,10 @@ spec:
     privateKeySecretRef:
       name: letsencrypt-dns01-account-key
     solvers:
-    - dns01:
-        cnameStrategy: None
-        manual:
-          options:
-            preserveZones: true
+    - selector: {}
+      dns01:
+        acmeDNS:
+          host: http://acme-dns.cert-manager.svc.cluster.local
+          accountSecretRef:
+            name: acme-dns-credentials
+            key: acme-dns-credentials.json
