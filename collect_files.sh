@@ -20,7 +20,7 @@ process_files() {
 
 # Procesar los directorios
 echo "Collecting files from modules/eks..."
-process_files "clusters/prod-cluster/apps"
+process_files "clusters/prod-cluster/apps/numinia/base/alchemist-tower/base"
 
 echo "Files have been collected in $output_file"
 

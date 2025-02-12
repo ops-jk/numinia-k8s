@@ -15,9 +15,11 @@ spec:
         namespace: flux-system
   install:
     createNamespace: true
+    crds: Create
     remediation:
       retries: 3
   upgrade:
+    crds: CreateReplace
     remediation:
       retries: 3
   values:
@@ -42,6 +44,8 @@ spec:
     providers:
       kubernetesCRD:
         enabled: true
+        allowCrossNamespace: true
+        allowExternalNameServices: true
       kubernetesIngress:
         enabled: true
         publishedService:

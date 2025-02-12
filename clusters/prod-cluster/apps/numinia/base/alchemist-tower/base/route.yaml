@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`numinia.xyz`) && PathPrefix(`/alchemist-tower`)
+    - match: "Host(`numinia.xyz`) && PathPrefix(`/alchemist-tower`)"
       kind: Rule
       middlewares:
         - name: "alchemist-tower-strip-prefix"
