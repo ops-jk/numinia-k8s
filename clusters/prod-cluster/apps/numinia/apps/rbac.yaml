@@ -21,3 +21,9 @@ roleRef:
   kind: Role
   name: numinia-developer
   apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: aws-secret-manager
+  namespace: numinia

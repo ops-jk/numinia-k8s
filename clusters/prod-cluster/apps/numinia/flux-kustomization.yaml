@@ -12,6 +12,6 @@ spec:
     name: flux-system
   dependsOn:
     - name: keda
-      namespace: keda 
-  dependsOn:
+      namespace: keda
     - name: traefik
+      namespace: traefik
