@@ -11,3 +11,6 @@ spec:
     solvers:
     - dns01:
         cnameStrategy: None
+        manual:
+          options:
+            preserveZones: true
