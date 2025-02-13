@@ -9,7 +9,4 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: flux-system
-  dependsOn:
-    - name: helm-repositories
-    - name: cert-manager-config 
+    name: flux-system 

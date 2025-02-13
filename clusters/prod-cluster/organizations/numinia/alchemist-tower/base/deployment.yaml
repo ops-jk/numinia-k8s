@@ -23,7 +23,7 @@ spec:
         environment: pro
         pod-type: alchemist-tower
     spec:
-      serviceAccountName: aws-secret-manager
+      serviceAccountName: aws-secret-manager-sa
       imagePullSecrets:
         - name: github/deploy
       nodeSelector:
