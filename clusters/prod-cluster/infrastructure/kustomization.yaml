@@ -6,6 +6,7 @@ resources:
   - secrets-store-csi-driver
   - cert-manager
   - keda
+  - aws-load-balancer-controller
   # 2. Configuración de DNS y certificados
   - acme-dns
   # 3. Servicios que dependen de certificados
