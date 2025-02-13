@@ -12,7 +12,7 @@ spec:
     - selector: {}
       dns01:
         acmeDNS:
-          host: http://acme-dns.cert-manager.svc.cluster.local
+          host: http://acme-dns-api.cert-manager.svc.cluster.local
           accountSecretRef:
             name: acme-dns-credentials
             key: acme-dns-credentials.json

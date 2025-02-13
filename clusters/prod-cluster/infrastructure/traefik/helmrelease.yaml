@@ -37,7 +37,18 @@ spec:
       runAsNonRoot: false
       runAsUser: 0
     service:
+      enabled: true
       type: LoadBalancer
+      annotations:
+        service.beta.kubernetes.io/aws-load-balancer-type: external
+        service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: instance
+        service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
+        service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+        service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/prod-cluster=owned"
+        service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-0ab7c45bef563cff2,subnet-019f34ad4bee8c4c3
+      spec:
+        externalTrafficPolicy: Local
+        loadBalancerClass: service.k8s.aws/nlb
     ports:
       web:
         port: 80
