@@ -6,24 +6,29 @@ metadata:
 data:
   config.cfg: |
     [general]
-    listen = ":53"
+    listen = "0.0.0.0:53"
     protocol = "both"
     domain = "auth.numinia.xyz"
     nsname = "auth.numinia.xyz"
     nsadmin = "admin.numinia.xyz"
     records = [
-        "auth.numinia.xyz. A 1.2.3.4"
+        "auth.numinia.xyz. 60 IN A 63.35.245.150",
+        "auth.numinia.xyz. 60 IN A 34.251.208.61"
     ]
+
+    [api]
+    api_domain = "auth.numinia.xyz"
+    ip = "0.0.0.0"
+    port = "80"
+    tls = "none"
+    corsorigins = ["*"]
+    use_header = false
 
     [database]
     engine = "sqlite3"
     connection = "/var/lib/acme-dns/acme-dns.db"
 
-    [api]
-    ip = "0.0.0.0"
-    port = "80"
-    tls = "none"
-
     [logconfig]
     loglevel = "debug"
-    logtype = "stdout" 
+    logtype = "stdout"
+    logformat = "text" 

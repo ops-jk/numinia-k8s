@@ -36,4 +36,6 @@ spec:
         configMap:
           name: acme-dns
       - name: storage
-        emptyDir: {} 
+        hostPath:
+          path: /var/lib/acme-dns
+          type: DirectoryOrCreate 
