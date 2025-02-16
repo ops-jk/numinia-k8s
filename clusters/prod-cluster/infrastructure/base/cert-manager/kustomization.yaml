@@ -7,4 +7,3 @@ resources:
   - issuers/cluster-issuer.yaml
   - issuers/numinia.yaml
   - acme-dns/ingress.yaml
-  - acme-dns/storage.yaml 
