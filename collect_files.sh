@@ -19,8 +19,15 @@ process_files() {
 }
 
 # Procesar los directorios
-echo "Collecting files from modules/eks..."
-process_files "clusters/prod-cluster/apps/infrastructure/traefik"
+echo "Collecting files from clusters/prod-cluster/infrastructure..."
+process_files "clusters/prod-cluster/infrastructure"
+
+echo "Collecting files from clusters/organizations..."
+process_files "clusters/organizations"
+
+echo "Collecting files from clusters/prod-cluster/flux-system..."
+process_files "clusters/prod-cluster/flux-system/numinia.yaml"
+process_files "clusters/prod-cluster/flux-system/infrastructure.yaml"
 
 echo "Files have been collected in $output_file"
 

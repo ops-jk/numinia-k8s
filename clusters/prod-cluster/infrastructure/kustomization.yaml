@@ -1,13 +1,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  # 1. CSI Drivers y operadores base
-  - aws-efs-csi-driver
-  - secrets-store-csi-driver
-  - cert-manager
-  - keda
-  - aws-load-balancer-controller
-  # 2. Configuración de DNS y certificados
-  - acme-dns
-  # 3. Servicios que dependen de certificados
-  - traefik 
+  # 1. Base infrastructure components (helm-repos, csi-drivers, cert-manager)
+  - base
+  # 2. Networking components (load-balancer, traefik)
+  - networking
+  # 3. Infrastructure applications (acme-dns, keda)
+  - applications 

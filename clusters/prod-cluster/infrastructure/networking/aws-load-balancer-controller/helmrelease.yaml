@@ -1,0 +1,30 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: aws-load-balancer-controller
+  namespace: kube-system
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: aws-load-balancer-controller
+      version: "1.7.1"
+      sourceRef:
+        kind: HelmRepository
+        name: eks
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    clusterName: prod-cluster
+    serviceAccount:
+      create: true
+      annotations:
+        eks.amazonaws.com/role-arn: arn:aws:iam::241533135482:role/numengames-prod-euw1-eks-aws-load-balancer-controller
+    region: eu-west-1
+    vpcId: vpc-0123456789
