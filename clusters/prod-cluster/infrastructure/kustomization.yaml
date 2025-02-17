@@ -6,4 +6,6 @@ resources:
   # 2. Networking components (load-balancer, traefik)
   - networking
   # 3. Infrastructure applications (acme-dns, keda)
-  - applications 
+  - applications
+  # 4. Secrets
+  - secrets 
