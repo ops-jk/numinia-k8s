@@ -83,4 +83,6 @@ spec:
           enabled: true
     additionalArguments:
       - "--providers.kubernetescrd"
-      - "--providers.kubernetesingress.ingressclass=traefik" 
+      - "--providers.kubernetesingress.ingressclass=traefik"
+      - "--entrypoints.dns-tcp.address=:53/tcp"
+      - "--entrypoints.dns-udp.address=:53/udp"
