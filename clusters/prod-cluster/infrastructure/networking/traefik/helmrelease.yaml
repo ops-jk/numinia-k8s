@@ -39,8 +39,8 @@ spec:
     service:
       enabled: true
       type: LoadBalancer
-      externalTrafficPolicy: Local
-      loadBalancerIP: "production-numengames-p-nlb-f1335fa9cff987d3.elb.eu-west-1.amazonaws.com"
+      externalTrafficPolicy: Cluster
+      loadBalancerClass: service.k8s.aws/nlb
       annotations:
         service.beta.kubernetes.io/aws-load-balancer-name: "production-numengames-p-nlb"
         service.beta.kubernetes.io/aws-load-balancer-type: "external"
