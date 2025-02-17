@@ -6,12 +6,9 @@ metadata:
 spec:
   entryPoints:
     - web
-    - websecure
   routes:
     - match: Host(`auth.numinia.xyz`)
       kind: Rule
       services:
         - name: acme-dns-api
-          port: 80
-  tls:
-    secretName: numinia-tls 
+          port: 80 

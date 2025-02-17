@@ -39,7 +39,7 @@ spec:
     service:
       enabled: true
       type: LoadBalancer
-      externalTrafficPolicy: Cluster
+      externalTrafficPolicy: Local
       loadBalancerClass: service.k8s.aws/nlb
       annotations:
         service.beta.kubernetes.io/aws-load-balancer-type: "external"

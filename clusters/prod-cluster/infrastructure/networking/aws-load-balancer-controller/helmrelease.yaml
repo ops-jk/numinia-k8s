@@ -21,7 +21,7 @@ spec:
     remediation:
       retries: 5
   values:
-    clusterName: numinia-main-vpc-cluster
+    clusterName: numengames-prod-euw1-eks
     serviceAccount:
       create: true
       annotations:
