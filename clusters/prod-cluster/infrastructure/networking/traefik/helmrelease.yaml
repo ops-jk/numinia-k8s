@@ -45,12 +45,10 @@ spec:
         service.beta.kubernetes.io/aws-load-balancer-type: "external"
         service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "instance"
         service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
-        service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
         service.beta.kubernetes.io/aws-load-balancer-name: "prod-numinia-traefik-nlb"
-        service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "Name=prod-numinia-traefik-nlb"
-        service.beta.kubernetes.io/aws-load-balancer-healthcheck-protocol: "TCP"
-        service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "53"
         service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: "preserve_client_ip.enabled=true"
+        service.beta.kubernetes.io/aws-load-balancer-healthcheck-protocol: "TCP_UDP"
+        service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "53"
     ports:
       web:
         port: 80
@@ -60,18 +58,13 @@ spec:
       websecure:
         port: 443
         expose: true
+        protocol: TCP
         targetPort: 443
-        protocol: TCP
-      dns-udp:
+      dns:
         port: 53
         expose: true
-        targetPort: dns-udp
-        protocol: UDP
-      dns-tcp:
-        port: 53
-        expose: true
-        targetPort: dns-tcp
-        protocol: TCP
+        protocol: TCP_UDP
+        targetPort: 53
     providers:
       kubernetesCRD:
         enabled: true
