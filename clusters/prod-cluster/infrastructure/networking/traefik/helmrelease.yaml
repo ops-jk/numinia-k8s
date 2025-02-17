@@ -38,29 +38,21 @@ spec:
       runAsUser: 0
     service:
       enabled: true
-      type: LoadBalancer
+      type: NodePort
       externalTrafficPolicy: Cluster
-      loadBalancerClass: service.k8s.aws/nlb
-      annotations:
-        service.beta.kubernetes.io/aws-load-balancer-name: "production-numengames-p-nlb"
-        service.beta.kubernetes.io/aws-load-balancer-type: "external"
-        service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "instance"
-        service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
-        service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
-    ports:
-      web:
-        port: 80
-        expose: true
-        exposedPort: 80
-        protocol: TCP
-      websecure:
-        port: 443
-        expose: true
-        exposedPort: 443
-        protocol: TCP
-    ingressRoute:
-      dashboard:
-        enabled: true
+      ports:
+        web:
+          port: 80
+          expose: true
+          exposedPort: 80
+          protocol: TCP
+          nodePort: 30080
+        websecure:
+          port: 443
+          expose: true
+          exposedPort: 443
+          protocol: TCP
+          nodePort: 30443
     providers:
       kubernetesCRD:
         enabled: true
@@ -71,12 +63,6 @@ spec:
         allowExternalNameServices: true
         publishedService:
           enabled: true
-    experimental:
-      plugins:
-        enabled: true
     additionalArguments:
-      - "--api.dashboard=true"
       - "--providers.kubernetescrd"
-      - "--providers.kubernetesingress.ingressclass=traefik"
-      - "--entrypoints.web.proxyProtocol.trustedIPs=0.0.0.0/0"
-      - "--entrypoints.websecure.proxyProtocol.trustedIPs=0.0.0.0/0" 
+      - "--providers.kubernetesingress.ingressclass=traefik" 
