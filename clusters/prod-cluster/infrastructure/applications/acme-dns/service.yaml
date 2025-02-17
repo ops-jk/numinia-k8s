@@ -27,6 +27,7 @@ metadata:
 spec:
   type: LoadBalancer
   loadBalancerClass: service.k8s.aws/nlb
+  externalTrafficPolicy: Local
   ports:
   - port: 53
     name: dns
