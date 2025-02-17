@@ -1,0 +1,15 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: acme-dns-api
+  namespace: cert-manager
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - match: Host(`auth.numinia.xyz`)
+      kind: Rule
+      services:
+        - name: acme-dns-api
+          port: 80 

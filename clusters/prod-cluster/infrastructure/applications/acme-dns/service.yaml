@@ -3,15 +3,8 @@ kind: Service
 metadata:
   name: acme-dns-api
   namespace: cert-manager
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-type: external
-    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: instance
-    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
-    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
-    service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/prod-cluster=owned"
-    service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-0d61a5e1c7b5df237,subnet-0b4df24da68a8ab37
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
   - port: 80
     name: api
@@ -25,15 +18,8 @@ kind: Service
 metadata:
   name: acme-dns-dns
   namespace: cert-manager
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-type: external
-    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: instance
-    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
-    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
-    service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/prod-cluster=owned"
-    service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-0d61a5e1c7b5df237,subnet-0b4df24da68a8ab37
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
   - port: 53
     name: dns
