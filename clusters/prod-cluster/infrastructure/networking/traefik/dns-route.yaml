@@ -10,8 +10,6 @@ spec:
     - services:
         - name: auth-numinia-xyz
           port: 53
-          weight: 1
-          udpMuxed: true
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRouteTCP
