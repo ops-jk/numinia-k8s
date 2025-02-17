@@ -52,12 +52,12 @@ spec:
       web:
         port: 80
         expose: true
-        targetPort: 80
+        exposedPort: 80
         protocol: TCP
       websecure:
         port: 443
         expose: true
-        targetPort: 443
+        exposedPort: 443
         protocol: TCP
       dns-udp:
         port: 53
@@ -65,16 +65,12 @@ spec:
         exposedPort: 53
         protocol: UDP
         appProtocol: dns-udp
-        containerPort: 53
-        hostPort: 53
       dns-tcp:
         port: 53
         expose: true
         exposedPort: 53
         protocol: TCP
         appProtocol: dns-tcp
-        containerPort: 53
-        hostPort: 53
     providers:
       kubernetesCRD:
         enabled: true
@@ -90,3 +86,4 @@ spec:
       - "--providers.kubernetesingress.ingressclass=traefik"
       - "--entrypoints.dns-tcp.address=:53/tcp"
       - "--entrypoints.dns-udp.address=:53/udp"
+      - "--entrypoints.dns-udp.forwardedHeaders.insecure"
