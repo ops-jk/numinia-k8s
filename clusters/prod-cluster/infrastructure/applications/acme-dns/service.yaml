@@ -9,7 +9,7 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
     service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
     service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/prod-cluster=owned"
-    service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-0ab7c45bef563cff2,subnet-019f34ad4bee8c4c3
+    service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-0d61a5e1c7b5df237,subnet-0b4df24da68a8ab37
 spec:
   type: LoadBalancer
   ports:
@@ -31,7 +31,7 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
     service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
     service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/prod-cluster=owned"
-    service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-0ab7c45bef563cff2,subnet-019f34ad4bee8c4c3
+    service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-0d61a5e1c7b5df237,subnet-0b4df24da68a8ab37
 spec:
   type: LoadBalancer
   ports:
