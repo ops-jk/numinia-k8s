@@ -39,14 +39,14 @@ spec:
     service:
       enabled: true
       type: LoadBalancer
-      externalTrafficPolicy: Local
-      loadBalancerIP: "production-numengames-p-nlb-f1335fa9cff987d3.elb.eu-west-1.amazonaws.com"
+      externalTrafficPolicy: Cluster
       annotations:
         service.beta.kubernetes.io/aws-load-balancer-name: "traefik-lb"
         service.beta.kubernetes.io/aws-load-balancer-type: "external"
         service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "instance"
         service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
         service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+      loadBalancerClass: service.k8s.aws/nlb
     ports:
       web:
         port: 80

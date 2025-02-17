@@ -21,10 +21,10 @@ spec:
     remediation:
       retries: 5
   values:
-    clusterName: prod-cluster
+    clusterName: numinia-main-vpc-cluster
     serviceAccount:
       create: true
       annotations:
         eks.amazonaws.com/role-arn: arn:aws:iam::241533135482:role/numengames-prod-euw1-eks-aws-load-balancer-controller
     region: eu-west-1
-    vpcId: vpc-0123456789
+    vpcId: vpc-0b84203ce67a9f154

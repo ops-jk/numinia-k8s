@@ -6,4 +6,5 @@ resources:
   # CSI Drivers and base operators
   - aws-efs-csi-driver
   - secrets-store-csi-driver
-  - cert-manager 
+  - cert-manager
+  - external-secrets 

@@ -66,3 +66,13 @@ metadata:
 spec:
   interval: 1h
   url: https://kubernetes-sigs.github.io/aws-efs-csi-driver/
+
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: external-secrets
+  namespace: flux-system
+spec:
+  interval: 1h
+  url: https://charts.external-secrets.io
