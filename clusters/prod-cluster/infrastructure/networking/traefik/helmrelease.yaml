@@ -65,12 +65,16 @@ spec:
         exposedPort: 53
         protocol: UDP
         appProtocol: dns-udp
+        containerPort: 53
+        hostPort: 53
       dns-tcp:
         port: 53
         expose: true
         exposedPort: 53
         protocol: TCP
         appProtocol: dns-tcp
+        containerPort: 53
+        hostPort: 53
     providers:
       kubernetesCRD:
         enabled: true

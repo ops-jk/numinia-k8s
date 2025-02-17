@@ -17,6 +17,24 @@ spec:
     - secretKey: acme-dns-credentials.json
       remoteRef:
         key: /acme-dns/credentials
+=== File: clusters/prod-cluster/infrastructure/secrets/acme-dns-external-secret-numinia.yaml ===
+
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: acme-dns-credentials
+  namespace: numinia
+spec:
+  secretStoreRef:
+    name: aws-secrets-manager
+    kind: ClusterSecretStore
+  target:
+    name: acme-dns-credentials
+    creationPolicy: Owner
+  data:
+    - secretKey: acme-dns-credentials.json
+      remoteRef:
+        key: /acme-dns/credentials 
 === File: clusters/prod-cluster/infrastructure/secrets/kustomization.yaml ===
 
 apiVersion: kustomize.config.k8s.io/v1beta1
@@ -24,7 +42,9 @@ kind: Kustomization
 resources:
   - secretstore.yaml
   - acme-dns-external-secret.yaml
+  - acme-dns-external-secret-numinia.yaml
   - traefik-external-secret.yaml
+  - serviceaccount.yaml
 === File: clusters/prod-cluster/infrastructure/secrets/traefik-external-secret.yaml ===
 
 apiVersion: external-secrets.io/v1beta1
@@ -46,6 +66,15 @@ spec:
     - secretKey: tls.key
       remoteRef:
         key: /traefik/tls-key
+=== File: clusters/prod-cluster/infrastructure/secrets/serviceaccount.yaml ===
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: external-secrets-sa
+  namespace: flux-system
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::241533135482:role/numengames-prod-euw1-eks-external-secrets 
 === File: clusters/prod-cluster/infrastructure/secrets/secretstore.yaml ===
 
 apiVersion: external-secrets.io/v1beta1
@@ -95,13 +124,13 @@ spec:
     remediation:
       retries: 5
   values:
-    clusterName: prod-cluster
+    clusterName: numengames-prod-euw1-eks
     serviceAccount:
       create: true
       annotations:
         eks.amazonaws.com/role-arn: arn:aws:iam::241533135482:role/numengames-prod-euw1-eks-aws-load-balancer-controller
     region: eu-west-1
-    vpcId: vpc-0123456789
+    vpcId: vpc-0b84203ce67a9f154
 === File: clusters/prod-cluster/infrastructure/networking/aws-load-balancer-controller/namespace.yaml ===
 
 apiVersion: v1
@@ -116,6 +145,34 @@ resources:
   # Load balancer controller must be first as it's required by Traefik
   - aws-load-balancer-controller
   - traefik 
+=== File: clusters/prod-cluster/infrastructure/networking/traefik/dns-route.yaml ===
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteUDP
+metadata:
+  name: acme-dns-udp
+  namespace: traefik
+spec:
+  entryPoints:
+    - dns-udp
+  routes:
+    - services:
+        - name: auth-numinia-xyz
+          port: 53
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: acme-dns-tcp
+  namespace: traefik
+spec:
+  entryPoints:
+    - dns-tcp
+  routes:
+    - match: HostSNI(`*`)
+      services:
+        - name: auth-numinia-xyz
+          port: 53 
 === File: clusters/prod-cluster/infrastructure/networking/traefik/kustomization.yaml ===
 
 apiVersion: kustomize.config.k8s.io/v1beta1
@@ -123,7 +180,9 @@ kind: Kustomization
 namespace: traefik
 resources:
   - namespace.yaml
-  - helmrelease.yaml 
+  - helmrelease.yaml
+  - dns-proxy.yaml
+  - dns-route.yaml 
 === File: clusters/prod-cluster/infrastructure/networking/traefik/helmrelease.yaml ===
 
 apiVersion: helm.toolkit.fluxcd.io/v2
@@ -168,13 +227,14 @@ spec:
       enabled: true
       type: LoadBalancer
       externalTrafficPolicy: Local
-      loadBalancerIP: "production-numengames-p-nlb-f1335fa9cff987d3.elb.eu-west-1.amazonaws.com"
+      loadBalancerClass: service.k8s.aws/nlb
       annotations:
-        service.beta.kubernetes.io/aws-load-balancer-name: "traefik-lb"
         service.beta.kubernetes.io/aws-load-balancer-type: "external"
         service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "instance"
         service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
         service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+        service.beta.kubernetes.io/aws-load-balancer-name: "prod-numinia-traefik-nlb"
+        service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "Name=prod-numinia-traefik-nlb"
     ports:
       web:
         port: 80
@@ -186,9 +246,22 @@ spec:
         expose: true
         exposedPort: 443
         protocol: TCP
-    ingressRoute:
-      dashboard:
-        enabled: true
+      dns-udp:
+        port: 53
+        expose: true
+        exposedPort: 53
+        protocol: UDP
+        appProtocol: dns-udp
+        containerPort: 53
+        hostPort: 53
+      dns-tcp:
+        port: 53
+        expose: true
+        exposedPort: 53
+        protocol: TCP
+        appProtocol: dns-tcp
+        containerPort: 53
+        hostPort: 53
     providers:
       kubernetesCRD:
         enabled: true
@@ -199,21 +272,36 @@ spec:
         allowExternalNameServices: true
         publishedService:
           enabled: true
-    experimental:
-      plugins:
-        enabled: true
     additionalArguments:
-      - "--api.dashboard=true"
       - "--providers.kubernetescrd"
       - "--providers.kubernetesingress.ingressclass=traefik"
-      - "--entrypoints.web.proxyProtocol.trustedIPs=0.0.0.0/0"
-      - "--entrypoints.websecure.proxyProtocol.trustedIPs=0.0.0.0/0" 
+      - "--entrypoints.dns-tcp.address=:53/tcp"
+      - "--entrypoints.dns-udp.address=:53/udp"
 === File: clusters/prod-cluster/infrastructure/networking/traefik/namespace.yaml ===
 
 apiVersion: v1
 kind: Namespace
 metadata:
   name: traefik 
+=== File: clusters/prod-cluster/infrastructure/networking/traefik/dns-proxy.yaml ===
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-numinia-xyz
+  namespace: traefik
+spec:
+  type: ExternalName
+  externalName: acme-dns-dns.cert-manager.svc.cluster.local
+  ports:
+    - name: dns-udp
+      port: 53
+      protocol: UDP
+      targetPort: 53
+    - name: dns-tcp
+      port: 53
+      protocol: TCP
+      targetPort: 53 
 === File: clusters/prod-cluster/infrastructure/networking/traefik/values.yaml ===
 
 service:
@@ -239,7 +327,9 @@ resources:
   # 2. Networking components (load-balancer, traefik)
   - networking
   # 3. Infrastructure applications (acme-dns, keda)
-  - applications 
+  - applications
+  # 4. Secrets
+  - secrets 
 === File: clusters/prod-cluster/infrastructure/applications/acme-dns/deployment.yaml ===
 
 apiVersion: apps/v1
@@ -290,6 +380,23 @@ resources:
   - configmap.yaml
   - deployment.yaml
   - service.yaml
+  - ingressroute.yaml
+=== File: clusters/prod-cluster/infrastructure/applications/acme-dns/ingressroute.yaml ===
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: acme-dns-api
+  namespace: cert-manager
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`auth.numinia.xyz`)
+      kind: Rule
+      services:
+        - name: acme-dns-api
+          port: 80 
 === File: clusters/prod-cluster/infrastructure/applications/acme-dns/service.yaml ===
 
 apiVersion: v1
@@ -297,15 +404,8 @@ kind: Service
 metadata:
   name: acme-dns-api
   namespace: cert-manager
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-type: external
-    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: instance
-    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
-    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
-    service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/prod-cluster=owned"
-    service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-0ab7c45bef563cff2,subnet-019f34ad4bee8c4c3
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
   - port: 80
     name: api
@@ -319,15 +419,8 @@ kind: Service
 metadata:
   name: acme-dns-dns
   namespace: cert-manager
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-type: external
-    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: instance
-    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
-    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
-    service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/prod-cluster=owned"
-    service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-0ab7c45bef563cff2,subnet-019f34ad4bee8c4c3
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
   - port: 53
     name: dns
@@ -338,7 +431,23 @@ spec:
     protocol: TCP
     targetPort: dns-tcp
   selector:
-    app: acme-dns 
+    app: acme-dns
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-numinia-xyz
+  namespace: traefik
+spec:
+  type: ExternalName
+  externalName: acme-dns-dns.cert-manager.svc.cluster.local
+  ports:
+  - name: dns
+    port: 53
+    protocol: UDP
+  - name: dns-tcp
+    port: 53
+    protocol: TCP 
 === File: clusters/prod-cluster/infrastructure/applications/acme-dns/configmap.yaml ===
 
 apiVersion: v1
@@ -506,6 +615,16 @@ metadata:
 spec:
   interval: 1h
   url: https://kubernetes-sigs.github.io/aws-efs-csi-driver/
+
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: external-secrets
+  namespace: flux-system
+spec:
+  interval: 1h
+  url: https://charts.external-secrets.io
 === File: clusters/prod-cluster/infrastructure/base/secrets-store-csi-driver/aws-provider.yaml ===
 
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -566,7 +685,8 @@ resources:
   # CSI Drivers and base operators
   - aws-efs-csi-driver
   - secrets-store-csi-driver
-  - cert-manager 
+  - cert-manager
+  - external-secrets 
 === File: clusters/prod-cluster/infrastructure/base/cert-manager/acme-dns/ingress.yaml ===
 
 apiVersion: networking.k8s.io/v1
@@ -710,6 +830,49 @@ spec:
         create: true
         annotations:
           eks.amazonaws.com/role-arn: arn:aws:iam::241533135482:role/numengames-prod-euw1-eks-efs-csi-driver
+=== File: clusters/prod-cluster/infrastructure/base/external-secrets/kustomization.yaml ===
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - namespace.yaml
+  - helmrelease.yaml 
+=== File: clusters/prod-cluster/infrastructure/base/external-secrets/helmrelease.yaml ===
+
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: external-secrets
+  namespace: external-secrets
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: external-secrets
+      version: "0.9.13"
+      sourceRef:
+        kind: HelmRepository
+        name: external-secrets
+        namespace: flux-system
+  install:
+    createNamespace: true
+    crds: Create
+  upgrade:
+    crds: CreateReplace
+  values:
+    serviceAccount:
+      create: true
+      name: external-secrets-sa
+    webhook:
+      create: true 
+=== File: clusters/prod-cluster/infrastructure/base/external-secrets/namespace.yaml ===
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: external-secrets
+  labels:
+    toolkit.fluxcd.io/tenant: infrastructure 
 === File: clusters/prod-cluster/flux-system/numinia.yaml ===
 
 apiVersion: kustomize.toolkit.fluxcd.io/v1

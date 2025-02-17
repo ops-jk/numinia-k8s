@@ -31,19 +31,3 @@ spec:
     targetPort: dns-tcp
   selector:
     app: acme-dns
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: auth-numinia-xyz
-  namespace: traefik
-spec:
-  type: ExternalName
-  externalName: acme-dns-dns.cert-manager.svc.cluster.local
-  ports:
-  - name: dns
-    port: 53
-    protocol: UDP
-  - name: dns-tcp
-    port: 53
-    protocol: TCP 
