@@ -18,16 +18,8 @@ kind: Service
 metadata:
   name: acme-dns-dns
   namespace: cert-manager
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-type: "external"
-    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "instance"
-    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
-    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
-    service.beta.kubernetes.io/aws-load-balancer-name: "prod-numinia-acme-dns-nlb"
 spec:
-  type: LoadBalancer
-  loadBalancerClass: service.k8s.aws/nlb
-  externalTrafficPolicy: Local
+  type: ClusterIP
   ports:
   - port: 53
     name: dns
@@ -38,4 +30,20 @@ spec:
     protocol: TCP
     targetPort: dns-tcp
   selector:
-    app: acme-dns 
+    app: acme-dns
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth.numinia.xyz
+  namespace: traefik
+spec:
+  type: ExternalName
+  externalName: acme-dns-dns.cert-manager.svc.cluster.local
+  ports:
+  - name: dns
+    port: 53
+    protocol: UDP
+  - name: dns-tcp
+    port: 53
+    protocol: TCP 
