@@ -62,13 +62,13 @@ spec:
       dns-udp:
         port: 53
         expose: true
-        exposedPort: 53
+        targetPort: 53
         protocol: UDP
         appProtocol: dns-udp
       dns-tcp:
         port: 53
         expose: true
-        exposedPort: 53
+        targetPort: 53
         protocol: TCP
         appProtocol: dns-tcp
     providers:
