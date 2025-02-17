@@ -64,14 +64,14 @@ spec:
         port: 53
         expose: true
         protocol: UDP
-        targetPort: dns-udp
-        appProtocol: dns-udp
+        targetPort: 53
+        name: dns-udp
       dns-tcp:
         port: 53
         expose: true
         protocol: TCP
-        targetPort: dns-tcp
-        appProtocol: dns-tcp
+        targetPort: 53
+        name: dns-tcp
     providers:
       kubernetesCRD:
         enabled: true
