@@ -48,7 +48,6 @@ spec:
         service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
         service.beta.kubernetes.io/aws-load-balancer-name: "prod-numinia-traefik-nlb"
         service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "Name=prod-numinia-traefik-nlb"
-        service.beta.kubernetes.io/aws-load-balancer-subnets: "subnet-0c2c3e2c0e6c2c2c2,subnet-0a1a3e1c0e6c1c1c1"
     ports:
       web:
         port: 80
