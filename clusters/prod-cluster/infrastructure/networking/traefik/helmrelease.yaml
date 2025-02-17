@@ -51,7 +51,6 @@ spec:
         service.beta.kubernetes.io/aws-load-balancer-healthcheck-protocol: "TCP"
         service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "53"
         service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: "preserve_client_ip.enabled=true"
-        service.beta.kubernetes.io/aws-load-balancer-attributes: "load_balancing.cross_zone.enabled=true"
     ports:
       web:
         port: 80
@@ -68,13 +67,11 @@ spec:
         expose: true
         targetPort: dns-udp
         protocol: UDP
-        appProtocol: dns-udp
       dns-tcp:
         port: 53
         expose: true
         targetPort: dns-tcp
         protocol: TCP
-        appProtocol: dns-tcp
     providers:
       kubernetesCRD:
         enabled: true
