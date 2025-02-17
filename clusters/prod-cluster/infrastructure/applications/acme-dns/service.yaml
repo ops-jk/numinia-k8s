@@ -18,8 +18,15 @@ kind: Service
 metadata:
   name: acme-dns-dns
   namespace: cert-manager
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "external"
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "instance"
+    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+    service.beta.kubernetes.io/aws-load-balancer-name: "prod-numinia-acme-dns-nlb"
 spec:
-  type: ClusterIP
+  type: LoadBalancer
+  loadBalancerClass: service.k8s.aws/nlb
   ports:
   - port: 53
     name: dns
