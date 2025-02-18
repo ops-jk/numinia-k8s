@@ -60,22 +60,18 @@ spec:
         port: 80
         expose: true
         protocol: TCP
-        targetPort: web
       websecure:
         port: 443
         expose: true
         protocol: TCP
-        targetPort: websecure
       dns-tcp:
         port: 53
         expose: true
         protocol: TCP
-        containerPort: 53
       dns-udp:
         port: 53
         expose: true
         protocol: UDP
-        containerPort: 53
     providers:
       kubernetesCRD:
         enabled: true
