@@ -1,11 +1,13 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: efs-sc
+  name: numinia-efs
+  labels:
+    organization: numinia
 provisioner: efs.csi.aws.com
 parameters:
   provisioningMode: efs-ap
-  fileSystemId: fs-08031eefc43b3cd62
+  fileSystemId: fs-07b02fe916a74ccb1
   directoryPerms: "700"
   gidRangeStart: "1000"
   gidRangeEnd: "2000" 

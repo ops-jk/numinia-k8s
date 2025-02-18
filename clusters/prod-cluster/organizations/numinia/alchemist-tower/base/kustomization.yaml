@@ -7,8 +7,6 @@ resources:
 - route.yaml
 - middleware.yaml
 - autoscaling.yaml
-- storage-class.yaml
-- persistent-volume.yaml
 - persistent-volume-claim.yaml
 - secret-provider.yaml
 configMapGenerator:

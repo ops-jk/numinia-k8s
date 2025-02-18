@@ -3,10 +3,16 @@ kind: PersistentVolumeClaim
 metadata:
   name: hyperfy2-efs-claim
   namespace: numinia
+  labels:
+    organization: numinia
+    app: alchemist-tower
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: efs-sc
+  storageClassName: numinia-efs
   resources:
     requests:
-      storage: 5Gi 
+      storage: 5Gi
+  selector:
+    matchLabels:
+      organization: numinia 
