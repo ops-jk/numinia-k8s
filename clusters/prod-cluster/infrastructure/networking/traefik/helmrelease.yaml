@@ -45,15 +45,14 @@ spec:
         service.beta.kubernetes.io/aws-load-balancer-type: "external"
         service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "instance"
         service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+        service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
         service.beta.kubernetes.io/aws-load-balancer-name: "prod-numinia-traefik-nlb"
         service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: "preserve_client_ip.enabled=true"
-        service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "TCP"
-        service.beta.kubernetes.io/aws-load-balancer-additional-protocols: "UDP"
-        service.beta.kubernetes.io/aws-load-balancer-healthcheck-protocol: "HTTP"
         service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "80"
+        service.beta.kubernetes.io/aws-load-balancer-healthcheck-protocol: "HTTP"
         service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: "/ping"
-        service.beta.kubernetes.io/aws-load-balancer-target-node-port-53-tcp: "30054"
-        service.beta.kubernetes.io/aws-load-balancer-target-node-port-53-udp: "30053"
+
+
     ports:
       web:
         port: 80
@@ -65,20 +64,20 @@ spec:
         expose: true
         protocol: TCP
         targetPort: websecure
-      dns-udp:
-        port: 53
-        expose: true
-        exposedPort: 53
-        protocol: UDP
-        nodePort: 30053
-        targetPort: dns-udp
       dns-tcp:
         port: 53
         expose: true
         exposedPort: 53
         protocol: TCP
-        nodePort: 30054
-        targetPort: dns-tcp
+        containerPort: 53
+        hostPort: 53
+      dns-udp:
+        port: 53
+        expose: true
+        exposedPort: 53
+        protocol: UDP
+        containerPort: 53
+        hostPort: 53
     providers:
       kubernetesCRD:
         enabled: true
@@ -94,7 +93,3 @@ spec:
       - "--providers.kubernetesingress.ingressclass=traefik"
       - "--entrypoints.dns-tcp.address=:53/tcp"
       - "--entrypoints.dns-udp.address=:53/udp"
-      - "--entrypoints.dns-udp.forwardedHeaders.insecure"
-      - "--providers.dns"
-      - "--providers.dns.resolvers=8.8.8.8:53,8.8.4.4:53"
-      - "--providers.dns.recursion=true"
