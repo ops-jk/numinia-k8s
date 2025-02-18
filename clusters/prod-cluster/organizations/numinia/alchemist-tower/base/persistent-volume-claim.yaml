@@ -12,7 +12,4 @@ spec:
   storageClassName: numinia-efs
   resources:
     requests:
-      storage: 5Gi
-  selector:
-    matchLabels:
-      organization: numinia 
+      storage: 5Gi 
