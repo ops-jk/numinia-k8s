@@ -68,15 +68,17 @@ spec:
       dns-udp:
         port: 53
         expose: true
+        exposedPort: 53
         protocol: UDP
-        targetPort: dns-udp
         nodePort: 30053
+        targetPort: dns-udp
       dns-tcp:
         port: 53
         expose: true
+        exposedPort: 53
         protocol: TCP
-        targetPort: dns-tcp
         nodePort: 30054
+        targetPort: dns-tcp
     providers:
       kubernetesCRD:
         enabled: true
@@ -93,3 +95,6 @@ spec:
       - "--entrypoints.dns-tcp.address=:53/tcp"
       - "--entrypoints.dns-udp.address=:53/udp"
       - "--entrypoints.dns-udp.forwardedHeaders.insecure"
+      - "--providers.dns"
+      - "--providers.dns.resolvers=8.8.8.8:53,8.8.4.4:53"
+      - "--providers.dns.recursion=true"
