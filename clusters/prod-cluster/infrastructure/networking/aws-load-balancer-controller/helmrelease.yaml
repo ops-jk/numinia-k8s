@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: aws-load-balancer-controller
@@ -21,10 +21,10 @@ spec:
     remediation:
       retries: 5
   values:
-    clusterName: numengames-prod-euw1-eks
+    clusterName: numinia-production-eks
     serviceAccount:
       create: true
       annotations:
-        eks.amazonaws.com/role-arn: arn:aws:iam::241533135482:role/numengames-prod-euw1-eks-aws-load-balancer-controller
+        eks.amazonaws.com/role-arn: arn:aws:iam::241533135482:role/numinia-production-eks-aws-load-balancer-controller
     region: eu-west-1
     vpcId: vpc-0b84203ce67a9f154
