@@ -45,6 +45,7 @@ spec:
       type: LoadBalancer
       externalTrafficPolicy: Local
       loadBalancerClass: service.k8s.aws/nlb
+      allocateLoadBalancerNodePorts: false
       annotations:
         service.beta.kubernetes.io/aws-load-balancer-type: "external"
         service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "instance"
@@ -55,8 +56,6 @@ spec:
         service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "80"
         service.beta.kubernetes.io/aws-load-balancer-healthcheck-protocol: "HTTP"
         service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: "/ping"
-      spec:
-        allocateLoadBalancerNodePorts: false
     ports:
       web:
         port: 80
