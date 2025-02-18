@@ -48,7 +48,8 @@ spec:
         service.beta.kubernetes.io/aws-load-balancer-name: "prod-numinia-traefik-nlb"
         service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: "preserve_client_ip.enabled=true"
         service.beta.kubernetes.io/aws-load-balancer-healthcheck-protocol: "TCP"
-        service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "53"
+        service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "80"
+        service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: "/ping"
     ports:
       web:
         port: 80
@@ -64,14 +65,12 @@ spec:
         port: 53
         expose: true
         protocol: UDP
-        targetPort: 53
-        name: dns-udp
+        targetPort: dns-udp
       dns-tcp:
         port: 53
         expose: true
         protocol: TCP
-        targetPort: 53
-        name: dns-tcp
+        targetPort: dns-tcp
     providers:
       kubernetesCRD:
         enabled: true
