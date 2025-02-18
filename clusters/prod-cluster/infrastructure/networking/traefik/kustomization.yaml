@@ -4,5 +4,6 @@ namespace: traefik
 resources:
   - namespace.yaml
   - helmrelease.yaml
+  - service.yaml
   - dns-proxy.yaml
   - dns-route.yaml 

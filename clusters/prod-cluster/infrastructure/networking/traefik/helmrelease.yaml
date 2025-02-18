@@ -26,9 +26,7 @@ spec:
     deployment:
       kind: DaemonSet
     daemonSet:
-      hostPorts:
-        dns-tcp: 53
-        dns-udp: 53
+      useHostPort: true
     podSecurityContext:
       fsGroup: 65532
     securityContext:
@@ -41,40 +39,37 @@ spec:
       runAsNonRoot: false
       runAsUser: 0
     service:
-      enabled: true
-      type: LoadBalancer
-      externalTrafficPolicy: Local
-      loadBalancerClass: service.k8s.aws/nlb
-      allocateLoadBalancerNodePorts: false
-      annotations:
-        service.beta.kubernetes.io/aws-load-balancer-type: "external"
-        service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "instance"
-        service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
-        service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
-        service.beta.kubernetes.io/aws-load-balancer-name: "prod-numinia-traefik-nlb"
-        service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: "preserve_client_ip.enabled=true"
-        service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "80"
-        service.beta.kubernetes.io/aws-load-balancer-healthcheck-protocol: "HTTP"
-        service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: "/ping"
+      enabled: false
+    entryPoints:
+      web:
+        address: ":80/tcp"
+      websecure:
+        address: ":443/tcp"
+      dns-tcp:
+        address: ":53/tcp"
+      dns-udp:
+        address: ":53/udp"
     ports:
       web:
         port: 80
         expose: true
         protocol: TCP
+        hostPort: 80
       websecure:
         port: 443
         expose: true
         protocol: TCP
+        hostPort: 443
       dns-tcp:
         port: 53
         expose: true
         protocol: TCP
-        targetPort: dns-tcp
+        hostPort: 53
       dns-udp:
         port: 53
         expose: true
         protocol: UDP
-        targetPort: dns-udp
+        hostPort: 53
     providers:
       kubernetesCRD:
         enabled: true
@@ -88,5 +83,3 @@ spec:
     additionalArguments:
       - "--providers.kubernetescrd"
       - "--providers.kubernetesingress.ingressclass=traefik"
-      - "--entrypoints.dns-tcp.address=:53/tcp"
-      - "--entrypoints.dns-udp.address=:53/udp"
