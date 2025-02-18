@@ -25,6 +25,10 @@ spec:
   values:
     deployment:
       kind: DaemonSet
+    daemonSet:
+      hostPorts:
+        dns-tcp: 53
+        dns-udp: 53
     podSecurityContext:
       fsGroup: 65532
     securityContext:
@@ -51,8 +55,6 @@ spec:
         service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "80"
         service.beta.kubernetes.io/aws-load-balancer-healthcheck-protocol: "HTTP"
         service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: "/ping"
-
-
     ports:
       web:
         port: 80
@@ -67,17 +69,13 @@ spec:
       dns-tcp:
         port: 53
         expose: true
-        exposedPort: 53
         protocol: TCP
         containerPort: 53
-        hostPort: 53
       dns-udp:
         port: 53
         expose: true
-        exposedPort: 53
         protocol: UDP
         containerPort: 53
-        hostPort: 53
     providers:
       kubernetesCRD:
         enabled: true
