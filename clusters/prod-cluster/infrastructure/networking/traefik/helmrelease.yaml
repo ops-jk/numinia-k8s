@@ -52,6 +52,8 @@ spec:
         service.beta.kubernetes.io/aws-load-balancer-healthcheck-protocol: "HTTP"
         service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "80"
         service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: "/ping"
+        service.beta.kubernetes.io/aws-load-balancer-target-node-port-53-tcp: "30054"
+        service.beta.kubernetes.io/aws-load-balancer-target-node-port-53-udp: "30053"
     ports:
       web:
         port: 80
