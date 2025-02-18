@@ -28,4 +28,4 @@ metadata:
   name: aws-secret-manager-sa
   namespace: numinia
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::241533135482:role/prod-cluster-secret-manager-efs-role
+    eks.amazonaws.com/role-arn: arn:aws:iam::241533135482:role/numinia-production-eks-secret-manager-efs-role

@@ -18,4 +18,4 @@ spec:
       serviceAccount:
         create: true
         annotations:
-          eks.amazonaws.com/role-arn: arn:aws:iam::241533135482:role/numengames-prod-euw1-eks-efs-csi-driver
+          eks.amazonaws.com/role-arn: arn:aws:iam::241533135482:role/numinia-production-eks-efs-csi-driver
