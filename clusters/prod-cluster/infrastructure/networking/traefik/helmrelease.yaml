@@ -47,7 +47,9 @@ spec:
         service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
         service.beta.kubernetes.io/aws-load-balancer-name: "prod-numinia-traefik-nlb"
         service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: "preserve_client_ip.enabled=true"
-        service.beta.kubernetes.io/aws-load-balancer-healthcheck-protocol: "TCP"
+        service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "TCP"
+        service.beta.kubernetes.io/aws-load-balancer-additional-protocols: "UDP"
+        service.beta.kubernetes.io/aws-load-balancer-healthcheck-protocol: "HTTP"
         service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "80"
         service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: "/ping"
     ports:
