@@ -15,7 +15,23 @@ spec:
         namespace: flux-system
   values:
     controller:
+      replicaCount: 1
+      resources:
+        limits:
+          memory: 128Mi
+          cpu: 100m
+        requests:
+          memory: 64Mi
+          cpu: 50m
       serviceAccount:
         create: true
         annotations:
           eks.amazonaws.com/role-arn: arn:aws:iam::241533135482:role/numinia-production-eks-efs-csi-driver
+    node:
+      resources:
+        limits:
+          memory: 128Mi
+          cpu: 100m
+        requests:
+          memory: 64Mi
+          cpu: 50m

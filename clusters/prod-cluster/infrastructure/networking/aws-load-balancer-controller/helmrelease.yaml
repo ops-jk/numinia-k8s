@@ -21,6 +21,14 @@ spec:
     remediation:
       retries: 5
   values:
+    replicaCount: 1
+    resources:
+      limits:
+        memory: 128Mi
+        cpu: 100m
+      requests:
+        memory: 64Mi
+        cpu: 50m
     clusterName: numinia-production-eks
     serviceAccount:
       create: true
