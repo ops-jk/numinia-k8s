@@ -8,15 +8,15 @@ spec:
     name: alchemist-tower-deployment
     kind: Deployment
   minReplicaCount: 1
-  maxReplicaCount: 1
-  cooldownPeriod: 300
-  pollingInterval: 30
+  maxReplicaCount: 3
+  cooldownPeriod: 120
+  pollingInterval: 15
   triggers:
-    - type: http
+    - type: cpu
       metadata:
-        url: "http://localhost:3000/health"
-        auth: ""
-        threshold: "1"
-        activationThreshold: "1"
-        host: "numinia.xyz"
-        path: "/alchemist-tower"
+        type: Utilization
+        value: "70"
+    - type: memory
+      metadata:
+        type: Utilization
+        value: "80"
