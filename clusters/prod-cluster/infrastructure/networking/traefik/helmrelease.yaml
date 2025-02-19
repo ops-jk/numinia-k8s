@@ -24,9 +24,15 @@ spec:
       retries: 3
   values:
     deployment:
-      kind: DaemonSet
-    daemonSet:
-      useHostPort: true
+      kind: Deployment
+      replicas: 1
+    resources:
+      requests:
+        memory: "128Mi"
+        cpu: "100m"
+      limits:
+        memory: "256Mi"
+        cpu: "200m"
     podSecurityContext:
       fsGroup: 65532
     securityContext:
@@ -39,7 +45,8 @@ spec:
       runAsNonRoot: false
       runAsUser: 0
     service:
-      enabled: false
+      enabled: true
+      type: LoadBalancer
     entryPoints:
       web:
         address: ":80/tcp"
@@ -54,22 +61,18 @@ spec:
         port: 80
         expose: true
         protocol: TCP
-        hostPort: 80
       websecure:
         port: 443
         expose: true
         protocol: TCP
-        hostPort: 443
       dns-tcp:
         port: 53
         expose: true
         protocol: TCP
-        hostPort: 53
       dns-udp:
         port: 53
         expose: true
         protocol: UDP
-        hostPort: 53
     providers:
       kubernetesCRD:
         enabled: true

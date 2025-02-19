@@ -20,4 +20,31 @@ spec:
     crds: CreateReplace
   values:
     crds:
-      install: true 
+      install: true
+    operator:
+      replicaCount: 1
+      resources:
+        limits:
+          cpu: 200m
+          memory: 256Mi
+        requests:
+          cpu: 50m
+          memory: 64Mi
+    metricsApiServer:
+      replicaCount: 1
+      resources:
+        limits:
+          cpu: 100m
+          memory: 128Mi
+        requests:
+          cpu: 25m
+          memory: 32Mi
+    webhooks:
+      replicaCount: 1
+      resources:
+        limits:
+          cpu: 100m
+          memory: 128Mi
+        requests:
+          cpu: 25m
+          memory: 32Mi 
