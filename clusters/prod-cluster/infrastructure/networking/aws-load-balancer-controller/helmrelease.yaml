@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: aws-load-balancer-controller
-      version: "1.7.1"
+      version: "1.9.2"
       sourceRef:
         kind: HelmRepository
         name: eks
@@ -29,10 +29,9 @@ spec:
       requests:
         memory: 64Mi
         cpu: 50m
-    clusterName: numinia-production-eks
+    clusterName: production-numinia
     serviceAccount:
-      create: true
-      annotations:
-        eks.amazonaws.com/role-arn: arn:aws:iam::241533135482:role/numinia-production-eks-aws-load-balancer-controller
+      create: false
+      name: aws-load-balancer-controller
     region: eu-west-1
-    vpcId: vpc-0b84203ce67a9f154
+    vpcId: vpc-01490cf6619bb99f8
