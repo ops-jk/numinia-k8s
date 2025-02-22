@@ -6,7 +6,6 @@ resources:
 - service.yaml
 - cert.yaml
 - route.yaml
-- middleware.yaml
 - persistent-volume-claim.yaml
 - secret-provider.yaml
 configMapGenerator:
