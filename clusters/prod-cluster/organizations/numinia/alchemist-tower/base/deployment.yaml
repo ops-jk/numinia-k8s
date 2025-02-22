@@ -44,7 +44,7 @@ spec:
               secretProviderClass: aws-secrets
       containers:
         - name: alchemist-tower
-          image: ghcr.io/numengames/numinia-hyperfy2:sha-612134744b388692724eb3ddffc1597b5a16e43f
+          image: ghcr.io/numengames/numinia-hyperfy2:sha-b598263a3eb99e5a8879da871f50c8099d64c39d
           volumeMounts:
             - name: hyperfy2-persistent-storage
               mountPath: /mnt/hyperfy2-persistent-storage
