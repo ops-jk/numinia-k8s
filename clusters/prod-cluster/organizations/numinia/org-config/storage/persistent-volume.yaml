@@ -14,4 +14,4 @@ spec:
   storageClassName: numinia-efs
   csi:
     driver: efs.csi.aws.com
-    volumeHandle: fs-07b02fe916a74ccb1 
+    volumeHandle: fs-08ccc6c105532a4b3 
