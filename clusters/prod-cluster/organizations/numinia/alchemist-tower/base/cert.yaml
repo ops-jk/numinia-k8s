@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: numinia-tls
+  namespace: numinia
+spec:
+  secretName: numinia-tls        # <===  Name of secret where the generated certificate will be stored.
+  dnsNames:
+    - "numinia.xyz"
+  issuerRef:
+    name: letsencrypt-numinia-prod
+    kind: ClusterIssuer
