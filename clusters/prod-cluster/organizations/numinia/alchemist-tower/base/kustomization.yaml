@@ -108,6 +108,16 @@ replacements:
 - source:
     kind: ConfigMap
     name: alchemist-tower-config
+    fieldPath: data.COMMIT_HASH
+  targets:
+  - select:
+      kind: Deployment
+      name: alchemist-tower-deployment
+    fieldPaths:
+    - spec.template.spec.containers.[name=alchemist-tower].env.[name=COMMIT_HASH].value
+- source:
+    kind: ConfigMap
+    name: alchemist-tower-config
     fieldPath: data.PUBLIC_WS_URL
   targets:
   - select:
