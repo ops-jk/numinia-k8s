@@ -4,6 +4,7 @@ namespace: numinia
 resources:
 - deployment.yaml
 - service.yaml
+- cert.yaml
 - route.yaml
 - middleware.yaml
 - autoscaling.yaml
