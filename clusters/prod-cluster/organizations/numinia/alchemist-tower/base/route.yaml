@@ -7,6 +7,14 @@ spec:
   entryPoints:
     - websecure
   routes:
+    - match: "Host(`numinia.xyz`) && Path(`/alchemist-tower`)"
+      kind: Rule
+      middlewares:
+        - name: "rewrite-root"
+          namespace: numinia
+      services:
+        - name: "alchemist-tower"
+          port: 3000
     - match: "Host(`numinia.xyz`) && PathPrefix(`/alchemist-tower`)"
       kind: Rule
       middlewares:
