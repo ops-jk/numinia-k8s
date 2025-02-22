@@ -7,6 +7,7 @@ spec:
   entryPoints:
     - websecure
   routes:
+    # Redirect manual access to /alchemist-tower to /
     - match: "Host(`numinia.xyz`) && Path(`/alchemist-tower`)"
       kind: Rule
       middlewares:
@@ -15,6 +16,8 @@ spec:
       services:
         - name: "alchemist-tower"
           port: 3000
+
+    # Handle API and other requests to /alchemist-tower/*
     - match: "Host(`numinia.xyz`) && PathPrefix(`/alchemist-tower`)"
       kind: Rule
       middlewares:
@@ -23,5 +26,16 @@ spec:
       services:
         - name: "alchemist-tower"
           port: 3000
+
+    # Fix requests for static assets (rewrite to /alchemist-tower/*)
+    - match: "Host(`numinia.xyz`) && PathPrefix(`/`)"
+      kind: Rule
+      middlewares:
+        - name: "rewrite-static-files"
+          namespace: numinia
+      services:
+        - name: "alchemist-tower"
+          port: 3000
+
   tls:
     secretName: numinia-tls
