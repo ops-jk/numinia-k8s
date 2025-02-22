@@ -88,13 +88,23 @@ replacements:
 - source:
     kind: ConfigMap
     name: alchemist-tower-config
-    fieldPath: data.PATH_PREFIX
+    fieldPath: data.STORAGE_PATH
   targets:
   - select:
       kind: Deployment
       name: alchemist-tower-deployment
     fieldPaths:
-    - spec.template.spec.containers.[name=alchemist-tower].env.[name=PATH_PREFIX].value
+    - spec.template.spec.containers.[name=alchemist-tower].env.[name=STORAGE_PATH].value
+- source:
+    kind: ConfigMap
+    name: alchemist-tower-config
+    fieldPath: data.STORAGE_NAME
+  targets:
+  - select:
+      kind: Deployment
+      name: alchemist-tower-deployment
+    fieldPaths:
+    - spec.template.spec.containers.[name=alchemist-tower].env.[name=STORAGE_NAME].value
 - source:
     kind: ConfigMap
     name: alchemist-tower-config

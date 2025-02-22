@@ -59,8 +59,10 @@ spec:
               value: ${PORT}
             - name: DOMAIN
               value: ${DOMAIN}
-            - name: PATH_PREFIX
-              value: ${PATH_PREFIX}
+            - name: STORAGE_PATH
+              value: ${STORAGE_PATH}
+            - name: STORAGE_NAME
+              value: ${STORAGE_NAME}
             - name: PUBLIC_WS_URL
               value: ${PUBLIC_WS_URL}
             - name: PUBLIC_API_URL
