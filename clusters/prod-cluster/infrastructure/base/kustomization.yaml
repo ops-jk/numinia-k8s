@@ -7,4 +7,5 @@ resources:
   - aws-efs-csi-driver
   - secrets-store-csi-driver
   - cert-manager
-  - external-secrets 
+  - external-secrets
+  - metrics-server
