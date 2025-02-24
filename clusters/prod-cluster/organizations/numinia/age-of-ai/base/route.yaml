@@ -11,7 +11,7 @@ spec:
     - match: "Host(`numinia.xyz`) && Path(`/age-of-ai`)"
       kind: Rule
       middlewares:
-        - name: "rewrite-root"
+        - name: "age-of-ai-rewrite-root"
           namespace: numinia
       services:
         - name: "age-of-ai"
@@ -31,7 +31,7 @@ spec:
     - match: "Host(`numinia.xyz`) && PathPrefix(`/`)"
       kind: Rule
       middlewares:
-        - name: "rewrite-static-files"
+        - name: "age-of-ai-rewrite-static-files"
           namespace: numinia
       services:
         - name: "age-of-ai"
