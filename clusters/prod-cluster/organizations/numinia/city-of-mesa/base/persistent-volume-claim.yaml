@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: hyperfy2-efs-claim
+  namespace: numinia
+  labels:
+    organization: numinia
+    app: city-of-mesa
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: numinia-efs
+  resources:
+    requests:
+      storage: 5Gi 

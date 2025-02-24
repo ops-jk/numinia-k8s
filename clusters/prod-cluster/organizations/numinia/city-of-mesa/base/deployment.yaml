@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: city-of-mesa-deployment
+  namespace: numinia
+  labels:
+    environment: pro
+    app: city-of-mesa
+    pod-type: city-of-mesa
+  annotations:
+    keda.sh/auto-scaling: "enabled"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: city-of-mesa
+      environment: pro
+      pod-type: city-of-mesa
+  template:
+    metadata:
+      labels:
+        app: city-of-mesa
+        environment: pro
+        pod-type: city-of-mesa
+    spec:
+      serviceAccountName: aws-secret-manager-sa
+      imagePullSecrets:
+        - name: github/deploy
+      nodeSelector:
+        NodeType: memory
+      tolerations:
+        - key: workload
+          value: memory
+          effect: NoSchedule
+      volumes:
+        - name: hyperfy2-persistent-storage
+          persistentVolumeClaim:
+            claimName: hyperfy2-efs-claim
+        - name: secrets-store
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: aws-secrets
+      containers:
+        - name: city-of-mesa
+          image: ghcr.io/numengames/numinia-hyperfy2:sha-b598263a3eb99e5a8879da871f50c8099d64c39d
+          volumeMounts:
+            - name: hyperfy2-persistent-storage
+              mountPath: /mnt/hyperfy2-persistent-storage
+              subPath: city-of-mesa
+            - name: secrets-store
+              mountPath: "/mnt/secrets-store"
+              readOnly: true
+          env:
+            - name: WORLD
+              value: ${WORLD_NAME}
+            - name: PORT
+              value: ${PORT}
+            - name: DOMAIN
+              value: ${DOMAIN}
+            - name: STORAGE_PATH
+              value: ${STORAGE_PATH}
+            - name: STORAGE_NAME
+              value: ${STORAGE_NAME}
+            - name: COMMIT_HASH
+              value: ${COMMIT_HASH}
+            - name: PUBLIC_WS_URL
+              value: ${PUBLIC_WS_URL}
+            - name: PUBLIC_API_URL
+              value: ${PUBLIC_API_URL}
+            - name: PUBLIC_ASSETS_URL
+              value: ${PUBLIC_ASSETS_URL}
+            - name: PUBLIC_MAX_UPLOAD_SIZE
+              value: "50"
+            - name: SAVE_INTERVAL
+              value: "30"
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets
+                  key: JWT_SECRET
+            - name: ADMIN_CODE
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets
+                  key: ADMIN_CODE
+          resources:
+            requests:
+              memory: ${MEMORY}
+              cpu: ${CPU}
+            limits:
+              memory: ${LIMITS_MEMORY}
+              cpu: ${LIMITS_CPU}
