@@ -11,7 +11,7 @@ parameters:
   fileSystemId: fs-08ccc6c105532a4b3
   reclaimPolicy: Retain
   volumeBindingMode: Immediate
-  allowVolumeExpansion: true
+  allowVolumeExpansion: "true"
   directoryPerms: "700"
   gidRangeStart: "1000"
   gidRangeEnd: "2000" 
