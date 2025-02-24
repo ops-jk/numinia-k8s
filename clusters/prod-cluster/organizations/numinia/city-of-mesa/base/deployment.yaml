@@ -33,7 +33,7 @@ spec:
           value: memory
           effect: NoSchedule
       volumes:
-        - name: persistent-storage
+        - name: hyperfy2-persistent-storage
           persistentVolumeClaim:
             claimName: numinia-shared-pvc
         - name: secrets-store
