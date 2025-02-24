@@ -8,4 +8,4 @@ resources:
   # 3. Infrastructure applications (acme-dns, keda)
   - applications
   # 4. Secrets
-  - secrets 
+  - secrets
