@@ -1,14 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    app: age-of-ai
-    pod-type: age-of-ai
-  name: age-of-ai
+  name: hyperfy2-numinia-age-of-ai-service
   namespace: numinia
+  labels:
+    app: hyperfy2-numinia-age-of-ai
+    environment: prod
+    component: game-world
 spec:
   selector:
-    app: age-of-ai
+    app: hyperfy2-numinia-age-of-ai
   ports:
     - protocol: TCP
       port: 3000

@@ -4,9 +4,9 @@ metadata:
   name: hyperfy2-numinia-alchemist-tower-deployment
   namespace: numinia
   labels:
+    environment: pro
     app: hyperfy2-numinia-alchemist-tower
-    environment: prod
-    component: game-world
+    pod-type: alchemist-tower
   annotations:
     keda.sh/auto-scaling: "enabled"
 spec:

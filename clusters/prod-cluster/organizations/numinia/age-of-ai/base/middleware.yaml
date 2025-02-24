@@ -1,7 +1,7 @@
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
-  name: age-of-ai-rewrite-static-files
+  name: hyperfy2-numinia-age-of-ai-rewrite-static-files
   namespace: numinia
 spec:
   redirectRegex:
@@ -12,7 +12,7 @@ spec:
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
-  name: age-of-ai-strip-prefix
+  name: hyperfy2-numinia-age-of-ai-strip-prefix
   namespace: numinia
 spec:
   stripPrefix:
@@ -23,7 +23,7 @@ spec:
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
-  name: age-of-ai-rewrite-root
+  name: hyperfy2-numinia-age-of-ai-rewrite-root
   namespace: numinia
 spec:
   redirectRegex:
