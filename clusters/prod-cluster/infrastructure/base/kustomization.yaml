@@ -3,9 +3,4 @@ kind: Kustomization
 resources:
   # Helm repositories must be first as they are required by other components
   - helm-repositories
-  # CSI Drivers and base operators
-  - aws-efs-csi-driver
-  - secrets-store-csi-driver
-  - cert-manager
-  - external-secrets
   - prometheus
