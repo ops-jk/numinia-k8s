@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: city-of-mesa-deployment
+  name: hyperfy2-numinia-city-of-mesa-deployment
   namespace: numinia
   labels:
-    environment: pro
-    app: city-of-mesa
-    pod-type: city-of-mesa
+    app: hyperfy2-numinia-city-of-mesa
+    environment: prod
+    component: game-world
   annotations:
     keda.sh/auto-scaling: "enabled"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: city-of-mesa
-      environment: pro
-      pod-type: city-of-mesa
+      app: hyperfy2-numinia-city-of-mesa
+      environment: prod
+      component: game-world
   template:
     metadata:
       labels:
-        app: city-of-mesa
-        environment: pro
-        pod-type: city-of-mesa
+        app: hyperfy2-numinia-city-of-mesa
+        environment: prod
+        component: game-world
     spec:
       serviceAccountName: aws-secret-manager-sa
       imagePullSecrets:
@@ -35,7 +35,7 @@ spec:
       volumes:
         - name: hyperfy2-persistent-storage
           persistentVolumeClaim:
-            claimName: hyperfy2-efs-claim
+            claimName: hyperfy2-numinia-city-of-mesa-pvc
         - name: secrets-store
           csi:
             driver: secrets-store.csi.k8s.io
@@ -43,7 +43,7 @@ spec:
             volumeAttributes:
               secretProviderClass: aws-secrets
       containers:
-        - name: city-of-mesa
+        - name: hyperfy2-numinia-city-of-mesa
           image: ghcr.io/numengames/numinia-hyperfy2:sha-b598263a3eb99e5a8879da871f50c8099d64c39d
           volumeMounts:
             - name: hyperfy2-persistent-storage

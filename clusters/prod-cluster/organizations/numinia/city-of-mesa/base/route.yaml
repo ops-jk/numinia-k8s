@@ -1,7 +1,7 @@
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: city-of-mesa-route
+  name: hyperfy2-numinia-city-of-mesa-route
   namespace: numinia
 spec:
   entryPoints:
@@ -11,31 +11,31 @@ spec:
     - match: "Host(`numinia.xyz`) && Path(`/city-of-mesa`)"
       kind: Rule
       middlewares:
-        - name: "city-of-mesa-rewrite-root"
+        - name: "hyperfy2-numinia-city-of-mesa-rewrite-root"
           namespace: numinia
       services:
-        - name: "city-of-mesa"
+        - name: "hyperfy2-numinia-city-of-mesa-service"
           port: 3000
 
     # Handle API and other requests to /city-of-mesa/*
     - match: "Host(`numinia.xyz`) && PathPrefix(`/city-of-mesa`)"
       kind: Rule
       middlewares:
-        - name: "city-of-mesa-strip-prefix"
+        - name: "hyperfy2-numinia-city-of-mesa-strip-prefix"
           namespace: numinia
       services:
-        - name: "city-of-mesa"
+        - name: "hyperfy2-numinia-city-of-mesa-service"
           port: 3000
 
     # Fix requests for static assets (rewrite to /city-of-mesa/*)
     - match: "Host(`numinia.xyz`) && PathPrefix(`/`)"
       kind: Rule
       middlewares:
-        - name: "city-of-mesa-rewrite-static-files"
+        - name: "hyperfy2-numinia-city-of-mesa-rewrite-static-files"
           namespace: numinia
       services:
-        - name: "city-of-mesa"
+        - name: "hyperfy2-numinia-city-of-mesa-service"
           port: 3000
 
   tls:
-    secretName: numinia-tls
+    secretName: hyperfy2-numinia-tls
