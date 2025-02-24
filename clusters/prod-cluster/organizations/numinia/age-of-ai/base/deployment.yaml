@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: age-of-ai-deployment
+  name: hyperfy2-numinia-age-of-ai-deployment
   namespace: numinia
   labels:
     environment: pro
     app: age-of-ai
-    pod-type: age-of-ai
+    pod-type: hyperfy2-numinia-age-of-ai
   annotations:
     keda.sh/auto-scaling: "enabled"
 spec:
@@ -15,13 +15,13 @@ spec:
     matchLabels:
       app: age-of-ai
       environment: pro
-      pod-type: age-of-ai
+      pod-type: hyperfy2-numinia-age-of-ai
   template:
     metadata:
       labels:
         app: age-of-ai
         environment: pro
-        pod-type: age-of-ai
+        pod-type: hyperfy2-numinia-age-of-ai
     spec:
       serviceAccountName: aws-secret-manager-sa
       imagePullSecrets:
@@ -35,7 +35,7 @@ spec:
       volumes:
         - name: hyperfy2-persistent-storage
           persistentVolumeClaim:
-            claimName: hyperfy2-efs-claim
+            claimName: hyperfy2-numinia-age-of-ai-pvc
         - name: secrets-store
           csi:
             driver: secrets-store.csi.k8s.io
@@ -43,7 +43,7 @@ spec:
             volumeAttributes:
               secretProviderClass: aws-secrets
       containers:
-        - name: age-of-ai
+        - name: hyperfy2-numinia-age-of-ai
           image: ghcr.io/numengames/numinia-hyperfy2:sha-b598263a3eb99e5a8879da871f50c8099d64c39d
           volumeMounts:
             - name: hyperfy2-persistent-storage

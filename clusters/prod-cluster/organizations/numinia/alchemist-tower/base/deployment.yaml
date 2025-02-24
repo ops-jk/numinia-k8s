@@ -1,11 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: alchemist-tower-deployment
+  name: hyperfy2-numinia-alchemist-tower-deployment
   namespace: numinia
   labels:
     environment: pro
-    app: alchemist-tower
+    app: hyperfy2-numinia-alchemist-tower
     pod-type: alchemist-tower
   annotations:
     keda.sh/auto-scaling: "enabled"
@@ -13,15 +13,15 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: alchemist-tower
+      app: hyperfy2-numinia-alchemist-tower
       environment: pro
-      pod-type: alchemist-tower
+      pod-type: hyperfy2-numinia-alchemist-tower
   template:
     metadata:
       labels:
-        app: alchemist-tower
+        app: hyperfy2-numinia-alchemist-tower
         environment: pro
-        pod-type: alchemist-tower
+        pod-type: hyperfy2-numinia-alchemist-tower
     spec:
       serviceAccountName: aws-secret-manager-sa
       imagePullSecrets:
@@ -35,7 +35,7 @@ spec:
       volumes:
         - name: hyperfy2-persistent-storage
           persistentVolumeClaim:
-            claimName: hyperfy2-efs-claim
+            claimName: hyperfy2-numinia-alchemist-tower-pvc
         - name: secrets-store
           csi:
             driver: secrets-store.csi.k8s.io
@@ -43,7 +43,7 @@ spec:
             volumeAttributes:
               secretProviderClass: aws-secrets
       containers:
-        - name: alchemist-tower
+        - name: hyperfy2-numinia-alchemist-tower
           image: ghcr.io/numengames/numinia-hyperfy2:sha-b598263a3eb99e5a8879da871f50c8099d64c39d
           volumeMounts:
             - name: hyperfy2-persistent-storage

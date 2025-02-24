@@ -1,14 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    app: city-of-mesa
-    pod-type: city-of-mesa
-  name: city-of-mesa
+  name: hyperfy2-numinia-city-of-mesa-service
   namespace: numinia
+  labels:
+    app: hyperfy2-numinia-city-of-mesa
+    environment: prod
+    component: game-world
 spec:
   selector:
-    app: city-of-mesa
+    app: hyperfy2-numinia-city-of-mesa
   ports:
     - protocol: TCP
       port: 3000

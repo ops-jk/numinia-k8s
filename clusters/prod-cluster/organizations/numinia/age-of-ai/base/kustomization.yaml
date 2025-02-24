@@ -12,140 +12,140 @@ configMapGenerator:
 - behavior: create
   envs:
   - config.env
-  name: age-of-ai-config
+  name: hyperfy2-numinia-age-of-ai-config
 replacements:
 - source:
     kind: ConfigMap
-    name: age-of-ai-config
+    name: hyperfy2-numinia-age-of-ai-config
     fieldPath: data.MEMORY
   targets:
   - select:
       kind: Deployment
-      name: age-of-ai-deployment
+      name: hyperfy2-numinia-age-of-ai-deployment
     fieldPaths:
-    - spec.template.spec.containers.[name=age-of-ai].resources.requests.memory
+    - spec.template.spec.containers.[name=hyperfy2-numinia-age-of-ai].resources.requests.memory
 - source:
     kind: ConfigMap
-    name: age-of-ai-config
+    name: hyperfy2-numinia-age-of-ai-config
     fieldPath: data.CPU
   targets:
   - select:
       kind: Deployment
-      name: age-of-ai-deployment
+      name: hyperfy2-numinia-age-of-ai-deployment
     fieldPaths:
-    - spec.template.spec.containers.[name=age-of-ai].resources.requests.cpu
+    - spec.template.spec.containers.[name=hyperfy2-numinia-age-of-ai].resources.requests.cpu
 - source:
     kind: ConfigMap
-    name: age-of-ai-config
+    name: hyperfy2-numinia-age-of-ai-config
     fieldPath: data.LIMITS_MEMORY
   targets:
   - select:
       kind: Deployment
-      name: age-of-ai-deployment
+      name: hyperfy2-numinia-age-of-ai-deployment
     fieldPaths:
-    - spec.template.spec.containers.[name=age-of-ai].resources.limits.memory
+    - spec.template.spec.containers.[name=hyperfy2-numinia-age-of-ai].resources.limits.memory
 - source:
     kind: ConfigMap
-    name: age-of-ai-config
+    name: hyperfy2-numinia-age-of-ai-config
     fieldPath: data.LIMITS_CPU
   targets:
   - select:
       kind: Deployment
-      name: age-of-ai-deployment
+      name: hyperfy2-numinia-age-of-ai-deployment
     fieldPaths:
-    - spec.template.spec.containers.[name=age-of-ai].resources.limits.cpu
+    - spec.template.spec.containers.[name=hyperfy2-numinia-age-of-ai].resources.limits.cpu
 - source:
     kind: ConfigMap
-    name: age-of-ai-config
+    name: hyperfy2-numinia-age-of-ai-config
     fieldPath: data.WORLD_NAME
   targets:
   - select:
       kind: Deployment
-      name: age-of-ai-deployment
+      name: hyperfy2-numinia-age-of-ai-deployment
     fieldPaths:
-    - spec.template.spec.containers.[name=age-of-ai].env.[name=WORLD].value
+    - spec.template.spec.containers.[name=hyperfy2-numinia-age-of-ai].env.[name=WORLD].value
 - source:
     kind: ConfigMap
-    name: age-of-ai-config
+    name: hyperfy2-numinia-age-of-ai-config
     fieldPath: data.PORT
   targets:
   - select:
       kind: Deployment
-      name: age-of-ai-deployment
+      name: hyperfy2-numinia-age-of-ai-deployment
     fieldPaths:
-    - spec.template.spec.containers.[name=age-of-ai].env.[name=PORT].value
+    - spec.template.spec.containers.[name=hyperfy2-numinia-age-of-ai].env.[name=PORT].value
 - source:
     kind: ConfigMap
-    name: age-of-ai-config
+    name: hyperfy2-numinia-age-of-ai-config
     fieldPath: data.DOMAIN
   targets:
   - select:
       kind: Deployment
-      name: age-of-ai-deployment
+      name: hyperfy2-numinia-age-of-ai-deployment
     fieldPaths:
-    - spec.template.spec.containers.[name=age-of-ai].env.[name=DOMAIN].value
+    - spec.template.spec.containers.[name=hyperfy2-numinia-age-of-ai].env.[name=DOMAIN].value
 - source:
     kind: ConfigMap
-    name: age-of-ai-config
+    name: hyperfy2-numinia-age-of-ai-config
     fieldPath: data.STORAGE_PATH
   targets:
   - select:
       kind: Deployment
-      name: age-of-ai-deployment
+      name: hyperfy2-numinia-age-of-ai-deployment
     fieldPaths:
-    - spec.template.spec.containers.[name=age-of-ai].env.[name=STORAGE_PATH].value
+    - spec.template.spec.containers.[name=hyperfy2-numinia-age-of-ai].env.[name=STORAGE_PATH].value
 - source:
     kind: ConfigMap
-    name: age-of-ai-config
+    name: hyperfy2-numinia-age-of-ai-config
     fieldPath: data.STORAGE_NAME
   targets:
   - select:
       kind: Deployment
-      name: age-of-ai-deployment
+      name: hyperfy2-numinia-age-of-ai-deployment
     fieldPaths:
-    - spec.template.spec.containers.[name=age-of-ai].env.[name=STORAGE_NAME].value
+    - spec.template.spec.containers.[name=hyperfy2-numinia-age-of-ai].env.[name=STORAGE_NAME].value
 - source:
     kind: ConfigMap
-    name: age-of-ai-config
+    name: hyperfy2-numinia-age-of-ai-config
     fieldPath: data.COMMIT_HASH
   targets:
   - select:
       kind: Deployment
-      name: age-of-ai-deployment
+      name: hyperfy2-numinia-age-of-ai-deployment
     fieldPaths:
-    - spec.template.spec.containers.[name=age-of-ai].env.[name=COMMIT_HASH].value
+    - spec.template.spec.containers.[name=hyperfy2-numinia-age-of-ai].env.[name=COMMIT_HASH].value
 - source:
     kind: ConfigMap
-    name: age-of-ai-config
+    name: hyperfy2-numinia-age-of-ai-config
     fieldPath: data.PUBLIC_WS_URL
   targets:
   - select:
       kind: Deployment
-      name: age-of-ai-deployment
+      name: hyperfy2-numinia-age-of-ai-deployment
     fieldPaths:
-    - spec.template.spec.containers.[name=age-of-ai].env.[name=PUBLIC_WS_URL].value
+    - spec.template.spec.containers.[name=hyperfy2-numinia-age-of-ai].env.[name=PUBLIC_WS_URL].value
 - source:
     kind: ConfigMap
-    name: age-of-ai-config
+    name: hyperfy2-numinia-age-of-ai-config
     fieldPath: data.PUBLIC_API_URL
   targets:
   - select:
       kind: Deployment
-      name: age-of-ai-deployment
+      name: hyperfy2-numinia-age-of-ai-deployment
     fieldPaths:
-    - spec.template.spec.containers.[name=age-of-ai].env.[name=PUBLIC_API_URL].value
+    - spec.template.spec.containers.[name=hyperfy2-numinia-age-of-ai].env.[name=PUBLIC_API_URL].value
 - source:
     kind: ConfigMap
-    name: age-of-ai-config
+    name: hyperfy2-numinia-age-of-ai-config
     fieldPath: data.PUBLIC_ASSETS_URL
   targets:
   - select:
       kind: Deployment
-      name: age-of-ai-deployment
+      name: hyperfy2-numinia-age-of-ai-deployment
     fieldPaths:
-    - spec.template.spec.containers.[name=age-of-ai].env.[name=PUBLIC_ASSETS_URL].value
+    - spec.template.spec.containers.[name=hyperfy2-numinia-age-of-ai].env.[name=PUBLIC_ASSETS_URL].value
 labels:
 - includeSelectors: true
   pairs:
-    app: age-of-ai
-    pod-type: age-of-ai
+    app: hyperfy2-numinia-age-of-ai
+    component: game-world
