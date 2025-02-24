@@ -6,7 +6,7 @@ metadata:
     organization: numinia
 spec:
   capacity:
-    storage: 40Gb
+    storage: 40Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteMany
