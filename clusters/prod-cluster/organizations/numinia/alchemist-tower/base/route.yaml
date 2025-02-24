@@ -11,7 +11,7 @@ spec:
     - match: "Host(`numinia.xyz`) && Path(`/alchemist-tower`)"
       kind: Rule
       middlewares:
-        - name: "rewrite-root"
+        - name: "alchemist-tower-rewrite-root"
           namespace: numinia
       services:
         - name: "alchemist-tower"
@@ -31,7 +31,7 @@ spec:
     - match: "Host(`numinia.xyz`) && PathPrefix(`/`)"
       kind: Rule
       middlewares:
-        - name: "rewrite-static-files"
+        - name: "alchemist-tower-rewrite-static-files"
           namespace: numinia
       services:
         - name: "alchemist-tower"
