@@ -6,8 +6,12 @@ metadata:
     organization: numinia
 provisioner: efs.csi.aws.com
 parameters:
-  provisioningMode: efs
+  provisioningMode: efs-ap
+  accessPointId: fsap-06b7bf07a4c3412f2
   fileSystemId: fs-08ccc6c105532a4b3
+  reclaimPolicy: Retain
+  volumeBindingMode: Immediate
+  allowVolumeExpansion: true
   directoryPerms: "700"
   gidRangeStart: "1000"
   gidRangeEnd: "2000" 
