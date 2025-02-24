@@ -35,7 +35,7 @@ spec:
       volumes:
         - name: hyperfy2-persistent-storage
           persistentVolumeClaim:
-            claimName: hyperfy2-numinia-alchemist-tower-pvc
+            claimName: numinia-shared-pvc
         - name: secrets-store
           csi:
             driver: secrets-store.csi.k8s.io

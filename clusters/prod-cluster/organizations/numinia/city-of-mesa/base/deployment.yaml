@@ -33,9 +33,9 @@ spec:
           value: memory
           effect: NoSchedule
       volumes:
-        - name: hyperfy2-persistent-storage
+        - name: persistent-storage
           persistentVolumeClaim:
-            claimName: hyperfy2-numinia-city-of-mesa-pvc
+            claimName: numinia-shared-pvc
         - name: secrets-store
           csi:
             driver: secrets-store.csi.k8s.io
