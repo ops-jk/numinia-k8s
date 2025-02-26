@@ -38,4 +38,4 @@ spec:
           port: 3000
 
   tls:
-    secretName: hyperfy2-numinia-tls
+    secretName: numinia-tls
