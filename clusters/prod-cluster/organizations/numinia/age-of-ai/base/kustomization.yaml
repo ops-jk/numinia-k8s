@@ -142,6 +142,16 @@ replacements:
       name: hyperfy2-numinia-age-of-ai-deployment
     fieldPaths:
     - spec.template.spec.containers.[name=hyperfy2-numinia-age-of-ai].env.[name=PUBLIC_ASSETS_URL].value
+- source:
+    kind: ConfigMap
+    name: hyperfy2-numinia-age-of-ai-config
+    fieldPath: data.PUBLIC_MAX_UPLOAD_SIZE
+  targets:
+  - select:
+      kind: Deployment
+      name: hyperfy2-numinia-age-of-ai-deployment
+    fieldPaths:
+    - spec.template.spec.containers.[name=hyperfy2-numinia-age-of-ai].env.[name=PUBLIC_MAX_UPLOAD_SIZE].value
 labels:
 - includeSelectors: true
   pairs:

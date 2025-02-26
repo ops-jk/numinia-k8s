@@ -143,6 +143,16 @@ replacements:
       name: hyperfy2-numinia-alchemist-tower-deployment
     fieldPaths:
     - spec.template.spec.containers.[name=hyperfy2-numinia-alchemist-tower].env.[name=PUBLIC_ASSETS_URL].value
+- source:
+    kind: ConfigMap
+    name: hyperfy2-numinia-alchemist-tower-config
+    fieldPath: data.PUBLIC_MAX_UPLOAD_SIZE
+  targets:
+  - select:
+      kind: Deployment
+      name: hyperfy2-numinia-alchemist-tower-deployment
+    fieldPaths:
+    - spec.template.spec.containers.[name=hyperfy2-numinia-alchemist-tower].env.[name=PUBLIC_MAX_UPLOAD_SIZE].value
 labels:
 - includeSelectors: true
   pairs:
