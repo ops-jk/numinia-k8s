@@ -7,32 +7,8 @@ spec:
   entryPoints:
     - websecure
   routes:
-    # Redirect manual access to /age-of-ai to /
-    - match: "Host(`numinia.xyz`) && Path(`/age-of-ai`)"
+    - match: "Host(`age-of-ai.numinia.xyz`)"
       kind: Rule
-      middlewares:
-        - name: "hyperfy2-numinia-age-of-ai-rewrite-root"
-          namespace: numinia
-      services:
-        - name: "hyperfy2-numinia-age-of-ai-service"
-          port: 3000
-
-    # Handle API and other requests to /age-of-ai/*
-    - match: "Host(`numinia.xyz`) && PathPrefix(`/age-of-ai`)"
-      kind: Rule
-      middlewares:
-        - name: "hyperfy2-numinia-age-of-ai-strip-prefix"
-          namespace: numinia
-      services:
-        - name: "hyperfy2-numinia-age-of-ai-service"
-          port: 3000
-
-    # Fix requests for static assets (rewrite to /age-of-ai/*)
-    - match: "Host(`numinia.xyz`) && PathPrefix(`/`)"
-      kind: Rule
-      middlewares:
-        - name: "hyperfy2-numinia-age-of-ai-rewrite-static-files"
-          namespace: numinia
       services:
         - name: "hyperfy2-numinia-age-of-ai-service"
           port: 3000

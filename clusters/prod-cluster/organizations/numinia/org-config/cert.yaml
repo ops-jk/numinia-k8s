@@ -8,6 +8,7 @@ spec:
   dnsNames:
     - "numinia.xyz"
     - "pre.numinia.xyz"
+    - "age-of-ai.numinia.xyz"
     - "city-of-mesa.numinia.xyz"
   issuerRef:
     name: letsencrypt-numinia-prod
