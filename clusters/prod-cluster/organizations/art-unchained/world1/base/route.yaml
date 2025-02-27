@@ -1,0 +1,17 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: hyperfy2-art-unchained-world1-route
+  namespace: art-unchained
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: "Host(`world1.art-unchained.xyz`)"
+      kind: Rule
+      services:
+        - name: "hyperfy2-art-unchained-world1-service"
+          port: 3000
+
+  tls:
+    secretName: art-unchained-tls

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hyperfy2-art-unchained-world1-service
+  namespace: art-unchained
+  labels:
+    app: hyperfy2-art-unchained-world1
+    environment: prod
+    component: game-world
+spec:
+  selector:
+    app: hyperfy2-art-unchained-world1
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000

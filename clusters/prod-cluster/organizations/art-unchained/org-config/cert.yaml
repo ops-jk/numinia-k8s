@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: art-unchained-tls
+  namespace: art-unchained
+spec:
+  secretName: art-unchained-tls
+  dnsNames:
+    - "world1.art-unchained.xyz"
+  issuerRef:
+    name: letsencrypt-art-unchained-prod
+    kind: ClusterIssuer

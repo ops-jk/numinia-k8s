@@ -1,0 +1,15 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: art-unchained-efs
+  labels:
+    organization: art-unchained
+provisioner: efs.csi.aws.com
+parameters:
+  fileSystemId: fs-0b7e43b62ab534d5f
+  reclaimPolicy: Retain
+  volumeBindingMode: Immediate
+  allowVolumeExpansion: "true"
+  directoryPerms: "700"
+  gidRangeStart: "1000"
+  gidRangeEnd: "2000" 

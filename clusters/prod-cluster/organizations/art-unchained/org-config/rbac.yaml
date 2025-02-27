@@ -1,0 +1,31 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: art-unchained-developer
+  namespace: art-unchained
+rules:
+  - apiGroups: ["*"]
+    resources: ["*"]
+    verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: art-unchained-developer-binding
+  namespace: art-unchained
+subjects:
+  - kind: Group
+    name: art-unchained-developers
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: art-unchained-developer
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: art-unchained-aws-secret-manager-sa
+  namespace: art-unchained
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::241533135482:role/numinia-production-eks-secret-manager-efs-role
