@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: "Host(`world1.art-unchained.xyz`)"
+    - match: "Host(`world1.art-unchained.io`)"
       kind: Rule
       services:
         - name: "hyperfy2-art-unchained-world1-service"

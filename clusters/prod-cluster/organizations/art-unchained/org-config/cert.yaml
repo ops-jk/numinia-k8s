@@ -6,7 +6,7 @@ metadata:
 spec:
   secretName: art-unchained-tls
   dnsNames:
-    - "world1.art-unchained.xyz"
+    - "world1.art-unchained.io"
   issuerRef:
     name: letsencrypt-art-unchained-prod
     kind: ClusterIssuer
