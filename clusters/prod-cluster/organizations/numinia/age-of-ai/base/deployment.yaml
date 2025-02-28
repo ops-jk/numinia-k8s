@@ -76,12 +76,12 @@ spec:
             - name: JWT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: aws-secrets
+                  name: aws-secrets-hyperfy2-numinia-age-of-ai
                   key: JWT_SECRET
             - name: ADMIN_CODE
               valueFrom:
                 secretKeyRef:
-                  name: aws-secrets
+                  name: aws-secrets-hyperfy2-numinia-age-of-ai
                   key: ADMIN_CODE
           resources:
             requests:

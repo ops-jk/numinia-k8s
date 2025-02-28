@@ -76,12 +76,12 @@ spec:
             - name: JWT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: aws-secrets
+                  name: aws-secrets-hyperfy2-art-unchained-world1
                   key: JWT_SECRET
             - name: ADMIN_CODE
               valueFrom:
                 secretKeyRef:
-                  name: aws-secrets
+                  name: aws-secrets-hyperfy2-art-unchained-world1
                   key: ADMIN_CODE
           resources:
             requests:
