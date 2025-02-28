@@ -95,16 +95,6 @@ replacements:
 - source:
     kind: ConfigMap
     name: hyperfy2-numinia-city-of-mesa-config
-    fieldPath: data.STORAGE_NAME
-  targets:
-  - select:
-      kind: Deployment
-      name: hyperfy2-numinia-city-of-mesa-deployment
-    fieldPaths:
-    - spec.template.spec.containers.[name=hyperfy2-numinia-city-of-mesa].env.[name=STORAGE_NAME].value
-- source:
-    kind: ConfigMap
-    name: hyperfy2-numinia-city-of-mesa-config
     fieldPath: data.COMMIT_HASH
   targets:
   - select:
