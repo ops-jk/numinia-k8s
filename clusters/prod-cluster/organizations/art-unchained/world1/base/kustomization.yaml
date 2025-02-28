@@ -95,16 +95,6 @@ replacements:
 - source:
     kind: ConfigMap
     name: hyperfy2-art-unchained-world1-config
-    fieldPath: data.STORAGE_NAME
-  targets:
-  - select:
-      kind: Deployment
-      name: hyperfy2-art-unchained-world1-deployment
-    fieldPaths:
-    - spec.template.spec.containers.[name=hyperfy2-art-unchained-world1].env.[name=STORAGE_NAME].value
-- source:
-    kind: ConfigMap
-    name: hyperfy2-art-unchained-world1-config
     fieldPath: data.COMMIT_HASH
   targets:
   - select:
