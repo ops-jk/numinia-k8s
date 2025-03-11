@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hyperfy2-numinia-crimson-tower-service
+  namespace: numinia
+  labels:
+    app: hyperfy2-numinia-crimson-tower
+    environment: prod
+    component: game-world
+spec:
+  selector:
+    app: hyperfy2-numinia-crimson-tower
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
