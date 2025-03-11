@@ -24,8 +24,6 @@ spec:
         component: game-world
     spec:
       serviceAccountName: aws-secret-manager-sa
-      imagePullSecrets:
-        - name: github/deploy
       nodeSelector:
         NodeType: memory
       tolerations:
