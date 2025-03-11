@@ -1,0 +1,17 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: hyperfy2-numinia-crimson-tower-route
+  namespace: numinia
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: "Host(`crimsontower.numinia.xyz`)"
+      kind: Rule
+      services:
+        - name: "hyperfy2-numinia-crimson-tower-service"
+          port: 3000
+
+  tls:
+    secretName: numinia-tls
