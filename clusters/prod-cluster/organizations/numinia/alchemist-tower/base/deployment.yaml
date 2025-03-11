@@ -24,8 +24,6 @@ spec:
         pod-type: hyperfy2-numinia-alchemist-tower
     spec:
       serviceAccountName: aws-secret-manager-sa
-      imagePullSecrets:
-        - name: github/deploy
       nodeSelector:
         NodeType: memory
       tolerations:
