@@ -10,6 +10,7 @@ spec:
     - "pre.numinia.xyz"
     - "age-of-ai.numinia.xyz"
     - "city-of-mesa.numinia.xyz"
+    - "crimsontower.numinia.xyz"
   issuerRef:
     name: letsencrypt-numinia-prod
     kind: ClusterIssuer
