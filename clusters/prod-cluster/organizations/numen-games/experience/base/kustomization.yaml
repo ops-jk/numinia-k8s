@@ -1,0 +1,149 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: numen-games
+resources:
+- deployment.yaml
+- service.yaml
+- route.yaml
+- secret-provider.yaml
+configMapGenerator:
+- behavior: create
+  envs:
+  - config.env
+  name: hyperfy2-numen-games-experience-config
+replacements:
+- source:
+    kind: ConfigMap
+    name: hyperfy2-numen-games-experience-config
+    fieldPath: data.MEMORY
+  targets:
+  - select:
+      kind: Deployment
+      name: hyperfy2-numen-games-experience-deployment
+    fieldPaths:
+    - spec.template.spec.containers.[name=hyperfy2-numen-games-experience].resources.requests.memory
+- source:
+    kind: ConfigMap
+    name: hyperfy2-numen-games-experience-config
+    fieldPath: data.CPU
+  targets:
+  - select:
+      kind: Deployment
+      name: hyperfy2-numen-games-experience-deployment
+    fieldPaths:
+      - spec.template.spec.containers.[name=hyperfy2-numen-games-experience].resources.requests.cpu
+- source:
+    kind: ConfigMap
+    name: hyperfy2-numen-games-experience-config
+    fieldPath: data.LIMITS_MEMORY
+  targets:
+  - select:
+      kind: Deployment
+      name: hyperfy2-numen-games-experience-deployment
+    fieldPaths:
+      - spec.template.spec.containers.[name=hyperfy2-numen-games-experience].resources.limits.memory
+- source:
+    kind: ConfigMap
+    name: hyperfy2-numen-games-experience-config
+    fieldPath: data.LIMITS_CPU
+  targets:
+  - select:
+      kind: Deployment
+      name: hyperfy2-numen-games-experience-deployment
+    fieldPaths:
+      - spec.template.spec.containers.[name=hyperfy2-numen-games-experience].resources.limits.cpu
+- source:
+    kind: ConfigMap
+    name: hyperfy2-numen-games-experience-config
+    fieldPath: data.WORLD_NAME
+  targets:
+  - select:
+      kind: Deployment
+      name: hyperfy2-numen-games-experience-deployment
+    fieldPaths:
+      - spec.template.spec.containers.[name=hyperfy2-numen-games-experience].env.[name=WORLD].value
+- source:
+    kind: ConfigMap
+    name: hyperfy2-numen-games-experience-config
+    fieldPath: data.PORT
+  targets:
+  - select:
+      kind: Deployment
+      name: hyperfy2-numen-games-experience-deployment
+    fieldPaths:
+      - spec.template.spec.containers.[name=hyperfy2-numen-games-experience].env.[name=PORT].value
+- source:
+    kind: ConfigMap
+    name: hyperfy2-numen-games-experience-config
+    fieldPath: data.DOMAIN
+  targets:
+  - select:
+      kind: Deployment
+      name: hyperfy2-numen-games-experience-deployment
+    fieldPaths:
+      - spec.template.spec.containers.[name=hyperfy2-numen-games-experience].env.[name=DOMAIN].value
+- source:
+    kind: ConfigMap
+    name: hyperfy2-numen-games-experience-config
+    fieldPath: data.STORAGE_PATH
+  targets:
+  - select:
+      kind: Deployment
+      name: hyperfy2-numen-games-experience-deployment
+    fieldPaths:
+      - spec.template.spec.containers.[name=hyperfy2-numen-games-experience].env.[name=STORAGE_PATH].value
+- source:
+    kind: ConfigMap
+    name: hyperfy2-numen-games-experience-config
+    fieldPath: data.COMMIT_HASH
+  targets:
+  - select:
+      kind: Deployment
+      name: hyperfy2-numen-games-experience-deployment
+    fieldPaths:
+      - spec.template.spec.containers.[name=hyperfy2-numen-games-experience].env.[name=COMMIT_HASH].value
+- source:
+    kind: ConfigMap
+    name: hyperfy2-numen-games-experience-config
+    fieldPath: data.PUBLIC_WS_URL
+  targets:
+  - select:
+      kind: Deployment
+      name: hyperfy2-numen-games-experience-deployment
+    fieldPaths:
+      - spec.template.spec.containers.[name=hyperfy2-numen-games-experience].env.[name=PUBLIC_WS_URL].value
+- source:
+    kind: ConfigMap
+    name: hyperfy2-numen-games-experience-config
+    fieldPath: data.PUBLIC_API_URL
+  targets:
+  - select:
+      kind: Deployment
+      name: hyperfy2-numen-games-experience-deployment
+    fieldPaths:
+      - spec.template.spec.containers.[name=hyperfy2-numen-games-experience].env.[name=PUBLIC_API_URL].value
+- source:
+    kind: ConfigMap
+    name: hyperfy2-numen-games-experience-config
+    fieldPath: data.PUBLIC_ASSETS_URL
+  targets:
+  - select:
+      kind: Deployment
+      name: hyperfy2-numen-games-experience-deployment
+    fieldPaths:
+    - spec.template.spec.containers.[name=hyperfy2-numen-games-experience].env.[name=PUBLIC_ASSETS_URL].value
+- source:
+    kind: ConfigMap
+    name: hyperfy2-numen-games-experience-config
+    fieldPath: data.PUBLIC_MAX_UPLOAD_SIZE
+  targets:
+  - select:
+      kind: Deployment
+      name: hyperfy2-numen-games-experience-deployment
+    fieldPaths:
+    - spec.template.spec.containers.[name=hyperfy2-numen-games-experience].env.[name=PUBLIC_MAX_UPLOAD_SIZE].value
+labels:
+- includeSelectors: true
+  pairs:
+    app: hyperfy2-numen-games-experience
+    component: game-world
