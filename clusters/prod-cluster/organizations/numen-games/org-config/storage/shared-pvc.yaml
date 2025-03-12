@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: numen-games-shared-pvc
+  namespace: numen-games
+  labels:
+    organization: numen-games
+    app: numen-games-shared
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: numen-games-efs
+  resources:
+    requests:
+      storage: 40Gi 
