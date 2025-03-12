@@ -1,0 +1,16 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: hyperfy2-numen-games-experience-route
+  namespace: numen-games
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: "Host(`experience.numen.games`)"
+      kind: Rule
+      services:
+        - name: "hyperfy2-numen-games-experience-service"
+          port: 3000
+  tls:
+    secretName: numen-games-tls
