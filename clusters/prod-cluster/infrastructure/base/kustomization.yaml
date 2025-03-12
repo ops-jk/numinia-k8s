@@ -4,3 +4,4 @@ resources:
   # Helm repositories must be first as they are required by other components
   - helm-repositories
   - prometheus
+  - flux-root.yaml
