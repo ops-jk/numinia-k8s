@@ -42,7 +42,7 @@ spec:
               secretProviderClass: hyperfy2-numinia-city-of-mesa-aws-secrets
       containers:
         - name: hyperfy2-numinia-city-of-mesa
-          image: ghcr.io/numengames/numinia-hyperfy2:sha-119b8a4d1e3238aa4de6eada97100d48833f1e78
+          image: ghcr.io/numengames/numinia-hyperfy2:sha-56cd747de9a6bd37ce11f38aecc992fb67755307
           volumeMounts:
             - name: hyperfy2-persistent-storage
               mountPath: /mnt/hyperfy2-persistent-storage
