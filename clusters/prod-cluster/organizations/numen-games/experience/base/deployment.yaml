@@ -46,7 +46,7 @@ spec:
           volumeMounts:
             - name: hyperfy2-persistent-storage
               mountPath: /mnt/hyperfy2-persistent-storage
-              subPath: world1
+              subPath: experience
             - name: secrets-store
               mountPath: "/mnt/secrets-store"
               readOnly: true
