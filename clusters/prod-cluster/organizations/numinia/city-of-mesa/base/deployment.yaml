@@ -24,12 +24,6 @@ spec:
         component: game-world
     spec:
       serviceAccountName: aws-secret-manager-sa
-      nodeSelector:
-        NodeType: memory
-      tolerations:
-        - key: workload
-          value: memory
-          effect: NoSchedule
       volumes:
         - name: hyperfy2-persistent-storage
           persistentVolumeClaim:
