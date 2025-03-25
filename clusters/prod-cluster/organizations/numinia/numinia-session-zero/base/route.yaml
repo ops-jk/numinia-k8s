@@ -1,0 +1,17 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: hyperfy2-numinia-session-zero-route
+  namespace: numinia
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: "Host(`session-zero.numinia.xyz`)"
+      kind: Rule
+      services:
+        - name: "hyperfy2-numinia-session-zero-service"
+          port: 3000
+
+  tls:
+    secretName: numinia-tls 
