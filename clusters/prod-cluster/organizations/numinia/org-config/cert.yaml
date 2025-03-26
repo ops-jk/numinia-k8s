@@ -11,9 +11,10 @@ spec:
     - "age-of-ai.numinia.xyz"
     - "agora-plaza.numinia.xyz"
     - "session-zero.numinia.xyz"
-    - "lemuria-academy.numinia.xyz"
     - "city-of-mesa.numinia.xyz"
     - "crimsontower.numinia.xyz"
+    - "lemuria-academy.numinia.xyz"
+    - "steiners-dreams.numinia.xyz"
   issuerRef:
     name: letsencrypt-numinia-prod
     kind: ClusterIssuer
