@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: hyperfy2-numinia-lemuria-academy-service
+  name: hyperfy2-numinia-steiners-dreams-service
   namespace: numinia
   labels:
-    app: hyperfy2-numinia-lemuria-academy
+    app: hyperfy2-numinia-steiners-dreams
     environment: prod
     component: game-world
 spec:
   selector:
-    app: lemuria-academy
+    app: steiners-dreams
   ports:
     - protocol: TCP
       port: 3000
-      targetPort: 3000
+      targetPort: 3000 
