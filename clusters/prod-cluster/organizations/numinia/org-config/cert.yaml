@@ -20,6 +20,7 @@ spec:
     - "atlantis-library.numinia.xyz"
     - "temple-of-khepri.numinia.xyz"
     - "ruins-of-numinia.numinia.xyz"
+    - "house-of-riddles.numinia.xyz"
   issuerRef:
     name: letsencrypt-numinia-prod
     kind: ClusterIssuer
