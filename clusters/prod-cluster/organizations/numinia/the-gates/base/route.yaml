@@ -1,0 +1,17 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: hyperfy2-numinia-the-gates-route
+  namespace: numinia
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: "Host(`the-gates.numinia.xyz`)"
+      kind: Rule
+      services:
+        - name: "hyperfy2-numinia-the-gates-service"
+          port: 3000
+
+  tls:
+    secretName: numinia-tls 
