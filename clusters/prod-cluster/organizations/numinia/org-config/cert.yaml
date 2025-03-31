@@ -17,6 +17,7 @@ spec:
     - "lemuria-academy.numinia.xyz"
     - "steiners-dreams.numinia.xyz"
     - "atlantis-library.numinia.xyz"
+    - "temple-of-khepri.numinia.xyz"
     - "ruins-of-numinia.numinia.xyz"
   issuerRef:
     name: letsencrypt-numinia-prod
