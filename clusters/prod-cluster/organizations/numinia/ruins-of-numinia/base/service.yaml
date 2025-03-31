@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hyperfy2-numinia-ruins-of-numinia-service
+  namespace: numinia
+  labels:
+    app: hyperfy2-numinia-ruins-of-numinia
+    environment: prod
+    component: game-world
+spec:
+  selector:
+    app: ruins-of-numinia
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000 

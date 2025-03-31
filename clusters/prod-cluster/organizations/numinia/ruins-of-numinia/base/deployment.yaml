@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hyperfy2-numinia-ruins-of-numinia-deployment
+  namespace: numinia
+  labels:
+    environment: pro
+    app: ruins-of-numinia
+    pod-type: hyperfy2-numinia-ruins-of-numinia
+  annotations:
+    keda.sh/auto-scaling: "enabled"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ruins-of-numinia
+      environment: pro
+      pod-type: hyperfy2-numinia-ruins-of-numinia
+  template:
+    metadata:
+      labels:
+        app: ruins-of-numinia
+        environment: pro
+        pod-type: hyperfy2-numinia-ruins-of-numinia
+    spec:
+      serviceAccountName: aws-secret-manager-sa
+      volumes:
+        - name: hyperfy2-persistent-storage
+          persistentVolumeClaim:
+            claimName: numinia-shared-pvc
+        - name: secrets-store
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: hyperfy2-numinia-ruins-of-numinia-aws-secrets
+      containers:
+        - name: hyperfy2-numinia-ruins-of-numinia
+          image: ghcr.io/numengames/numinia-hyperfy2:sha-119b8a4d1e3238aa4de6eada97100d48833f1e78
+          volumeMounts:
+            - name: hyperfy2-persistent-storage
+              mountPath: /mnt/hyperfy2-persistent-storage
+              subPath: ruins-of-numinia
+            - name: secrets-store
+              mountPath: "/mnt/secrets-store"
+              readOnly: true
+          env:
+            - name: WORLD
+              value: ${WORLD_NAME}
+            - name: PORT
+              value: ${PORT}
+            - name: DOMAIN
+              value: ${DOMAIN}
+            - name: STORAGE_PATH
+              value: ${STORAGE_PATH}
+            - name: COMMIT_HASH
+              value: ${COMMIT_HASH}
+            - name: PUBLIC_WS_URL
+              value: ${PUBLIC_WS_URL}
+            - name: PUBLIC_API_URL
+              value: ${PUBLIC_API_URL}
+            - name: PUBLIC_ASSETS_URL
+              value: ${PUBLIC_ASSETS_URL}
+            - name: PUBLIC_MAX_UPLOAD_SIZE
+              value: ${PUBLIC_MAX_UPLOAD_SIZE}
+            - name: SAVE_INTERVAL
+              value: "30"
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-hyperfy2-numinia-ruins-of-numinia
+                  key: JWT_SECRET
+            - name: ADMIN_CODE
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-hyperfy2-numinia-ruins-of-numinia
+                  key: ADMIN_CODE
+          resources:
+            requests:
+              memory: ${MEMORY}
+              cpu: ${CPU}
+            limits:
+              memory: ${LIMITS_MEMORY}
+              cpu: ${LIMITS_CPU} 

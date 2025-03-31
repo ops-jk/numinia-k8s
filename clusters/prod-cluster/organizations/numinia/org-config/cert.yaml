@@ -15,6 +15,7 @@ spec:
     - "crimsontower.numinia.xyz"
     - "lemuria-academy.numinia.xyz"
     - "steiners-dreams.numinia.xyz"
+    - "ruins-of-numinia.numinia.xyz"
   issuerRef:
     name: letsencrypt-numinia-prod
     kind: ClusterIssuer
