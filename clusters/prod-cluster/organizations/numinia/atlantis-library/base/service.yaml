@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hyperfy2-numinia-atlantis-library-service
+  namespace: numinia
+  labels:
+    app: hyperfy2-numinia-atlantis-library
+    environment: prod
+    component: game-world
+spec:
+  selector:
+    app: atlantis-library
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000 
