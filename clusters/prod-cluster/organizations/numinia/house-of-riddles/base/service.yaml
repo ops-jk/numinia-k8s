@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hyperfy2-numinia-house-of-riddles-service
+  namespace: numinia
+  labels:
+    app: hyperfy2-numinia-house-of-riddles
+    environment: prod
+    component: game-world
+spec:
+  selector:
+    app: house-of-riddles
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000 
