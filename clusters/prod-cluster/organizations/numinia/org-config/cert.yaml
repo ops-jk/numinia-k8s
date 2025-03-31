@@ -8,6 +8,7 @@ spec:
   dnsNames:
     - "numinia.xyz"
     - "pre.numinia.xyz"
+    - "athenaeum.numinia.xyz"
     - "age-of-ai.numinia.xyz"
     - "the-gates.numinia.xyz"
     - "agora-plaza.numinia.xyz"
