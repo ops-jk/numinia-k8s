@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: hyperfy2-active-inference-experience-service
+  name: hyperfy2-active-inference-adventure-service
   namespace: active-inference
   labels:
-    app: hyperfy2-active-inference-experience
+    app: hyperfy2-active-inference-adventure
     environment: pro
     component: game-world
 spec:
   selector:
-    app: hyperfy2-active-inference-experience
+    app: hyperfy2-active-inference-adventure
   ports:
     - protocol: TCP
       port: 3000

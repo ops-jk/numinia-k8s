@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hyperfy2-active-inference-experience-deployment
+  name: hyperfy2-active-inference-adventure-deployment
   namespace: active-inference
   labels:
     environment: pro
-    app: hyperfy2-active-inference-experience
-    pod-type: hyperfy2-active-inference-experience
+    app: hyperfy2-active-inference-adventure
+    pod-type: hyperfy2-active-inference-adventure
   annotations:
     keda.sh/auto-scaling: "enabled"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: experience
+      app: adventure
       environment: pro
-      pod-type: hyperfy2-active-inference-experience
+      pod-type: hyperfy2-active-inference-adventure
   template:
     metadata:
       labels:
-        app: experience
+        app: adventure
         environment: pro
-        pod-type: hyperfy2-active-inference-experience
+        pod-type: hyperfy2-active-inference-adventure
     spec:
       serviceAccountName: active-inference-aws-secret-manager-sa
       volumes:
@@ -33,14 +33,14 @@ spec:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: hyperfy2-active-inference-experience-aws-secrets
+              secretProviderClass: hyperfy2-active-inference-adventure-aws-secrets
       containers:
-        - name: hyperfy2-active-inference-experience
+        - name: hyperfy2-active-inference-adventure
           image: ghcr.io/numengames/numinia-hyperfy2:sha-3eb1f82755fae4b185171dc7109e89f4ab8982d3
           volumeMounts:
             - name: hyperfy2-persistent-storage
               mountPath: /mnt/hyperfy2-persistent-storage
-              subPath: experience
+              subPath: adventure
             - name: secrets-store
               mountPath: "/mnt/secrets-store"
               readOnly: true
@@ -68,12 +68,12 @@ spec:
             - name: JWT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: aws-secrets-hyperfy2-active-inference-experience
+                  name: aws-secrets-hyperfy2-active-inference-adventure
                   key: JWT_SECRET
             - name: ADMIN_CODE
               valueFrom:
                 secretKeyRef:
-                  name: aws-secrets-hyperfy2-active-inference-experience
+                  name: aws-secrets-hyperfy2-active-inference-adventure
                   key: ADMIN_CODE
           resources:
             requests:
