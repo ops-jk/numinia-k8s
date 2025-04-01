@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: active-inference-efs-pv
+  labels:
+    organization: active-inference
+spec:
+  capacity:
+    storage: 40Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: active-inference-efs
+  csi:
+    driver: efs.csi.aws.com
+    volumeHandle: fs-05bb5e177c73d219b

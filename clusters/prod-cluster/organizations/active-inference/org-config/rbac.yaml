@@ -1,0 +1,31 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: active-inference-developer
+  namespace: active-inference
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: active-inference-developer-binding
+  namespace: active-inference
+subjects:
+- kind: Group
+  name: active-inference-developers
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: active-inference-developer
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: active-inference-aws-secret-manager-sa
+  namespace: active-inference
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::241533135482:role/numinia-production-eks-secret-manager-efs-role 
