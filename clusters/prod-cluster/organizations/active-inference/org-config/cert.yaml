@@ -6,7 +6,7 @@ metadata:
 spec:
   secretName: active-inference-tls
   dnsNames:
-    - "experience.activeinference.institute"
+    - "adventure.activeinference.institute"
   issuerRef:
     name: letsencrypt-active-inference-prod
     kind: ClusterIssuer
