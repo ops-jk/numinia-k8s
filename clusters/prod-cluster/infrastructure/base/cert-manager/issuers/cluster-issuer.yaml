@@ -4,7 +4,7 @@ metadata:
   name: letsencrypt-dns01
 spec:
   acme:
-    email: tu-email@dominio.com
+    email: notifications@numinia.com
     server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       name: letsencrypt-dns01-account-key

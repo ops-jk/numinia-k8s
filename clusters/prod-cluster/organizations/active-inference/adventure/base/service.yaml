@@ -5,7 +5,7 @@ metadata:
   namespace: active-inference
   labels:
     app: hyperfy2-active-inference-adventure
-    environment: pro
+    environment: prod
     component: game-world
 spec:
   selector:
