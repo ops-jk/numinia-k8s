@@ -45,6 +45,8 @@ spec:
               mountPath: "/mnt/secrets-store"
               readOnly: true
           env:
+            - name: WORLD
+              value: ${WORLD_NAME}
             - name: PORT
               value: ${PORT}
             - name: DOMAIN
