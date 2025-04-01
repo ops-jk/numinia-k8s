@@ -53,8 +53,6 @@ spec:
               value: ${DOMAIN}
             - name: STORAGE_PATH
               value: ${STORAGE_PATH}
-            - name: ENVIRONMENT
-              value: ${ENVIRONMENT}
             - name: COMMIT_HASH
               value: ${COMMIT_HASH}
             - name: PUBLIC_API_URL

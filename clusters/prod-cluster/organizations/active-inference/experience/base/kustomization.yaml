@@ -55,6 +55,16 @@ replacements:
 - source:
     kind: ConfigMap
     name: hyperfy2-active-inference-experience-config
+    fieldPath: data.WORLD_NAME
+  targets:
+  - select:
+      kind: Deployment
+      name: hyperfy2-active-inference-experience-deployment
+    fieldPaths:
+    - spec.template.spec.containers.[name=hyperfy2-active-inference-experience].env.[name=WORLD].value
+- source:
+    kind: ConfigMap
+    name: hyperfy2-active-inference-experience-config
     fieldPath: data.PORT
   targets:
   - select:
@@ -82,16 +92,6 @@ replacements:
       name: hyperfy2-active-inference-experience-deployment
     fieldPaths:
     - spec.template.spec.containers.[name=hyperfy2-active-inference-experience].env.[name=STORAGE_PATH].value
-- source:
-    kind: ConfigMap
-    name: hyperfy2-active-inference-experience-config
-    fieldPath: data.ENVIRONMENT
-  targets:
-  - select:
-      kind: Deployment
-      name: hyperfy2-active-inference-experience-deployment
-    fieldPaths:
-    - spec.template.spec.containers.[name=hyperfy2-active-inference-experience].env.[name=ENVIRONMENT].value
 - source:
     kind: ConfigMap
     name: hyperfy2-active-inference-experience-config
