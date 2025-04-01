@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hyperfy2-numinia-historical-society-deployment
+  name: hyperfy2-numinia-akasha-museum-deployment
   namespace: numinia
   labels:
     environment: pro
-    app: historical-society
-    pod-type: hyperfy2-numinia-historical-society
+    app: akasha-museum
+    pod-type: hyperfy2-numinia-akasha-museum
   annotations:
     keda.sh/auto-scaling: "enabled"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: historical-society
+      app: akasha-museum
       environment: pro
-      pod-type: hyperfy2-numinia-historical-society
+      pod-type: hyperfy2-numinia-akasha-museum
   template:
     metadata:
       labels:
-        app: historical-society
+        app: akasha-museum
         environment: pro
-        pod-type: hyperfy2-numinia-historical-society
+        pod-type: hyperfy2-numinia-akasha-museum
     spec:
       serviceAccountName: aws-secret-manager-sa
       volumes:
@@ -33,14 +33,14 @@ spec:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: hyperfy2-numinia-historical-society-aws-secrets
+              secretProviderClass: hyperfy2-numinia-akasha-museum-aws-secrets
       containers:
-        - name: hyperfy2-numinia-historical-society
-          image: ghcr.io/numengames/numinia-hyperfy2:latest
+        - name: hyperfy2-numinia-akasha-museum
+          image: ghcr.io/numengames/numinia-hyperfy2:sha-119b8a4d1e3238aa4de6eada97100d48833f1e78
           volumeMounts:
             - name: hyperfy2-persistent-storage
               mountPath: /mnt/hyperfy2-persistent-storage
-              subPath: historical-society
+              subPath: akasha-museum
             - name: secrets-store
               mountPath: "/mnt/secrets-store"
               readOnly: true
@@ -68,12 +68,12 @@ spec:
             - name: JWT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: aws-secrets-hyperfy2-numinia-historical-society
+                  name: aws-secrets-hyperfy2-numinia-akasha-museum
                   key: JWT_SECRET
             - name: ADMIN_CODE
               valueFrom:
                 secretKeyRef:
-                  name: aws-secrets-hyperfy2-numinia-historical-society
+                  name: aws-secrets-hyperfy2-numinia-akasha-museum
                   key: ADMIN_CODE
           resources:
             requests:

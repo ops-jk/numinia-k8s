@@ -1,16 +1,16 @@
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: hyperfy2-numinia-historical-society-route
+  name: hyperfy2-numinia-akasha-museum-route
   namespace: numinia
 spec:
   entryPoints:
     - websecure
   routes:
-    - match: "Host(`historical-society.numinia.xyz`)"
+    - match: "Host(`akasha-museum.numinia.xyz`)"
       kind: Rule
       services:
-        - name: "hyperfy2-numinia-historical-society-service"
+        - name: "hyperfy2-numinia-akasha-museum-service"
           port: 3000
 
   tls:
