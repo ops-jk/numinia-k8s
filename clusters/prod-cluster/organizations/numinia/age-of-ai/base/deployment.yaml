@@ -37,7 +37,6 @@ spec:
       containers:
         - name: hyperfy2-numinia-age-of-ai
           image: ghcr.io/numengames/numinia-hyperfy2:sha-1e16378a96bd315b35db7e19c92c998a39f9731f
-sha-1e16378a96bd315b35db7e19c92c998a39f9731f
           volumeMounts:
             - name: hyperfy2-persistent-storage
               mountPath: /mnt/hyperfy2-persistent-storage
