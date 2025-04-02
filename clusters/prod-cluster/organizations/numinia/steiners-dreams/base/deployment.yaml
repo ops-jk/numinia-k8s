@@ -36,7 +36,7 @@ spec:
               secretProviderClass: hyperfy2-numinia-steiners-dreams-aws-secrets
       containers:
         - name: hyperfy2-numinia-steiners-dreams
-          image: ghcr.io/numengames/numinia-hyperfy2:sha-119b8a4d1e3238aa4de6eada97100d48833f1e78
+          image: ghcr.io/numengames/numinia-hyperfy2:sha-1e16378a96bd315b35db7e19c92c998a39f9731f
           volumeMounts:
             - name: hyperfy2-persistent-storage
               mountPath: /mnt/hyperfy2-persistent-storage
