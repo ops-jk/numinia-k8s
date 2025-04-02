@@ -36,7 +36,7 @@ spec:
               secretProviderClass: hyperfy2-active-inference-adventure-aws-secrets
       containers:
         - name: hyperfy2-active-inference-adventure
-          image: ghcr.io/numengames/numinia-hyperfy2:sha-3eb1f82755fae4b185171dc7109e89f4ab8982d3
+          image: ghcr.io/numengames/numinia-hyperfy2:sha-1e16378a96bd315b35db7e19c92c998a39f9731f
           volumeMounts:
             - name: hyperfy2-persistent-storage
               mountPath: /mnt/hyperfy2-persistent-storage
