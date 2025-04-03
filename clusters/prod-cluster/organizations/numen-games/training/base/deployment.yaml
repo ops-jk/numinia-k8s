@@ -24,6 +24,11 @@ spec:
         pod-type: hyperfy2-numen-games-training
     spec:
       serviceAccountName: numen-games-aws-secret-manager-sa
+      tolerations:
+        - key: "dedicated"
+          operator: "Equal"
+          value: "arm"
+          effect: "NoSchedule"
       volumes:
         - name: hyperfy2-persistent-storage
           persistentVolumeClaim:
