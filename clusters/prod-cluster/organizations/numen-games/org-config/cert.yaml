@@ -6,6 +6,7 @@ metadata:
 spec:
   secretName: numen-games-tls
   dnsNames:
+    - "maria.numen.games"
     - "r3s3t.numen.games"
     - "engage.numen.games"
     - "pablofm.numen.games"
