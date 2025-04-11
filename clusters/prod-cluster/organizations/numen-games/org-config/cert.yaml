@@ -11,6 +11,7 @@ spec:
     - "engage.numen.games"
     - "pablofm.numen.games"
     - "training.numen.games"
+    - "christian.numen.games"
     - "experience.numen.games"
   issuerRef:
     name: letsencrypt-numen-games-prod
