@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: the-gates-pro-values
+  namespace: flux-system
+data:
+  values.yaml: |
+    orgName: "numinia"
+    appName: "the-gates"
+    environment: "pro"
+    image:
+      repository: "ghcr.io/numengames/numinia-hyperfy2"
+      tag: "sha-1e16378a96bd315b35db7e19c92c998a39f9731f"
+    world: "the-gates"
+    tlsSecretName: "numinia-tls"
+    hostname: "the-gates.numinia.xyz"
+    storagePath: "/mnt/hyperfy2-persistent-storage"
+    publicWsUrl: "https://the-gates.numinia.xyz/ws"
+    publicApiUrl: "https://the-gates.numinia.xyz/api"
+    publicAssetsUrl: "https://the-gates.numinia.xyz/assets"
+    publicMaxUploadSize: "100MB"
+    resources:
+      requests:
+        cpu: "256m"
+        memory: "256Mi"
+      limits:
+        cpu: "256m"
+        memory: "512Mi" 

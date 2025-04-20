@@ -44,7 +44,7 @@ spec:
               readOnly: true
           env:
             - name: SAVE_INTERVAL
-              value: "30"
+              value: {{ .Values.saveInterval | default "30" | quote }}
             - name: WORLD
               value: {{ .Values.world | quote }}
             - name: PORT

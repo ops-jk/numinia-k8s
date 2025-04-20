@@ -2,7 +2,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - athenaeum/base
-  - the-gates/base
+  - helm-resources/age-of-ai/pre
+  - helm-resources/age-of-ai/pro
+  - helm-resources/the-gates/pro
   - agora-plaza/base
   - city-of-mesa/base
   - akasha-museum/base

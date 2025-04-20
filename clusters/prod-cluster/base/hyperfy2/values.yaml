@@ -10,6 +10,7 @@ image:
 port: "3000"
 world: "world"
 tlsSecretName: ""
+saveInterval: "30"
 commitHash: "commit-hash"
 publicMaxUploadSize: "100"
 publicPlayerCollision: "true"
