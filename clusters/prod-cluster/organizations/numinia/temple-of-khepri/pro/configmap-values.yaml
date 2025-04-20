@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: temple-of-khepri-pro-values
+  namespace: flux-system
+data:
+  values.yaml: |
+    orgName: "numinia"
+    appName: "temple-of-khepri"
+    environment: "pro"
+    image:
+      repository: "ghcr.io/numengames/numinia-hyperfy2"
+      tag: "sha-1e16378a96bd315b35db7e19c92c998a39f9731f"
+    world: "temple-of-khepri"
+    tlsSecretName: "numinia-tls"
+    hostname: "temple-of-khepri.numinia.xyz"
+    storagePath: "/mnt/hyperfy2-persistent-storage"
+    publicWsUrl: "https://temple-of-khepri.numinia.xyz/ws"
+    publicApiUrl: "https://temple-of-khepri.numinia.xyz/api"
+    publicAssetsUrl: "https://temple-of-khepri.numinia.xyz/assets"
+    publicMaxUploadSize: "100MB"
+    resources:
+      requests:
+        cpu: "128m"
+        memory: "128Mi"
+      limits:
+        cpu: "256m"
+        memory: "256Mi" 

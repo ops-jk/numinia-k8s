@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: steiners-dreams-pro-values
+  namespace: flux-system
+data:
+  values.yaml: |
+    orgName: "numinia"
+    appName: "steiners-dreams"
+    environment: "pro"
+    image:
+      repository: "ghcr.io/numengames/numinia-hyperfy2"
+      tag: "sha-1e16378a96bd315b35db7e19c92c998a39f9731f"
+    world: "steiners-dreams"
+    tlsSecretName: "numinia-tls"
+    hostname: "steiners-dreams.numinia.xyz"
+    storagePath: "/mnt/hyperfy2-persistent-storage"
+    publicWsUrl: "https://steiners-dreams.numinia.xyz/ws"
+    publicApiUrl: "https://steiners-dreams.numinia.xyz/api"
+    publicAssetsUrl: "https://steiners-dreams.numinia.xyz/assets"
+    publicMaxUploadSize: "100MB"
+    resources:
+      requests:
+        cpu: "128m"
+        memory: "128Mi"
+      limits:
+        cpu: "256m"
+        memory: "256Mi" 

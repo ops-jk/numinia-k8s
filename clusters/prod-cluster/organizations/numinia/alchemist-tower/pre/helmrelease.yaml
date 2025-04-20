@@ -1,0 +1,27 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: alchemist-tower-pro
+  namespace: flux-system
+spec:
+  interval: 5m
+  releaseName: alchemist-tower-pro
+  targetNamespace: numinia
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  chart:
+    spec:
+      chart: ./clusters/prod-cluster/base/hyperfy2
+      sourceRef:
+        kind: GitRepository
+        name: numinia-k8s
+        namespace: flux-system
+      interval: 1m
+  valuesFrom:
+    - kind: ConfigMap
+      name: alchemist-tower-pro-values
+      valuesKey: values.yaml 

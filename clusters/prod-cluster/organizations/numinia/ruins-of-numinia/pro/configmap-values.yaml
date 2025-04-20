@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ruins-of-numinia-pro-values
+  namespace: flux-system
+data:
+  values.yaml: |
+    orgName: "numinia"
+    appName: "ruins-of-numinia"
+    environment: "pro"
+    image:
+      repository: "ghcr.io/numengames/numinia-hyperfy2"
+      tag: "sha-1e16378a96bd315b35db7e19c92c998a39f9731f"
+    world: "ruins-of-numinia"
+    tlsSecretName: "numinia-tls"
+    hostname: "ruins-of-numinia.numinia.xyz"
+    storagePath: "/mnt/hyperfy2-persistent-storage"
+    publicWsUrl: "https://ruins-of-numinia.numinia.xyz/ws"
+    publicApiUrl: "https://ruins-of-numinia.numinia.xyz/api"
+    publicAssetsUrl: "https://ruins-of-numinia.numinia.xyz/assets"
+    publicMaxUploadSize: "100MB"
+    resources:
+      requests:
+        cpu: "128m"
+        memory: "128Mi"
+      limits:
+        cpu: "256m"
+        memory: "256Mi" 
