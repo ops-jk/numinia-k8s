@@ -21,7 +21,7 @@ spec:
         environment: {{ .Values.environment }}
         pod-type: hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
     spec:
-      serviceAccountName: aws-secret-manager-sa
+      serviceAccountName: {{ .Values.serviceAccountName }}
       volumes:
         - name: hyperfy2-persistent-storage
           persistentVolumeClaim:

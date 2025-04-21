@@ -2,6 +2,7 @@ replicas: 1
 environment: "pro"
 orgName: "org-name"
 appName: "app-name"
+serviceAccountName: "aws-secret-manager-sa"
 
 image:
   repository: "ghcr.io/numengames/numinia-hyperfy2"

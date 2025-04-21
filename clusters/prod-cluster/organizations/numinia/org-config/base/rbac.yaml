@@ -23,6 +23,6 @@ roleRef:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: aws-secret-manager-sa
+  name: numinia-aws-secret-manager-sa
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::241533135482:role/numinia-production-eks-secret-manager-efs-role

@@ -8,6 +8,7 @@ data:
     orgName: "numinia"
     appName: "age-of-ai"
     environment: "pro"
+    serviceAccountName: "numinia-aws-secret-manager-sa"
     image:
       repository: "ghcr.io/numengames/numinia-hyperfy2"
       tag: "sha-1e16378a96bd315b35db7e19c92c998a39f9731f"
@@ -21,8 +22,8 @@ data:
     publicMaxUploadSize: "100MB"
     resources:
       requests:
-        cpu: "128m"
-        memory: "128Mi"
-      limits:
         cpu: "256m"
-        memory: "256Mi" 
+        memory: "512Mi"
+      limits:
+        cpu: "1000m"
+        memory: "1024Mi" 
