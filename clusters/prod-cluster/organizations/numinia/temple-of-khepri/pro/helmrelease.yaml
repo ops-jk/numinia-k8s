@@ -2,7 +2,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: temple-of-khepri-pro
-  namespace: flux-system
+  namespace: numinia
 spec:
   interval: 5m
   releaseName: temple-of-khepri-pro

@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: alchemist-tower-pro-values
-  namespace: flux-system
+  name: alchemist-tower-pre-values
+  namespace: numinia
 data:
   values.yaml: |
     orgName: "numinia"
     appName: "alchemist-tower"
-    environment: "pro"
+    environment: "pre"
     image:
       repository: "ghcr.io/numengames/numinia-hyperfy2"
       tag: "sha-1e16378a96bd315b35db7e19c92c998a39f9731f"
