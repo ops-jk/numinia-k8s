@@ -3,6 +3,8 @@ kind: ConfigMap
 metadata:
   name: akasha-museum-pro-values
   namespace: numinia
+  annotations:
+    config-version: "1.0.0"
 data:
   values.yaml: |
     orgName: "numinia"

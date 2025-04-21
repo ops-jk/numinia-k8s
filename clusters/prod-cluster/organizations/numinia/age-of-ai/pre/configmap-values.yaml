@@ -3,6 +3,8 @@ kind: ConfigMap
 metadata:
   name: age-of-ai-pre-values
   namespace: numinia
+  annotations:
+    config-version: "1.0.0"
 data:
   values.yaml: |
     orgName: "numinia"
@@ -22,8 +24,8 @@ data:
     publicMaxUploadSize: "100MB"
     resources:
       requests:
-        cpu: "128m"
-        memory: "128Mi"
-      limits:
         cpu: "256m"
         memory: "256Mi"
+      limits:
+        cpu: "512m"
+        memory: "512Mi"

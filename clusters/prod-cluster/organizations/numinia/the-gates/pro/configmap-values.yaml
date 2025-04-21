@@ -3,6 +3,8 @@ kind: ConfigMap
 metadata:
   name: the-gates-pro-values
   namespace: numinia
+  annotations:
+    config-version: "1.0.0"
 data:
   values.yaml: |
     orgName: "numinia"

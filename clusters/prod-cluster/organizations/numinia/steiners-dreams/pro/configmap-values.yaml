@@ -3,6 +3,8 @@ kind: ConfigMap
 metadata:
   name: steiners-dreams-pro-values
   namespace: numinia
+  annotations:
+    config-version: "1.0.0"
 data:
   values.yaml: |
     orgName: "numinia"

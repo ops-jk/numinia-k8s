@@ -3,6 +3,8 @@ kind: ConfigMap
 metadata:
   name: age-of-ai-pro-values
   namespace: numinia
+  annotations:
+    config-version: "1.0.0"
 data:
   values.yaml: |
     orgName: "numinia"
@@ -23,7 +25,7 @@ data:
     resources:
       requests:
         cpu: "256m"
-        memory: "512Mi"
+        memory: "256Mi"
       limits:
-        cpu: "1000m"
-        memory: "1024Mi" 
+        cpu: "512m"
+        memory: "512Mi" 

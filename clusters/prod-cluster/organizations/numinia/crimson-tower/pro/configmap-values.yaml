@@ -3,6 +3,8 @@ kind: ConfigMap
 metadata:
   name: crimson-tower-pro-values
   namespace: numinia
+  annotations:
+    config-version: "1.0.0"
 data:
   values.yaml: |
     orgName: "numinia"
