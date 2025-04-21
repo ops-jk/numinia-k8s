@@ -13,11 +13,11 @@ data:
       tag: "sha-1e16378a96bd315b35db7e19c92c998a39f9731f"
     world: "crimson-tower"
     tlsSecretName: "numinia-tls"
-    hostname: "crimson-tower.numinia.xyz"
+    hostname: "crimsontower.numinia.xyz"
     storagePath: "/mnt/hyperfy2-persistent-storage"
-    publicWsUrl: "https://crimson-tower.numinia.xyz/ws"
-    publicApiUrl: "https://crimson-tower.numinia.xyz/api"
-    publicAssetsUrl: "https://crimson-tower.numinia.xyz/assets"
+    publicWsUrl: "https://crimsontower.numinia.xyz/ws"
+    publicApiUrl: "https://crimsontower.numinia.xyz/api"
+    publicAssetsUrl: "https://crimsontower.numinia.xyz/assets"
     publicMaxUploadSize: "100MB"
     resources:
       requests:
