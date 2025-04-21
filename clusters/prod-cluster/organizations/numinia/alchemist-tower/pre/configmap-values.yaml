@@ -12,8 +12,8 @@ data:
     environment: "pre"
     serviceAccountName: "aws-secret-manager-sa"
     image:
-      repository: "ghcr.io/numengames/numinia-hyperfy2"
-      tag: "sha-1e16378a96bd315b35db7e19c92c998a39f9731f"
+      repository: "ghcr.io/hyperfy-xyz/hyperfy"
+      tag: "sha-ce5403a0fe4cb550bf0f9ccea78c25e1b959cd99"
     world: "alchemist-tower"
     tlsSecretName: "numinia-tls"
     hostname: "alchemist-tower.numinia.xyz"
@@ -24,8 +24,8 @@ data:
     publicMaxUploadSize: "100MB"
     resources:
       requests:
-        cpu: "128m"
-        memory: "128Mi"
-      limits:
         cpu: "256m"
-        memory: "256Mi" 
+        memory: "256Mi"
+      limits:
+        cpu: "512m"
+        memory: "512Mi" 
