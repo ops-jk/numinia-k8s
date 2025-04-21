@@ -1,0 +1,29 @@
+replicas: 1
+environment: "pro"
+orgName: "org-name"
+appName: "app-name"
+
+image:
+  repository: "ghcr.io/numengames/numinia-hyperfy2"
+  tag: "latest"
+
+port: "3000"
+world: "world"
+tlsSecretName: ""
+saveInterval: "30"
+commitHash: "commit-hash"
+publicMaxUploadSize: "100"
+publicPlayerCollision: "true"
+publicWsUrl: "https://domain.com/ws"
+publicApiUrl: "https://domain.com/api"
+hostname: "app-name.org-name.example.com"
+publicAssetsUrl: "https://domain.com/assets"
+storagePath: "/mnt/hyperfy2-persistent-storage/app-name"
+
+resources:
+  requests:
+    memory: "64Mi"
+    cpu: "50m"
+  limits:
+    memory: "128Mi"
+    cpu: "100m"

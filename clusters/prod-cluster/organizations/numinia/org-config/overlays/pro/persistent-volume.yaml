@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: numinia-efs-pv
+  labels:
+    organization: numinia
+spec:
+  capacity:
+    storage: 40Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: numinia-efs
+  csi:
+    driver: efs.csi.aws.com
+    volumeHandle: fs-08ccc6c105532a4b3 

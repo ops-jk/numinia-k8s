@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: atlantis-library-pro-values
+  namespace: flux-system
+data:
+  values.yaml: |
+    orgName: "numinia"
+    appName: "atlantis-library"
+    environment: "pro"
+    image:
+      repository: "ghcr.io/numengames/numinia-hyperfy2"
+      tag: "sha-1e16378a96bd315b35db7e19c92c998a39f9731f"
+    world: "atlantis-library"
+    tlsSecretName: "numinia-tls"
+    hostname: "atlantis-library.numinia.xyz"
+    storagePath: "/mnt/hyperfy2-persistent-storage"
+    publicWsUrl: "https://atlantis-library.numinia.xyz/ws"
+    publicApiUrl: "https://atlantis-library.numinia.xyz/api"
+    publicAssetsUrl: "https://atlantis-library.numinia.xyz/assets"
+    publicMaxUploadSize: "100MB"
+    resources:
+      requests:
+        cpu: "128m"
+        memory: "128Mi"
+      limits:
+        cpu: "256m"
+        memory: "256Mi" 

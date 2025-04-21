@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: numinia-pre-shared-pvc
+  namespace: numinia-pre
+  labels:
+    organization: numinia
+    app: numinia-shared
+    environment: pre
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: numinia-efs
+  resources:
+    requests:
+      storage: 40Gi

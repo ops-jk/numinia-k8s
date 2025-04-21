@@ -1,0 +1,6 @@
+apiVersion: v2
+name: hyperfy2-base
+description: Base Helm chart for deploying Hyperfy2 application instances
+version: 0.1.0
+appVersion: "1.0"
+type: application

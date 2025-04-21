@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}-deployment
+  namespace: {{ .Values.orgName }}
+  labels:
+    app: {{ .Values.appName }}
+    environment: {{ .Values.environment }}
+    pod-type: hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+spec:
+  replicas: {{ .Values.replicas | default 1 }}
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}
+      environment: {{ .Values.environment }}
+      pod-type: hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}
+        environment: {{ .Values.environment }}
+        pod-type: hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+    spec:
+      serviceAccountName: aws-secret-manager-sa
+      volumes:
+        - name: hyperfy2-persistent-storage
+          persistentVolumeClaim:
+            claimName: {{ .Values.orgName }}-shared-pvc
+        - name: secrets-store
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+      containers:
+        - name: hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          volumeMounts:
+            - name: hyperfy2-persistent-storage
+              mountPath: /mnt/hyperfy2-persistent-storage
+              subPath: {{ .Values.appName }}
+            - name: secrets-store
+              mountPath: "/mnt/secrets-store"
+              readOnly: true
+          env:
+            - name: SAVE_INTERVAL
+              value: {{ .Values.saveInterval | default "30" | quote }}
+            - name: WORLD
+              value: {{ .Values.world | quote }}
+            - name: PORT
+              value: {{ .Values.port | default "3000" | quote }}
+            - name: STORAGE_PATH
+              value: {{ .Values.storagePath | quote }}
+            - name: COMMIT_HASH
+              value: {{ .Values.commitHash | quote }}
+            - name: PUBLIC_WS_URL
+              value: {{ .Values.publicWsUrl | quote }}
+            - name: PUBLIC_API_URL
+              value: {{ .Values.publicApiUrl | quote }}
+            - name: PUBLIC_ASSETS_URL
+              value: {{ .Values.publicAssetsUrl | quote }}
+            - name: PUBLIC_MAX_UPLOAD_SIZE
+              value: {{ .Values.publicMaxUploadSize | quote }}
+            - name: PUBLIC_PLAYER_COLLISION
+              value: {{ .Values.publicPlayerCollision | quote }}
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: JWT_SECRET
+            - name: ADMIN_CODE
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: ADMIN_CODE
+          resources:
+            requests:
+              memory: {{ .Values.resources.requests.memory | quote }}
+              cpu: {{ .Values.resources.requests.cpu | quote }}
+            limits:
+              memory: {{ .Values.resources.limits.memory | quote }}
+              cpu: {{ .Values.resources.limits.cpu | quote }} 

@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: akasha-museum-pro-values
+  namespace: flux-system
+data:
+  values.yaml: |
+    orgName: "numinia"
+    appName: "akasha-museum"
+    environment: "pro"
+    image:
+      repository: "ghcr.io/numengames/numinia-hyperfy2"
+      tag: "sha-1e16378a96bd315b35db7e19c92c998a39f9731f"
+    world: "akasha-museum"
+    tlsSecretName: "numinia-tls"
+    hostname: "akasha-museum.numinia.xyz"
+    storagePath: "/mnt/hyperfy2-persistent-storage"
+    publicWsUrl: "https://akasha-museum.numinia.xyz/ws"
+    publicApiUrl: "https://akasha-museum.numinia.xyz/api"
+    publicAssetsUrl: "https://akasha-museum.numinia.xyz/assets"
+    publicMaxUploadSize: "100MB"
+    resources:
+      requests:
+        cpu: "128m"
+        memory: "128Mi"
+      limits:
+        cpu: "256m"
+        memory: "256Mi" 
