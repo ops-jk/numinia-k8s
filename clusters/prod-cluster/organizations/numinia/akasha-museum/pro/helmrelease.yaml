@@ -2,7 +2,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: akasha-museum-pro
-  namespace: flux-system
+  namespace: numinia
 spec:
   interval: 5m
   releaseName: akasha-museum-pro
@@ -19,7 +19,7 @@ spec:
       sourceRef:
         kind: GitRepository
         name: numinia-k8s
-        namespace: flux-system
+        namespace: numinia
       interval: 1m
   valuesFrom:
     - kind: ConfigMap

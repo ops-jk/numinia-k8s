@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: temple-of-khepri-pro-values
-  namespace: flux-system
+  namespace: numinia
 data:
   values.yaml: |
     orgName: "numinia"

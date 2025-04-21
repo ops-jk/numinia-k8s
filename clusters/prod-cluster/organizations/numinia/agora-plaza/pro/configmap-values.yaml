@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: agora-plaza-pro-values
-  namespace: flux-system
+  namespace: numinia
 data:
   values.yaml: |
     orgName: "numinia"
