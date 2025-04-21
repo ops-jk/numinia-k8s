@@ -1,12 +1,10 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: numinia-pre-efs-pv
-  labels:
-    organization: numinia
+  name: numinia-efs-pv
 spec:
   capacity:
-    storage: 40Gi
+    storage: 10Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteMany
@@ -14,6 +12,6 @@ spec:
   storageClassName: numinia-efs
   csi:
     driver: efs.csi.aws.com
-    volumeHandle: fs-08ccc6c105532a4b3
+    volumeHandle: fs-0fac2c8b7fa8cc60c
     volumeAttributes:
-      path: /numinia-pre 
+      path: /numinia 

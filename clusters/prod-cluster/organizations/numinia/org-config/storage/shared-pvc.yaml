@@ -3,15 +3,11 @@ kind: PersistentVolumeClaim
 metadata:
   name: numinia-shared-pvc
   namespace: numinia
-  labels:
-    organization: numinia
-    app: numinia-shared
-    environment: pro
 spec:
+  storageClassName: numinia-efs
   accessModes:
     - ReadWriteMany
-  storageClassName: numinia-efs
   resources:
     requests:
-      storage: 40Gi
-  volumeName: numinia-efs-pv
+      storage: 10Gi
+  volumeName: numinia-efs-pv 
