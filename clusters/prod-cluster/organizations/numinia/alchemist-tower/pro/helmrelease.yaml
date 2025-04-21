@@ -1,13 +1,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: alchemist-tower-pre
+  name: alchemist-tower-pro
   namespace: numinia
   annotations:
     reconcile.fluxcd.io/requestedAt: "1734523452"
 spec:
   interval: 5m
-  releaseName: alchemist-tower-pre
+  releaseName: alchemist-tower-pro
   targetNamespace: numinia
   install:
     remediation:
@@ -27,5 +27,5 @@ spec:
       interval: 1m
   valuesFrom:
     - kind: ConfigMap
-      name: alchemist-tower-pre-values
+      name: alchemist-tower-pro-values
       valuesKey: values.yaml 

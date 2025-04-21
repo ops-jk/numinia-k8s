@@ -4,4 +4,5 @@ metadata:
   name: numinia-tls
 spec:
   dnsNames:
-    - "pre.age-of-ai.numinia.xyz" 
+    - "pre.age-of-ai.numinia.xyz"
+    - "pre.alchemist-tower.numinia.xyz"
