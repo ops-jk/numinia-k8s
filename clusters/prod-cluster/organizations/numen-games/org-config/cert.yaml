@@ -13,6 +13,7 @@ spec:
     - "training.numen.games"
     - "christian.numen.games"
     - "experience.numen.games"
+    - "kevinonearth.numen.games"
   issuerRef:
     name: letsencrypt-numen-games-prod
     kind: ClusterIssuer
