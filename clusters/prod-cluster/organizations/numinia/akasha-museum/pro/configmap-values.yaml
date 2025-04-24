@@ -13,7 +13,7 @@ data:
     serviceAccountName: "aws-secret-manager-sa"
     image:
       repository: "ghcr.io/numengames/numinia-hyperfy2"
-      tag: "sha-1e16378a96bd315b35db7e19c92c998a39f9731f"
+      tag: "sha-2083fe01910737f770c9a527616defb1814e7603"
     world: "akasha-museum"
     tlsSecretName: "numinia-tls"
     hostname: "akasha-museum.numinia.xyz"
