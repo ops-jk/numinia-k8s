@@ -3,6 +3,8 @@ kind: HelmRelease
 metadata:
   name: akasha-museum-pro
   namespace: numinia
+  annotations:
+    reconcile.fluxcd.io/requestedAt: "1745499146"
 spec:
   interval: 5m
   releaseName: akasha-museum-pro
@@ -19,7 +21,7 @@ spec:
       sourceRef:
         kind: GitRepository
         name: numinia-k8s
-        namespace: numinia
+        namespace: flux-system
       interval: 1m
   valuesFrom:
     - kind: ConfigMap
