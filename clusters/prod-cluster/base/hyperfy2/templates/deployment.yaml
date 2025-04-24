@@ -73,6 +73,21 @@ spec:
                 secretKeyRef:
                   name: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
                   key: ADMIN_CODE
+            - name: LIVEKIT_WS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: LIVEKIT_WS_URL
+            - name: LIVEKIT_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: LIVEKIT_API_KEY
+            - name: LIVEKIT_API_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: LIVEKIT_API_SECRET
           resources:
             requests:
               memory: {{ .Values.resources.requests.memory | quote }}
