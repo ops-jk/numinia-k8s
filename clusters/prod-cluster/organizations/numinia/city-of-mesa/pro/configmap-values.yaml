@@ -20,7 +20,7 @@ data:
     storagePath: "/mnt/hyperfy2-persistent-storage"
     publicWsUrl: "https://city-of-mesa.numinia.xyz/ws"
     publicApiUrl: "https://city-of-mesa.numinia.xyz/api"
-    publicAssetsUrl: "https://city-of-mesa.numinia.xyz/assets"
+    publicAssetsUrl: "http://statics.numinia.xyz/hyperfy-spaces/city-of-mesa"
     publicMaxUploadSize: "100MB"
     resources:
       requests:
