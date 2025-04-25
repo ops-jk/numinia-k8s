@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: maria-pro-values
+  namespace: numen-games
+  annotations:
+    config-version: "1.0.0"
+data:
+  values.yaml: |
+    orgName: "numen-games"
+    appName: "maria"
+    environment: "pro"
+    serviceAccountName: "numen-games-aws-secret-manager-sa"
+    image:
+      repository: "ghcr.io/numengames/numinia-hyperfy2"
+      tag: "sha-119b8a4d1e3238aa4de6eada97100d48833f1e78"
+    world: "maria"
+    tlsSecretName: "numen-games-tls"
+    hostname: "maria.numen.games"
+    storagePath: "/mnt/hyperfy2-persistent-storage"
+    publicWsUrl: "https://maria.numen.games/ws"
+    publicApiUrl: "https://maria.numen.games/api"
+    publicAssetsUrl: "https://maria.numen.games/assets"
+    publicMaxUploadSize: "100MB"
+    resources:
+      requests:
+        cpu: "125m"
+        memory: "256Mi"
+      limits:
+        cpu: "250m"
+        memory: "512Mi" 

@@ -1,0 +1,29 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: training-pro
+  namespace: numen-games
+  annotations:
+    reconcile.fluxcd.io/requestedAt: "1734523452"
+spec:
+  interval: 5m
+  releaseName: training-pro
+  targetNamespace: numen-games
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  chart:
+    spec:
+      chart: ./clusters/prod-cluster/base/hyperfy2
+      sourceRef:
+        kind: GitRepository
+        name: numinia-k8s
+        namespace: flux-system
+      interval: 1m
+  valuesFrom:
+    - kind: ConfigMap
+      name: training-pro-values
+      valuesKey: values.yaml 

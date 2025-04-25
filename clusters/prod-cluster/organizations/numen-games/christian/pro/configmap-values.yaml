@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: christian-pro-values
+  namespace: numen-games
+  annotations:
+    config-version: "1.0.0"
+data:
+  values.yaml: |
+    orgName: "numen-games"
+    appName: "christian"
+    environment: "pro"
+    serviceAccountName: "numen-games-aws-secret-manager-sa"
+    image:
+      repository: "ghcr.io/numengames/numinia-hyperfy2"
+      tag: "sha-119b8a4d1e3238aa4de6eada97100d48833f1e78"
+    world: "christian"
+    tlsSecretName: "numen-games-tls"
+    hostname: "christian.numen.games"
+    storagePath: "/mnt/hyperfy2-persistent-storage"
+    publicWsUrl: "https://christian.numen.games/ws"
+    publicApiUrl: "https://christian.numen.games/api"
+    publicAssetsUrl: "https://christian.numen.games/assets"
+    publicMaxUploadSize: "100MB"
+    resources:
+      requests:
+        cpu: "125m"
+        memory: "256Mi"
+      limits:
+        cpu: "250m"
+        memory: "512Mi" 
