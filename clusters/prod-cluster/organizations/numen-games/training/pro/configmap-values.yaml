@@ -13,7 +13,7 @@ data:
     serviceAccountName: "numen-games-aws-secret-manager-sa"
     image:
       repository: "ghcr.io/numengames/numinia-hyperfy2"
-      tag: "sha-119b8a4d1e3238aa4de6eada97100d48833f1e78"
+      tag: "sha-2083fe01910737f770c9a527616defb1814e7603"
     world: "training"
     tlsSecretName: "numen-games-tls"
     hostname: "training.numen.games"
