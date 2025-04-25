@@ -18,7 +18,7 @@ data:
     tlsSecretName: "numen-games-tls"
     hostname: "experience.numen.games"
     storagePath: "/mnt/hyperfy2-persistent-storage"
-    publicWsUrl: "wss://experience.numen.games/ws"
+    publicWsUrl: "https://experience.numen.games/ws"
     publicApiUrl: "https://experience.numen.games/api"
     publicAssetsUrl: "https://experience.numen.games/assets"
     publicMaxUploadSize: "100MB"

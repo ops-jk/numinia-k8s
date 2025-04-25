@@ -18,7 +18,7 @@ data:
     tlsSecretName: "numen-games-tls"
     hostname: "engage.numen.games"
     storagePath: "/mnt/hyperfy2-persistent-storage"
-    publicWsUrl: "wss://engage.numen.games/ws"
+    publicWsUrl: "https://engage.numen.games/ws"
     publicApiUrl: "https://engage.numen.games/api"
     publicAssetsUrl: "https://engage.numen.games/assets"
     publicMaxUploadSize: "100MB"

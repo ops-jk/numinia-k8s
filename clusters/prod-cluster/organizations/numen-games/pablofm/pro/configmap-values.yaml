@@ -18,7 +18,7 @@ data:
     tlsSecretName: "numen-games-tls"
     hostname: "pablofm.numen.games"
     storagePath: "/mnt/hyperfy2-persistent-storage"
-    publicWsUrl: "wss://pablofm.numen.games/ws"
+    publicWsUrl: "https://pablofm.numen.games/ws"
     publicApiUrl: "https://pablofm.numen.games/api"
     publicAssetsUrl: "https://pablofm.numen.games/assets"
     publicMaxUploadSize: "100MB"

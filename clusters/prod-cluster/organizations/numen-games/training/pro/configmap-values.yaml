@@ -18,7 +18,7 @@ data:
     tlsSecretName: "numen-games-tls"
     hostname: "training.numen.games"
     storagePath: "/mnt/hyperfy2-persistent-storage"
-    publicWsUrl: "wss://training.numen.games/ws"
+    publicWsUrl: "https://training.numen.games/ws"
     publicApiUrl: "https://training.numen.games/api"
     publicAssetsUrl: "https://training.numen.games/assets"
     publicMaxUploadSize: "100MB"
