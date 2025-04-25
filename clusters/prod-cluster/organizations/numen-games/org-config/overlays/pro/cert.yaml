@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: numen-games-tls
+spec:
+  dnsNames:
+    - "maria.numen.games"
+    - "r3s3t.numen.games"
+    - "engage.numen.games"
+    - "pablofm.numen.games"
+    - "training.numen.games"
+    - "christian.numen.games"
+    - "experience.numen.games"
+    - "kevinonearth.numen.games" 

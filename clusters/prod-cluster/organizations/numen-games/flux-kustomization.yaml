@@ -1,15 +1,20 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: numen-games
-  namespace: flux-system
+  name: numen-games-helm-apps
+  namespace: numen-games
 spec:
-  interval: 10m
-  path: ./clusters/prod-cluster/organizations/numen-games/
+  interval: 5m0s
+  path: ./clusters/prod-cluster/organizations/numen-games
   prune: true
   sourceRef:
     kind: GitRepository
-    name: flux-system
+    name: numinia-k8s
+    namespace: flux-system
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-gpg
   dependsOn:
     - name: infrastructure
       namespace: flux-system

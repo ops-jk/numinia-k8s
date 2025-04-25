@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: r3s3t-pro-values
+  namespace: numen-games
+  annotations:
+    config-version: "1.0.0"
+data:
+  values.yaml: |
+    orgName: "numen-games"
+    appName: "r3s3t"
+    environment: "pro"
+    serviceAccountName: "numen-games-aws-secret-manager-sa"
+    image:
+      repository: "ghcr.io/numengames/numinia-hyperfy2"
+      tag: "sha-2083fe01910737f770c9a527616defb1814e7603"
+    world: "r3s3t"
+    tlsSecretName: "numen-games-tls"
+    hostname: "r3s3t.numen.games"
+    storagePath: "/mnt/hyperfy2-persistent-storage"
+    publicWsUrl: "https://r3s3t.numen.games/ws"
+    publicApiUrl: "https://r3s3t.numen.games/api"
+    publicAssetsUrl: "https://r3s3t.numen.games/assets"
+    publicMaxUploadSize: "100MB"
+    resources:
+      requests:
+        cpu: "125m"
+        memory: "256Mi"
+      limits:
+        cpu: "250m"
+        memory: "512Mi" 

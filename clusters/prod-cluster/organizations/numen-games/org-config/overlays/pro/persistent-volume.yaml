@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: numen-games-efs-pv
+  labels:
+    organization: numen-games
+spec:
+  capacity:
+    storage: 40Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: numen-games-efs
+  csi:
+    driver: efs.csi.aws.com
+    volumeHandle: fs-0267ea1daa3cbf566
+    volumeAttributes:
+      path: /
