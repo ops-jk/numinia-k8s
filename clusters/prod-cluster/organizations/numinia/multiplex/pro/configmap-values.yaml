@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: multiplex-pro-values
+  namespace: numinia
+  annotations:
+    config-version: "1.0.0"
+data:
+  values.yaml: |
+    orgName: "numinia"
+    appName: "multiplex"
+    environment: "pro"
+    serviceAccountName: "aws-secret-manager-sa"
+    image:
+      repository: "ghcr.io/numengames/numinia-hyperfy2"
+      tag: "sha-2083fe01910737f770c9a527616defb1814e7603"
+    world: "multiplex"
+    tlsSecretName: "numinia-tls"
+    hostname: "multiplex.numinia.xyz"
+    storagePath: "/mnt/hyperfy2-persistent-storage"
+    publicWsUrl: "https://multiplex.numinia.xyz/ws"
+    publicApiUrl: "https://multiplex.numinia.xyz/api"
+    publicAssetsUrl: "https://multiplex.numinia.xyz/assets"
+    publicMaxUploadSize: "100MB"
+    resources:
+      requests:
+        cpu: "128m"
+        memory: "128Mi"
+      limits:
+        cpu: "256m"
+        memory: "256Mi" 
