@@ -1,0 +1,243 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}-deployment
+  namespace: {{ .Values.orgName }}
+  labels:
+    app: {{ .Values.appName }}
+    environment: {{ .Values.environment }}
+    pod-type: eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+spec:
+  replicas: {{ .Values.replicas | default 1 }}
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}
+      environment: {{ .Values.environment }}
+      pod-type: eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}
+        environment: {{ .Values.environment }}
+        pod-type: eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+    spec:
+      serviceAccountName: {{ .Values.serviceAccountName }}
+      volumes:
+        - name: eliza-persistent-storage
+          persistentVolumeClaim:
+            claimName: {{ .Values.orgName }}-shared-pvc
+        - name: secrets-store
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: aws-secrets-eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+      containers:
+        - name: eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          volumeMounts:
+            - name: eliza-persistent-storage
+              mountPath: /app/data
+              subPath: {{ .Values.appName }}/data
+            - name: secrets-store
+              mountPath: "/mnt/secrets-store"
+              readOnly: true
+          env:
+            - name: SERVER_PORT
+              value: {{ .Values.port | default "3000" | quote }}
+            - name: DAEMON_PROCESS
+              value: {{ .Values.daemonProcess | default "false" | quote }}
+            - name: X_SERVER_URL
+              value: {{ .Values.xServerUrl | default "" | quote }}
+            - name: XAI_MODEL
+              value: {{ .Values.xAIModel | default "" | quote }}
+            - name: OLLAMA_SERVER_URL
+              value: {{ .Values.ollamaServerUrl | default "" | quote }}
+            - name: DEEPSEEK_API_URL
+              value: {{ .Values.deepseekApiUrl | default "https://api.deepseek.com" | quote }}
+            - name: RPC_URL
+              value: {{ .Values.rpcUrl | default "https://api.mainnet-beta.solana.com" | quote }}
+            - name: OLLAMA_MODEL
+              value: {{ .Values.ollamaModel | default "" | quote }}
+            - name: OLLAMA_EMBEDDING_MODEL
+              value: {{ .Values.ollamaEmbeddingModel | default "mxbai-embed-large" | quote }}
+            - name: SMALL_OLLAMA_MODEL
+              value: {{ .Values.smallOllamaModel | default "llama3.2" | quote }}
+            - name: MEDIUM_OLLAMA_MODEL
+              value: {{ .Values.mediumOllamaModel | default "hermes3" | quote }}
+            - name: LARGE_OLLAMA_MODEL
+              value: {{ .Values.largeOllamaModel | default "hermes3:70b" | quote }}
+            - name: OPENROUTER_MODEL
+              value: {{ .Values.openrouterModel | default "" | quote }}
+            - name: SMALL_OPENROUTER_MODEL
+              value: {{ .Values.smallOpenrouterModel | default "" | quote }}
+            - name: MEDIUM_OPENROUTER_MODEL
+              value: {{ .Values.mediumOpenrouterModel | default "" | quote }}
+            - name: LARGE_OPENROUTER_MODEL
+              value: {{ .Values.largeOpenrouterModel | default "" | quote }}
+            - name: SMALL_HEURIST_MODEL
+              value: {{ .Values.smallHeuristModel | default "" | quote }}
+            - name: MEDIUM_HEURIST_MODEL
+              value: {{ .Values.mediumHeuristModel | default "" | quote }}
+            - name: LARGE_HEURIST_MODEL
+              value: {{ .Values.largeHeuristModel | default "" | quote }}
+            - name: HEURIST_IMAGE_MODEL
+              value: {{ .Values.heuristImageModel | default "" | quote }}
+            - name: SMALL_DEEPSEEK_MODEL
+              value: {{ .Values.smallDeepseekModel | default "deepseek-chat" | quote }}
+            - name: MEDIUM_DEEPSEEK_MODEL
+              value: {{ .Values.mediumDeepseekModel | default "deepseek-chat" | quote }}
+            - name: LARGE_DEEPSEEK_MODEL
+              value: {{ .Values.largeDeepseekModel | default "deepseek-chat" | quote }}
+            - name: ELEVENLABS_MODEL_ID
+              value: {{ .Values.elevenLabsModelId | default "eleven_multilingual_v2" | quote }}
+            - name: ELEVENLABS_VOICE_ID
+              value: {{ .Values.elevenLabsVoiceId | default "21m00Tcm4TlvDq8ikWAM" | quote }}
+            - name: ELEVENLABS_VOICE_STABILITY
+              value: {{ .Values.elevenLabsVoiceStability | default "0.5" | quote }}
+            - name: ELEVENLABS_VOICE_SIMILARITY_BOOST
+              value: {{ .Values.elevenLabsVoiceSimilarityBoost | default "0.9" | quote }}
+            - name: ELEVENLABS_VOICE_STYLE
+              value: {{ .Values.elevenLabsVoiceStyle | default "0.66" | quote }}
+            - name: ELEVENLABS_VOICE_USE_SPEAKER_BOOST
+              value: {{ .Values.elevenLabsVoiceUseSpeakerBoost | default "false" | quote }}
+            - name: ELEVENLABS_OPTIMIZE_STREAMING_LATENCY
+              value: {{ .Values.elevenLabsOptimizeStreamingLatency | default "4" | quote }}
+            - name: ELEVENLABS_OUTPUT_FORMAT
+              value: {{ .Values.elevenLabsOutputFormat | default "pcm_16000" | quote }}
+            - name: TWITTER_DRY_RUN
+              value: {{ .Values.twitterDryRun | default "false" | quote }}
+            - name: TWITTER_USERNAME
+              value: {{ .Values.twitterUsername | default "" | quote }}
+            - name: TWITTER_EMAIL
+              value: {{ .Values.twitterEmail | default "" | quote }}
+            - name: TWITTER_COOKIES
+              value: {{ .Values.twitterCookies | default "" | quote }}
+            - name: POST_INTERVAL_MIN
+              value: {{ .Values.postIntervalMin | default "90" | quote }}
+            - name: POST_INTERVAL_MAX
+              value: {{ .Values.postIntervalMax | default "180" | quote }}
+            - name: IMAGE_GEN
+              value: {{ .Values.imageGen | default "TRUE" | quote }}
+            - name: USE_OPENAI_EMBEDDING
+              value: {{ .Values.useOpenaiEmbedding | default "" | quote }}
+            - name: SOL_ADDRESS
+              value: {{ .Values.solAddress | default "So11111111111111111111111111111111111111112" | quote }}
+            - name: SLIPPAGE
+              value: {{ .Values.slippage | default "1" | quote }}
+            - name: BASE_MINT
+              value: {{ .Values.baseMint | default "So11111111111111111111111111111111111111112" | quote }}
+            - name: STARKNET_ADDRESS
+              value: {{ .Values.starknetAddress | default "" | quote }}
+            - name: DISCORD_APPLICATION_ID
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: DISCORD_APPLICATION_ID
+            - name: DISCORD_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: DISCORD_API_TOKEN
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: OPENAI_API_KEY
+            - name: REDPILL_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: REDPILL_API_KEY
+            - name: GROK_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: GROK_API_KEY
+            - name: GROQ_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: GROQ_API_KEY
+            - name: OPENROUTER_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: OPENROUTER_API_KEY
+            - name: GOOGLE_GENERATIVE_AI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: GOOGLE_GENERATIVE_AI_API_KEY
+            - name: ELEVENLABS_XI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: ELEVENLABS_XI_API_KEY
+            - name: TWITTER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: TWITTER_PASSWORD
+            - name: XAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: XAI_API_KEY
+            - name: ANTHROPIC_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: ANTHROPIC_API_KEY
+            - name: HEURIST_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: HEURIST_API_KEY
+            - name: DEEPSEEK_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: DEEPSEEK_API_KEY
+            - name: WALLET_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: WALLET_PRIVATE_KEY
+            - name: WALLET_PUBLIC_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: WALLET_PUBLIC_KEY
+            - name: BIRDEYE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: BIRDEYE_API_KEY
+            - name: HELIUS_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: HELIUS_API_KEY
+            - name: TELEGRAM_BOT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: TELEGRAM_BOT_TOKEN
+            - name: TOGETHER_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: TOGETHER_API_KEY
+            - name: STARKNET_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: STARKNET_PRIVATE_KEY
+          resources:
+            requests:
+              memory: {{ .Values.resources.requests.memory | quote }}
+              cpu: {{ .Values.resources.requests.cpu | quote }}
+            limits:
+              memory: {{ .Values.resources.limits.memory | quote }}
+              cpu: {{ .Values.resources.limits.cpu | quote }} 

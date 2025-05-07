@@ -1,0 +1,16 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}-route
+  namespace: {{ .Values.orgName }}
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: "Host(`{{ .Values.hostname }}`)"
+      kind: Rule
+      services:
+        - name: "eliza-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}-service"
+          port: {{ .Values.port | default 3000 }}
+  tls:
+    secretName: {{ .Values.tlsSecretName }} 

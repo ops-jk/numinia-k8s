@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: eliza-agent-pro-values
+  namespace: numinia
+  annotations:
+    config-version: "1.0.0"
+data:
+  values.yaml: |
+    orgName: "numinia"
+    appName: "eliza-agent"
+    environment: "pro"
+    serviceAccountName: "aws-secret-manager-sa"
+    image:
+      repository: "ghcr.io/numengames/numinia-eliza"
+      tag: "sha-fc1c7f2d56fd740937e1c65136f36cac712ad9c5"
+    port: "3000"
+    tlsSecretName: "numinia-tls"
+    hostname: "eliza-agent.numinia.xyz"
+    charactersPath: "/app/characters/numinia-generic-procyon.character.json"
+    daemonProcess: "false"
+    xServerUrl: ""
+    xAIModel: ""
+    ollamaServerUrl: ""
+    deepseekApiUrl: "https://api.deepseek.com"
+    rpcUrl: "https://api.mainnet-beta.solana.com"
+    twitterDryRun: "true"
+    postIntervalMin: "90"
+    postIntervalMax: "180"
+    imageGen: "TRUE"
+    resources:
+      requests:
+        cpu: "128m"
+        memory: "256Mi"
+      limits:
+        cpu: "256m"
+        memory: "512Mi"
+
+
+
+
+
+
+
+
