@@ -1,0 +1,77 @@
+replicas: 1
+environment: "pro"
+orgName: "org-name"
+appName: "agent-name"
+serviceAccountName: "aws-secret-manager-sa"
+
+image:
+  repository: "ghcr.io/your-org/eliza"
+  tag: "latest"
+
+# Basic Configuration
+port: "3000"
+tlsSecretName: ""
+hostname: "agent-name.org-name.example.com"
+daemonProcess: "false"
+charactersPath: "/app/characters"
+
+# API URLs
+xServerUrl: ""
+xAIModel: ""
+ollamaServerUrl: ""
+deepseekApiUrl: "https://api.deepseek.com"
+rpcUrl: "https://api.mainnet-beta.solana.com"
+
+# Model Configuration
+ollamaModel: ""
+ollamaEmbeddingModel: "mxbai-embed-large"
+smallOllamaModel: "llama3.2"
+mediumOllamaModel: "hermes3"
+largeOllamaModel: "hermes3:70b"
+openrouterModel: ""
+smallOpenrouterModel: ""
+mediumOpenrouterModel: ""
+largeOpenrouterModel: ""
+smallHeuristModel: ""
+mediumHeuristModel: ""
+largeHeuristModel: ""
+heuristImageModel: ""
+smallDeepseekModel: "deepseek-chat"
+mediumDeepseekModel: "deepseek-chat"
+largeDeepseekModel: "deepseek-chat"
+
+# ElevenLabs Configuration
+elevenLabsModelId: "eleven_multilingual_v2"
+elevenLabsVoiceId: "21m00Tcm4TlvDq8ikWAM"
+elevenLabsVoiceStability: "0.5"
+elevenLabsVoiceSimilarityBoost: "0.9"
+elevenLabsVoiceStyle: "0.66"
+elevenLabsVoiceUseSpeakerBoost: "false"
+elevenLabsOptimizeStreamingLatency: "4"
+elevenLabsOutputFormat: "pcm_16000"
+
+# Twitter/X Configuration
+twitterDryRun: "false"
+twitterUsername: ""
+twitterEmail: ""
+twitterCookies: ""
+
+# Post Configuration
+postIntervalMin: "90"
+postIntervalMax: "180"
+imageGen: "TRUE"
+useOpenaiEmbedding: ""
+
+# Blockchain Configuration
+solAddress: "So11111111111111111111111111111111111111112"
+slippage: "1"
+baseMint: "So11111111111111111111111111111111111111112"
+starknetAddress: ""
+
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "100m"
+  limits:
+    memory: "512Mi"
+    cpu: "200m" 
