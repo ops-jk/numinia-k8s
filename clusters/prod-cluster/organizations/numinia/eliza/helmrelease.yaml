@@ -1,10 +1,10 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: multiplex-pro
+  name: eliza-pro
   namespace: numinia
   annotations:
-    reconcile.fluxcd.io/requestedAt: "1746623178"
+    reconcile.fluxcd.io/requestedAt: "1746658645"
 spec:
   interval: 5m
   releaseName: eliza-pro
@@ -25,5 +25,5 @@ spec:
       interval: 1m
   valuesFrom:
     - kind: ConfigMap
-      name: multiplex-pro-values
+      name: eliza-pro-values
       valuesKey: values.yaml 

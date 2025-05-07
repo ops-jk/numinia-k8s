@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: eliza-agent-pro-values
+  name: eliza-pro-values
   namespace: numinia
   annotations:
     config-version: "1.0.0"
 data:
   values.yaml: |
     orgName: "numinia"
-    appName: "eliza-agent"
+    appName: "eliza"
     environment: "pro"
     serviceAccountName: "aws-secret-manager-sa"
     image:
@@ -16,7 +16,7 @@ data:
       tag: "sha-fc1c7f2d56fd740937e1c65136f36cac712ad9c5"
     port: "3000"
     tlsSecretName: "numinia-tls"
-    hostname: "eliza-agent.numinia.xyz"
+    hostname: "eliza.numinia.xyz"
     charactersPath: "/app/characters/numinia-generic-procyon.character.json"
     daemonProcess: "false"
     xServerUrl: ""

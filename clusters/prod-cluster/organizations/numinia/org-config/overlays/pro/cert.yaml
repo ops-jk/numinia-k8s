@@ -5,6 +5,7 @@ metadata:
 spec:
   dnsNames:
     - "numinia.xyz"
+    - "eliza.numinia.xyz"
     - "procyon.numinia.xyz"
     - "multiplex.numinia.xyz"
     - "athenaeum.numinia.xyz"
