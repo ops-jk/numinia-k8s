@@ -13,7 +13,7 @@ data:
     serviceAccountName: "aws-secret-manager-sa"
     image:
       repository: "ghcr.io/numengames/numinia-eliza"
-      tag: "sha-fc1c7f2d56fd740937e1c65136f36cac712ad9c5"
+      tag: "sha-7ec6f07c5a25e5a2623acc1fb2d5e22497387834"
     port: "3000"
     tlsSecretName: "numinia-tls"
     hostname: "eliza.numinia.xyz"
