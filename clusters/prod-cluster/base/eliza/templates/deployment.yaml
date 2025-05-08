@@ -45,6 +45,8 @@ spec:
           env:
             - name: SERVER_PORT
               value: {{ .Values.port | default "3000" | quote }}
+            - name: CHARACTERS_PATH
+              value: {{ .Values.charactersPath | default "/app/characters/default.character.json" | quote }}
             - name: DAEMON_PROCESS
               value: {{ .Values.daemonProcess | default "false" | quote }}
             - name: X_SERVER_URL

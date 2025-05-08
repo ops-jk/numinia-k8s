@@ -4,7 +4,7 @@ metadata:
   name: eliza-pro
   namespace: numinia
   annotations:
-    reconcile.fluxcd.io/requestedAt: "1746658645"
+    reconcile.fluxcd.io/requestedAt: "1746727124"
 spec:
   interval: 5m
   releaseName: eliza-pro
