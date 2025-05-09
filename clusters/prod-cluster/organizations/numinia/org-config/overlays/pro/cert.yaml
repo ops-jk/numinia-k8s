@@ -6,7 +6,6 @@ spec:
   dnsNames:
     - "numinia.xyz"
     - "eliza.numinia.xyz"
-    - "procyon.numinia.xyz"
     - "multiplex.numinia.xyz"
     - "athenaeum.numinia.xyz"
     - "age-of-ai.numinia.xyz"
