@@ -4,6 +4,7 @@ metadata:
   name: numen-games-tls
 spec:
   dnsNames:
+    - "ghost.numen.games"
     - "maria.numen.games"
     - "r3s3t.numen.games"
     - "engage.numen.games"
