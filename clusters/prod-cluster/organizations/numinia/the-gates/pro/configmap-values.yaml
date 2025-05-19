@@ -13,7 +13,7 @@ data:
     serviceAccountName: "aws-secret-manager-sa"
     image:
       repository: "ghcr.io/numengames/numinia-hyperfy2"
-      tag: "sha-2083fe01910737f770c9a527616defb1814e7603"
+      tag: "sha-37fbf2f6bf8444ebae92e47105c1ab1a8e49757d"
     world: "the-gates"
     tlsSecretName: "numinia-tls"
     hostname: "the-gates.numinia.xyz"
