@@ -21,7 +21,7 @@ data:
     publicWsUrl: "https://multiplex.numinia.xyz/ws"
     publicApiUrl: "https://multiplex.numinia.xyz/api"
     publicAssetsUrl: "https://multiplex.numinia.xyz/assets"
-    publicMaxUploadSize: "100MB"
+    publicMaxUploadSize: "2048MB"
     resources:
       requests:
         cpu: "128m"
