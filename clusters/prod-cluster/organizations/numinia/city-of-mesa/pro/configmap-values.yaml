@@ -13,7 +13,7 @@ data:
     serviceAccountName: "aws-secret-manager-sa"
     image:
       repository: "ghcr.io/numengames/numinia-hyperfy2"
-      tag: "sha-790b962e8605501430532f9ec9b9060640163ecb"
+      tag: "sha-ff60462adfee4655cd21660360dbdcf444ed7474"
     world: "city-of-mesa"
     tlsSecretName: "numinia-tls"
     hostname: "city-of-mesa.numinia.xyz"
