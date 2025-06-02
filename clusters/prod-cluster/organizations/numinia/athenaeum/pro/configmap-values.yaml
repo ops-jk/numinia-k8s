@@ -13,7 +13,7 @@ data:
     serviceAccountName: "aws-secret-manager-sa"
     image:
       repository: "ghcr.io/numengames/numinia-hyperfy2"
-      tag: "sha-37fbf2f6bf8444ebae92e47105c1ab1a8e49757d"
+      tag: "sha-ff60462adfee4655cd21660360dbdcf444ed7474"
     world: "athenaeum"
     tlsSecretName: "numinia-tls"
     hostname: "athenaeum.numinia.xyz"
