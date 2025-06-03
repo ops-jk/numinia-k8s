@@ -8,7 +8,7 @@ metadata:
 spec:
   interval: 5m
   releaseName: age-of-ai-pre
-  targetNamespace: numinia
+  targetNamespace: numinia-pre
   install:
     remediation:
       retries: 3
@@ -17,7 +17,7 @@ spec:
       retries: 3
   chart:
     spec:
-      chart: ./clusters/prod-cluster/base/hyperfy2
+      chart: ./clusters/prod-cluster/base/hyperfy2-knative
       sourceRef:
         kind: GitRepository
         name: numinia-k8s
