@@ -30,7 +30,7 @@ data:
       limits:
         cpu: "512m"
         memory: "512Mi"
-    autoscaling
+    autoscaling:
       minScale: 0
       maxScale: 1
     domainMapping:
