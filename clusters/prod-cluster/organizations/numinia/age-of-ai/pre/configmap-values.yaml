@@ -10,6 +10,7 @@ data:
     orgName: "numinia"
     appName: "age-of-ai"
     environment: "pre"
+    namespace: numinia-pre
     serviceAccountName: "aws-secret-manager-sa"
     image:
       repository: "ghcr.io/numengames/numinia-hyperfy2"
@@ -29,3 +30,10 @@ data:
       limits:
         cpu: "512m"
         memory: "512Mi"
+    autoscaling
+      minScale: 0
+      maxScale: 1
+    domainMapping:
+      enabled: true
+      hostname: pre.age-of-ai.numinia.xyz
+      namespace: numinia-pre
