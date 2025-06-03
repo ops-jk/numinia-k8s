@@ -2,7 +2,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: age-of-ai-pre
-  namespace: numinia
+  namespace: numinia-pre
   annotations:
     reconcile.fluxcd.io/requestedAt: "1745499146"
 spec:
