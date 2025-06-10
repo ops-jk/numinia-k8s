@@ -15,9 +15,6 @@ spec:
     spec:
       serviceAccountName: {{ .Values.serviceAccountName }}
       volumes:
-        - name: hyperfy2-persistent-storage
-          persistentVolumeClaim:
-            claimName: {{ .Values.orgName }}-shared-pvc
         - name: secrets-store
           csi:
             driver: secrets-store.csi.k8s.io
@@ -29,9 +26,6 @@ spec:
           ports:
             - containerPort: {{ .Values.port | default 3000 }}
           volumeMounts:
-            - name: hyperfy2-persistent-storage
-              mountPath: /mnt/hyperfy2-persistent-storage
-              subPath: {{ .Values.appName }}
             - name: secrets-store
               mountPath: "/mnt/secrets-store"
               readOnly: true
@@ -40,8 +34,6 @@ spec:
               value: {{ .Values.saveInterval | default "30" | quote }}
             - name: WORLD
               value: {{ .Values.world | quote }}
-            - name: PORT
-              value: {{ .Values.port | default "3000" | quote }}
             - name: STORAGE_PATH
               value: {{ .Values.storagePath | quote }}
             - name: COMMIT_HASH
