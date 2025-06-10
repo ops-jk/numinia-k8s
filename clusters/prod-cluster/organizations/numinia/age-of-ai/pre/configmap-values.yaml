@@ -11,10 +11,10 @@ data:
     appName: "age-of-ai"
     environment: "pre"
     namespace: numinia-pre
-    serviceAccountName: "aws-secret-manager-sa"
+    serviceAccountName: "numinia-pre"
     image:
       repository: "ghcr.io/numengames/numinia-hyperfy2"
-      tag: "sha-1e16378a96bd315b35db7e19c92c998a39f9731f"
+      tag: "sha-e915b147ab92125a65cdc95691264fb6dfe6f667"
     world: "pre-age-of-ai"
     tlsSecretName: "numinia-tls"
     hostname: "pre.age-of-ai.numinia.xyz"
