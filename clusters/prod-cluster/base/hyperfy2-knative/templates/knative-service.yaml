@@ -48,6 +48,43 @@ spec:
               value: {{ .Values.publicMaxUploadSize | quote }}
             - name: PUBLIC_PLAYER_COLLISION
               value: {{ .Values.publicPlayerCollision | quote }}
+            - name: DB_TYPE
+              value: {{ .Values.dbType | default "postgres" | quote }}
+            - name: DB_PORT
+              value: {{ .Values.dbPort | default "5432" | quote }}
+            - name: DB_NAME
+              value: {{ .Values.dbName | default "hyperfy2" | quote }}
+            - name: DB_SCHEMA
+              value: {{ .Values.dbSchema | default "public" | quote }}
+            - name: STORAGE_TYPE
+              value: {{ .Values.storageType | default "local" | quote }}
+            - name: S3_BUCKET_NAME
+              value: {{ .Values.s3BucketName | default "hyperfy2-storage" | quote }}
+            - name: S3_REGION
+              value: {{ .Values.s3Region | default "us-east-1" | quote }}
+            - name: S3_ASSETS_PREFIX
+              value: {{ .Values.s3AssetsPrefix | default "assets" | quote }}
+            - name: S3_COLLECTIONS_PREFIX
+              value: {{ .Values.s3CollectionsPrefix | default "collections" | quote }}
+            - name: S3_STORAGE_PREFIX
+              value: {{ .Values.s3StoragePrefix | default "storage" | quote }}
+            - name: CLOUDFRONT_URL
+              value: {{ .Values.cloudfrontUrl | default "https://d1234567890.cloudfront.net" | quote }}
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: DB_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: DB_PASSWORD
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: DB_HOST
             - name: JWT_SECRET
               valueFrom:
                 secretKeyRef:
