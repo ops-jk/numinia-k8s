@@ -16,6 +16,7 @@ spec:
       serviceAccountName: {{ .Values.serviceAccountName }}
       volumes:
         - name: secrets-store
+          emptyDir: {}
           csi:
             driver: secrets-store.csi.k8s.io
             readOnly: true
