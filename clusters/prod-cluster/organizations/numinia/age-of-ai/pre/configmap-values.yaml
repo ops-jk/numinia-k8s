@@ -14,7 +14,7 @@ data:
     serviceAccountName: "numinia-pre"
     image:
       repository: "ghcr.io/numengames/numinia-hyperfy2"
-      tag: "sha-e915b147ab92125a65cdc95691264fb6dfe6f667"
+      tag: "sha-225096bf03cf835517612311e06b3a5624313c75"
     world: "pre-age-of-ai"
     tlsSecretName: "numinia-tls"
     hostname: "pre.age-of-ai.numinia.xyz"
@@ -23,6 +23,17 @@ data:
     publicApiUrl: "https://pre.age-of-ai.numinia.xyz/api"
     publicAssetsUrl: "https://pre.age-of-ai.numinia.xyz/assets"
     publicMaxUploadSize: "100MB"
+    dbType: "pg"
+    dbPort: "5432"
+    dbName: "postgres"
+    dbSchema: "pre-numinia-age-of-ai"
+    storageType: "aws"
+    s3BucketName: "statics.numinia.xyz"
+    s3Region: "eu-west-1"
+    s3AssetsPrefix: "hyperfy-spaces/numinia/pre-age-of-ai/v1/assets/"
+    s3CollectionsPrefix: hyperfy-spaces/numinia/pre-age-of-ai/v1/collections/
+    s3StoragePrefix: hyperfy-spaces/numinia/pre-age-of-ai/v1/storage/
+    cloudfrontUrl: "https://statics.numinia.xyz"
     resources:
       requests:
         cpu: "256m"
