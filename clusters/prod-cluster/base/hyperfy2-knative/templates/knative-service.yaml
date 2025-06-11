@@ -14,21 +14,10 @@ spec:
         autoscaling.knative.dev/maxScale: "{{ .Values.autoscaling.maxScale }}"
     spec:
       serviceAccountName: {{ .Values.serviceAccountName }}
-      volumes:
-        - name: secrets-store-inline
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: "aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}"
       containers:
         - image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           ports:
             - containerPort: {{ .Values.port | default 3000 }}
-          volumeMounts:
-            - name: secrets-store-inline
-              mountPath: "/mnt/secrets-store"
-              readOnly: true
           env:
             - name: SAVE_INTERVAL
               value: {{ .Values.saveInterval | default "30" | quote }}
