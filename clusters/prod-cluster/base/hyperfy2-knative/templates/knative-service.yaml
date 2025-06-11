@@ -59,6 +59,16 @@ spec:
               value: {{ .Values.s3StoragePrefix | default "storage" | quote }}
             - name: CLOUDFRONT_URL
               value: {{ .Values.cloudfrontUrl | default "https://d1234567890.cloudfront.net" | quote }}
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
+                  key: AWS_SECRET_ACCESS_KEY
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
