@@ -18,6 +18,9 @@ spec:
         - image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           ports:
             - containerPort: {{ .Values.port | default 3000 }}
+          envFrom:
+            - secretRef:
+                name: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
           env:
             - name: SAVE_INTERVAL
               value: {{ .Values.saveInterval | default "30" | quote }}
@@ -59,56 +62,6 @@ spec:
               value: {{ .Values.s3StoragePrefix | default "storage" | quote }}
             - name: CLOUDFRONT_URL
               value: {{ .Values.cloudfrontUrl | default "https://d1234567890.cloudfront.net" | quote }}
-            - name: AWS_ACCESS_KEY_ID
-              valueFrom:
-                secretKeyRef:
-                  name: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
-                  key: AWS_ACCESS_KEY_ID
-            - name: AWS_SECRET_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
-                  key: AWS_SECRET_ACCESS_KEY
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
-                  key: DB_USER
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
-                  key: DB_PASSWORD
-            - name: DB_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
-                  key: DB_HOST
-            - name: JWT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
-                  key: JWT_SECRET
-            - name: ADMIN_CODE
-              valueFrom:
-                secretKeyRef:
-                  name: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
-                  key: ADMIN_CODE
-            - name: LIVEKIT_WS_URL
-              valueFrom:
-                secretKeyRef:
-                  name: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
-                  key: LIVEKIT_WS_URL
-            - name: LIVEKIT_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
-                  key: LIVEKIT_API_KEY
-            - name: LIVEKIT_API_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
-                  key: LIVEKIT_API_SECRET
           resources:
             requests:
               memory: {{ .Values.resources.requests.memory | quote }}
