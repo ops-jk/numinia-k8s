@@ -7,6 +7,7 @@ metadata:
     config-version: "1.0.0"
 data:
   values.yaml: |
+    awsSecretName: "hyperfy2-numinia-age-of-ai-pre-yvd3Rp"
     orgName: "numinia"
     appName: "age-of-ai"
     environment: "pre"
