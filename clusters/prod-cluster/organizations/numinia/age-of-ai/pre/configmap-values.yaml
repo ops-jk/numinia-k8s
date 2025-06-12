@@ -15,7 +15,7 @@ data:
     serviceAccountName: "numinia-pre"
     image:
       repository: "ghcr.io/numengames/numinia-hyperfy2"
-      tag: "sha-225096bf03cf835517612311e06b3a5624313c75"
+      tag: "feat-full-storage-and-db-support-docker"
     world: "pre-age-of-ai"
     tlsSecretName: "numinia-tls"
     hostname: "pre.age-of-ai.numinia.xyz"
