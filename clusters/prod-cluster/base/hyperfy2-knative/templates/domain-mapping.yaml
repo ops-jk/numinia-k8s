@@ -6,7 +6,7 @@ metadata:
   namespace: {{ .Values.namespace | default .Values.orgName }}
 spec:
   ref:
-    name: {{ .Values.domainMapping.hostname }}
+    name: hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
     kind: Service
     apiVersion: serving.knative.dev/v1
 {{- end }}
