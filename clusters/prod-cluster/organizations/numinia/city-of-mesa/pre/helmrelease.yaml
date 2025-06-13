@@ -1,0 +1,27 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: city-of-mesa-pre
+  namespace: numinia-pre
+spec:
+  interval: 5m
+  releaseName: city-of-mesa-pre
+  targetNamespace: numinia-pre
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  chart:
+    spec:
+      chart: ./clusters/prod-cluster/base/hyperfy2-knative
+      sourceRef:
+        kind: GitRepository
+        name: numinia-k8s
+        namespace: flux-system
+      interval: 1m
+  valuesFrom:
+    - kind: ConfigMap
+      name: city-of-mesa-pre-values
+      valuesKey: values.yaml

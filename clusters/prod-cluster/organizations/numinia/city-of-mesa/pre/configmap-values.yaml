@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: city-of-mesa-pre-values
+  namespace: numinia-pre
+  annotations:
+    config-version: "1.0.0"
+data:
+  values.yaml: |
+    awsSecretName: "hyperfy2-numinia-city-of-mesa-pre"
+    orgName: "numinia"
+    appName: "city-of-mesa"
+    environment: "pre"
+    namespace: numinia-pre
+    serviceAccountName: "numinia-pre"
+    image:
+      repository: "ghcr.io/numengames/numinia-hyperfy2"
+      tag: "feat-full-storage-and-db-support-docker"
+    world: "pre-city-of-mesa"
+    tlsSecretName: "numinia-tls"
+    hostname: "pre.city-of-mesa.numinia.xyz"
+    storagePath: "/mnt/hyperfy2-persistent-storage"
+    publicWsUrl: "https://pre.city-of-mesa.numinia.xyz/ws"
+    publicApiUrl: "https://pre.city-of-mesa.numinia.xyz/api"
+    publicAssetsUrl: "https://pre.city-of-mesa.numinia.xyz/assets"
+    publicMaxUploadSize: "100MB"
+    dbType: "pg"
+    dbPort: "5432"
+    dbName: "postgres"
+    dbSchema: "pre-numinia-city-of-mesa"
+    storageType: "aws"
+    s3BucketName: "statics.numinia.xyz"
+    s3Region: "eu-west-1"
+    s3AssetsPrefix: "hyperfy-spaces/numinia/pre-city-of-mesa/v1/assets/"
+    s3CollectionsPrefix: hyperfy-spaces/numinia/pre-city-of-mesa/v1/collections/
+    s3StoragePrefix: hyperfy-spaces/numinia/pre-city-of-mesa/v1/storage/
+    cloudfrontUrl: "https://statics.numinia.xyz"
+    resources:
+      requests:
+        cpu: "256m"
+        memory: "256Mi"
+      limits:
+        cpu: "512m"
+        memory: "512Mi"
+    autoscaling:
+      minScale: 0
+      maxScale: 1
+    domainMapping:
+      enabled: true
+      hostname: pre.city-of-mesa.numinia.xyz
+      namespace: numinia-pre
