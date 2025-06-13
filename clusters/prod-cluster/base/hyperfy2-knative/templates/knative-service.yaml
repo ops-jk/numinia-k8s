@@ -12,7 +12,6 @@ spec:
       annotations:
         autoscaling.knative.dev/minScale: "{{ .Values.autoscaling.minScale }}"
         autoscaling.knative.dev/maxScale: "{{ .Values.autoscaling.maxScale }}"
-        autoscaling.knative.dev/scale-down-delay: "15m"
     spec:
       timeoutSeconds: 3600
       serviceAccountName: {{ .Values.serviceAccountName }}
