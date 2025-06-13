@@ -39,3 +39,5 @@ domainMapping:
 autoscaling:
   minScale: 0
   maxScale: 1
+
+timeoutSeconds: 3600 # 1 hour

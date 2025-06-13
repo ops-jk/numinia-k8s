@@ -13,7 +13,7 @@ spec:
         autoscaling.knative.dev/minScale: "{{ .Values.autoscaling.minScale }}"
         autoscaling.knative.dev/maxScale: "{{ .Values.autoscaling.maxScale }}"
     spec:
-      timeoutSeconds: 3600
+      timeoutSeconds: {{ .Values.timeoutSeconds }}
       serviceAccountName: {{ .Values.serviceAccountName }}
       containers:
         - image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
