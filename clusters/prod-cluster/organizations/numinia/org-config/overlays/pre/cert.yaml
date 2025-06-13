@@ -5,4 +5,5 @@ metadata:
 spec:
   dnsNames:
     - "pre.age-of-ai.numinia.xyz"
+    - "pre.city-of-mesa.numinia.xyz"
     - "pre.alchemist-tower.numinia.xyz"
