@@ -2,24 +2,16 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: numinia
 resources:
-  # Base resources (namespace-independent)
-  - ../../base/external-secrets/acme-dns
-  # Apps split by environment
-  - pro-apps.yaml
-  - pre-apps.yaml
   - org-config/overlays/pro
   - eliza
-  - age-of-ai/pre
   - age-of-ai/pro
   - agora-plaza/pro
   - akasha-museum/pro
-  - alchemist-tower/pre
   - alchemist-tower/pro
   - athenaeum/pro
   - multiplex/pro
   - atlantis-library/pro
   - city-of-mesa/pro
-  - city-of-mesa/pre
   - crimson-tower/pro
   - historical-society/pro
   - house-of-riddles/pro
@@ -27,4 +19,4 @@ resources:
   - ruins-of-numinia/pro
   - steiners-dreams/pro
   - temple-of-khepri/pro
-  - the-gates/pro
+  - the-gates/pro 
