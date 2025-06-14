@@ -4,6 +4,8 @@ kind: DomainMapping
 metadata:
   name: {{ .Values.domainMapping.hostname }}
   namespace: {{ .Values.namespace | default .Values.orgName }}
+  annoatations: 
+    kourier.knative.dev/disable-http2: "true"
 spec:
   ref:
     name: hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
