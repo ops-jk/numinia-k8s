@@ -20,7 +20,7 @@ spec:
       chart: ./clusters/prod-cluster/base/hyperfy2
       sourceRef:
         kind: GitRepository
-        name: numinia-k8s
+        name: flux-system
         namespace: flux-system
       interval: 1m
   valuesFrom:
