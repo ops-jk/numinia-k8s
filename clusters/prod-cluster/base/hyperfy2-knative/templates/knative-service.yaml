@@ -13,23 +13,15 @@ spec:
         autoscaling.knative.dev/minScale: "{{ .Values.autoscaling.minScale }}"
         autoscaling.knative.dev/maxScale: "{{ .Values.autoscaling.maxScale }}"
     spec:
+      timeoutSeconds: {{ .Values.timeoutSeconds }}
       serviceAccountName: {{ .Values.serviceAccountName }}
-      volumes:
-        - name: secrets-store
-          emptyDir: {}
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
       containers:
         - image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           ports:
             - containerPort: {{ .Values.port | default 3000 }}
-          volumeMounts:
-            - name: secrets-store
-              mountPath: "/mnt/secrets-store"
-              readOnly: true
+          envFrom:
+            - secretRef:
+                name: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
           env:
             - name: SAVE_INTERVAL
               value: {{ .Values.saveInterval | default "30" | quote }}
@@ -49,31 +41,28 @@ spec:
               value: {{ .Values.publicMaxUploadSize | quote }}
             - name: PUBLIC_PLAYER_COLLISION
               value: {{ .Values.publicPlayerCollision | quote }}
-            - name: JWT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
-                  key: JWT_SECRET
-            - name: ADMIN_CODE
-              valueFrom:
-                secretKeyRef:
-                  name: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
-                  key: ADMIN_CODE
-            - name: LIVEKIT_WS_URL
-              valueFrom:
-                secretKeyRef:
-                  name: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
-                  key: LIVEKIT_WS_URL
-            - name: LIVEKIT_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
-                  key: LIVEKIT_API_KEY
-            - name: LIVEKIT_API_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: aws-secrets-hyperfy2-{{ .Values.orgName }}-{{ .Values.appName }}-{{ .Values.environment }}
-                  key: LIVEKIT_API_SECRET
+            - name: DB_TYPE
+              value: {{ .Values.dbType | default "postgres" | quote }}
+            - name: DB_PORT
+              value: {{ .Values.dbPort | default "5432" | quote }}
+            - name: DB_NAME
+              value: {{ .Values.dbName | default "hyperfy2" | quote }}
+            - name: DB_SCHEMA
+              value: {{ .Values.dbSchema | default "public" | quote }}
+            - name: STORAGE_TYPE
+              value: {{ .Values.storageType | default "local" | quote }}
+            - name: S3_BUCKET_NAME
+              value: {{ .Values.s3BucketName | default "hyperfy2-storage" | quote }}
+            - name: S3_REGION
+              value: {{ .Values.s3Region | default "us-east-1" | quote }}
+            - name: S3_ASSETS_PREFIX
+              value: {{ .Values.s3AssetsPrefix | default "assets" | quote }}
+            - name: S3_COLLECTIONS_PREFIX
+              value: {{ .Values.s3CollectionsPrefix | default "collections" | quote }}
+            - name: S3_STORAGE_PREFIX
+              value: {{ .Values.s3StoragePrefix | default "storage" | quote }}
+            - name: CLOUDFRONT_URL
+              value: {{ .Values.cloudfrontUrl | default "https://d1234567890.cloudfront.net" | quote }}
           resources:
             requests:
               memory: {{ .Values.resources.requests.memory | quote }}

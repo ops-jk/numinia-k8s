@@ -4,7 +4,7 @@ kind: DomainMapping
 metadata:
   name: {{ .Values.domainMapping.hostname }}
   namespace: {{ .Values.namespace | default .Values.orgName }}
-  annoatations: 
+  annotations:
     kourier.knative.dev/disable-http2: "true"
 spec:
   ref:

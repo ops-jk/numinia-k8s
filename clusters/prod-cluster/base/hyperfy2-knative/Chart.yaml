@@ -1,6 +1,6 @@
 apiVersion: v2
 name: hyperfy2-base-knative
 description: Base Helm chart with knative integration for deploying Hyperfy2 application instances
-version: 0.2.0
+version: 0.2.4
 appVersion: "1.0"
 type: application
