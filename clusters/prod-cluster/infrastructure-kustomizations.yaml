@@ -46,6 +46,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
+  path: ./clusters/prod-cluster/infrastructure/meta
   prune: true
   sourceRef:
     kind: GitRepository
