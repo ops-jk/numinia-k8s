@@ -3,6 +3,5 @@ kind: Kustomization
 resources:
   # Helm repositories must be first as they are required by other components
   - helm-repositories
-  - aws-efs-csi-driver
-  - external-secrets
-  - secrets-store-csi-driver
+  - prometheus
+  - flux-root.yaml

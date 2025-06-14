@@ -19,13 +19,13 @@ spec:
     mode: enabled
   chart:
     spec:
-      chart: ./clusters/prod-cluster/base/hyperfy2-knative
+      chart: ./clusters/prod-cluster/base/hyperfy2
       sourceRef:
         kind: GitRepository
-        name: flux-system
+        name: numinia-k8s
         namespace: flux-system
       interval: 1m
   valuesFrom:
     - kind: ConfigMap
       name: alchemist-tower-pre-values
-      valuesKey: values.yaml
+      valuesKey: values.yaml 
