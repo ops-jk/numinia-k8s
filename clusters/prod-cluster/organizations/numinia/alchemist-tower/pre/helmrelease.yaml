@@ -28,4 +28,4 @@ spec:
   valuesFrom:
     - kind: ConfigMap
       name: alchemist-tower-pre-values
-      valuesKey: values.yaml
+      valuesKey: values.yaml 
