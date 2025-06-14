@@ -1,0 +1,13 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: numinia-apps-pre
+  namespace: numinia-pre
+spec:
+  interval: 5m0s
+  path: ./clusters/prod-cluster/organizations/numinia/flux-pre
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: numinia-k8s
+    namespace: flux-system
