@@ -1,0 +1,56 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: infrastructure-base
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  path: ./clusters/prod-cluster/infrastructure/base
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: infrastructure-networking
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  path: ./clusters/prod-cluster/infrastructure/networking
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: infrastructure-secrets
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  path: ./clusters/prod-cluster/infrastructure/secrets
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  dependsOn:
+    - name: infrastructure-base
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: infrastructure
+  namespace: flux-system
+spec:
+  interval: 10m
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  dependsOn:
+    - name: infrastructure-base
+    - name: infrastructure-networking
+    - name: infrastructure-secrets 
